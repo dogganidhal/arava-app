@@ -1,0 +1,13 @@
+{
+  "@@last_modified": "2020-01-25T22:34:02.427918",
+  "onboarding_ChooseLanguage": "选择语言",
+  "@onboarding_ChooseLanguage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "onboarding_Continue": "续集",
+  "@onboarding_Continue": {
+    "type": "text",
+    "placeholders": {}
+  }
+}
