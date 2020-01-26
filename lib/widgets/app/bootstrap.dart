@@ -1,5 +1,6 @@
-import 'package:arava_app/blocs/app_bloc/app_bloc.dart';
-import 'package:arava_app/blocs/app_bloc/state/app_state.dart';
+import 'package:arava_app/blocs/app/app_bloc.dart';
+import 'package:arava_app/blocs/app/state/app_state.dart';
+import 'package:arava_app/blocs/navigation/navigation_bloc.dart';
 import 'package:arava_app/i18n/localizations.dart';
 import 'package:arava_app/modules/app_module.dart';
 import 'package:arava_app/theme/arava_theme.dart';
@@ -18,13 +19,14 @@ class Bootstrap extends StatefulWidget {
 }
 
 class _BootstrapState extends ModularState<Bootstrap, AppModule> {
-  AppBloc _bloc;
+  AppBloc _appBloc;
+  NavigationBloc _navigationBloc;
 
   @override
   void initState() {
     super.initState();
-    _bloc = get()
-      ..loadApp();
+    _appBloc = get()..loadApp();
+    _navigationBloc = get();
   }
 
   @override
@@ -34,6 +36,7 @@ class _BootstrapState extends ModularState<Bootstrap, AppModule> {
       theme: AravaTheme.kLightTheme,
       darkTheme: AravaTheme.kDarkTheme,
       onGenerateRoute: Modular.generateRoute,
+      navigatorKey: get(),
       localizationsDelegates: [
         AppLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
@@ -46,14 +49,17 @@ class _BootstrapState extends ModularState<Bootstrap, AppModule> {
         const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'),
       ],
       home: BlocBuilder<AppBloc, AppState>(
-        bloc: _bloc,
-        builder: (context, state) => BlocProvider(
-          create: (context) => _bloc,
-          child: state.when(
-            loading: _loading,
-            unintialized: _loading,
-            appLoaded: _loadedApp,
-            firstLaunch: _firstLaunch
+        bloc: _appBloc,
+        builder: (context, state) => BlocProvider<NavigationBloc>(
+          create: (context) => _navigationBloc,
+          child: BlocProvider<AppBloc>(
+            create: (context) => _appBloc,
+            child: state.when(
+              loading: _loading,
+              unintialized: _loading,
+              appLoaded: _loadedApp,
+              firstLaunch: _firstLaunch
+            ),
           ),
         )
       ),
@@ -68,5 +74,5 @@ class _BootstrapState extends ModularState<Bootstrap, AppModule> {
 
   Widget _loadedApp(AppState state) => Main();
 
-  Widget _firstLaunch(AppState state) => Onboarding();
+  Widget _firstLaunch(AppState state) => OnBoarding();
 }

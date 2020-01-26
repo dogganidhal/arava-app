@@ -1,4 +1,4 @@
-import 'package:arava_app/blocs/app_bloc/app_bloc.dart';
+import 'package:arava_app/blocs/app/app_bloc.dart';
 import 'package:arava_app/i18n/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,13 +11,13 @@ class _LanguageDropdownData {
   _LanguageDropdownData({this.name, this.languageCode});
 }
 
-class Onboarding extends StatefulWidget {
+class OnBoarding extends StatefulWidget {
 
   @override
-  _OnboardingState createState() => _OnboardingState();
+  _OnBoardingState createState() => _OnBoardingState();
 }
 
-class _OnboardingState extends State<Onboarding> {
+class _OnBoardingState extends State<OnBoarding> {
   int _selectedLanguage;
   List<_LanguageDropdownData> _languages = [
     _LanguageDropdownData(name: '🇺🇸 English', languageCode: 'en'),
@@ -28,7 +28,8 @@ class _OnboardingState extends State<Onboarding> {
   @override
   void initState() {
     super.initState();
-    _selectedLanguage = _languages.indexWhere((lang) => lang.languageCode == Intl.getCurrentLocale());
+    final index = _languages.indexWhere((lang) => lang.languageCode == Intl.getCurrentLocale());
+    _selectedLanguage = index != -1 ? index : 0;
   }
 
   @override
@@ -78,7 +79,8 @@ class _OnboardingState extends State<Onboarding> {
                   minWidth: double.infinity,
                   child: MaterialButton(
                     color: Theme.of(context).primaryColor,
-                    onPressed: () {},
+                    onPressed: () => BlocProvider.of<AppBloc>(context)
+                      .confirmFirstLaunch(),
                     child: Text(AppLocalizations.of(context).onboarding_Continue()),
                   ),
                 ),

@@ -11,7 +11,7 @@ class CacheManager {
 
   Future<void> setStringAsync(String key, String value) async {
     final instance = await _instance;
-    instance.setString(key, value);
+    await instance.setString(key, value);
   }
 
   Future<bool> getBoolAsync(String key) async {
@@ -21,6 +21,6 @@ class CacheManager {
 
   Future<void> setBoolAsync(String key, bool value) async {
     final instance = await _instance;
-    instance.setBool(key, value);
+    await instance.setBool(key, value);
   }
 }
