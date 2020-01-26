@@ -21,7 +21,21 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "home_Favorites" : MessageLookupByLibrary.simpleMessage("最喜欢的"),
+    "home_Featured" : MessageLookupByLibrary.simpleMessage("精选"),
+    "home_Map" : MessageLookupByLibrary.simpleMessage("地图"),
+    "home_More" : MessageLookupByLibrary.simpleMessage("更多"),
+    "home_Photos" : MessageLookupByLibrary.simpleMessage("相片"),
+    "more_EmailUs" : MessageLookupByLibrary.simpleMessage("给我们发电子邮件"),
+    "more_Favorites" : MessageLookupByLibrary.simpleMessage("最喜欢的"),
+    "more_LastUpdate" : MessageLookupByLibrary.simpleMessage("最后更新"),
+    "more_LoginSignUp" : MessageLookupByLibrary.simpleMessage("登陆注册"),
+    "more_QaA" : MessageLookupByLibrary.simpleMessage("问答"),
+    "more_Settings" : MessageLookupByLibrary.simpleMessage("设定"),
+    "more_Update" : MessageLookupByLibrary.simpleMessage("更新应用"),
     "onboarding_ChooseLanguage" : MessageLookupByLibrary.simpleMessage("选择语言"),
-    "onboarding_Continue" : MessageLookupByLibrary.simpleMessage("续集")
+    "onboarding_Continue" : MessageLookupByLibrary.simpleMessage("续集"),
+    "settings_Language" : MessageLookupByLibrary.simpleMessage("语言"),
+    "settings_Title" : MessageLookupByLibrary.simpleMessage("设定")
   };
 }

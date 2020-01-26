@@ -1,12 +1,82 @@
 {
-  "@@last_modified": "2020-01-25T22:34:02.427918",
-  "onboarding_ChooseLanguage": "Choose the fucking language",
+  "@@last_modified": "2020-01-26T14:11:31.126875",
+  "onboarding_ChooseLanguage": "Choose language",
   "@onboarding_ChooseLanguage": {
     "type": "text",
     "placeholders": {}
   },
   "onboarding_Continue": "Continue",
   "@onboarding_Continue": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "home_Map": "Map",
+  "@home_Map": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "home_Featured": "Featured",
+  "@home_Featured": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "home_Favorites": "Favorites",
+  "@home_Favorites": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "home_Photos": "Photos",
+  "@home_Photos": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "home_More": "More",
+  "@home_More": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_Settings": "Settings",
+  "@more_Settings": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_Favorites": "Favorites",
+  "@more_Favorites": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_QaA": "Q&A",
+  "@more_QaA": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_EmailUs": "Email us",
+  "@more_EmailUs": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_LoginSignUp": "Login / Sign up",
+  "@more_LoginSignUp": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_LastUpdate": "Last update",
+  "@more_LastUpdate": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_Update": "Update app",
+  "@more_Update": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "settings_Title": "Settings",
+  "@settings_Title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "settings_Language": "Language",
+  "@settings_Language": {
     "type": "text",
     "placeholders": {}
   }

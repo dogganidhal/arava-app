@@ -6,12 +6,17 @@ then
    exit 0
 fi
 
-if [[ $1 == "intl" ]]
+if [[ $1 == "intl-extract-arb" ]]
 then
-   flutter pub run intl_translation:extract_to_arb --output-dir lib/i18n lib/i18n/localizations.dart
-   flutter pub run intl_translation:generate_from_arb --output-dir=lib/i18n --no-use-deferred-loading lib/i18n/localizations.dart lib/i18n/intl_en.arb lib/i18n/intl_fr.arb lib/i18n/intl_zh_Hans.arb
+   flutter pub run intl_translation:extract_to_arb --output-dir lib/i18n lib/i18n/app_localizations.dart
    exit 0
 fi
 
-echo "Available commands intl | codegen"
+if [[ $1 == "intl-generate-dart" ]]
+then
+   flutter pub run intl_translation:generate_from_arb --output-dir=lib/i18n --no-use-deferred-loading lib/i18n/app_localizations.dart lib/i18n/intl_en.arb lib/i18n/intl_fr.arb lib/i18n/intl_zh_Hans.arb
+   exit 0
+fi
+
+echo "Available commands intl-extract-arb | intl-generate-dart | codegen"
 exit 1

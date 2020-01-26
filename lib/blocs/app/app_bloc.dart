@@ -1,7 +1,7 @@
 import 'package:arava_app/blocs/app/event/app_event.dart';
 import 'package:arava_app/blocs/app/state/app_state.dart';
 import 'package:arava_app/blocs/navigation/navigation_bloc.dart';
-import 'package:arava_app/i18n/localizations.dart';
+import 'package:arava_app/i18n/app_localizations.dart';
 import 'package:arava_app/model/app_configuration/app_configuration.dart';
 import 'package:arava_app/service/app_service.dart';
 import 'package:arava_app/service/session.dart';
@@ -75,6 +75,17 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   Stream<AppState> _changeLocale(ChangeLocale event) async* {
     await AppLocalizations.load(Locale(event.locale));
     await session.setPreferredLocale(event.locale);
+    if (state is AppLoaded) {
+      final oldConfiguration = (state as AppLoaded).appConfiguration;
+      yield AppState.appLoaded(
+        appConfiguration: AppConfiguration(
+          islands: oldConfiguration.islands,
+          poiTypes: oldConfiguration.poiTypes,
+          versionConfiguration: oldConfiguration.versionConfiguration,
+          preferredLocale: event.locale
+        )
+      );
+    }
   }
 
 }

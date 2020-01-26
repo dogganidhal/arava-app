@@ -1,3 +1,4 @@
+import 'package:arava_app/i18n/app_localizations.dart';
 import 'package:arava_app/widgets/favorites/favorites.dart';
 import 'package:arava_app/widgets/favorites/favorites_app_bar.dart';
 import 'package:arava_app/widgets/featured/featured.dart';
@@ -54,31 +55,31 @@ class _MainState extends State<Main> {
         onTap: (index) => setState(() => _selectedTab = index),
         selectedItemColor: Theme.of(context).colorScheme.primary,
         unselectedItemColor: Theme.of(context).colorScheme.primary.withOpacity(0.25),
-        items: _bottomNavigationBarItems,
+        items: _bottomNavigationBarItems(context),
       ),
     );
   }
 
-  List<BottomNavigationBarItem> get _bottomNavigationBarItems => [
+  List<BottomNavigationBarItem> _bottomNavigationBarItems(BuildContext context) => [
     BottomNavigationBarItem(
       icon: Icon(Icons.map),
-      title: Text("Carte")
+      title: Text(AppLocalizations.of(context).home_Map())
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.star),
-      title: Text("À la une")
+      title: Text(AppLocalizations.of(context).home_Featured())
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.favorite),
-      title: Text("Favoris")
+      title: Text(AppLocalizations.of(context).home_Favorites())
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.photo_camera),
-      title: Text("Photos")
+      title: Text(AppLocalizations.of(context).home_Photos())
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.more_horiz),
-      title: Text("Plus")
+      title: Text(AppLocalizations.of(context).home_More())
     )
   ];
 }

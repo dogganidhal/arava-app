@@ -8,16 +8,16 @@ class MapAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Row(
         children: <Widget>[
+          Image.asset(
+            "assets/images/octopus.png",
+            height: 24,
+          ),
           Text(
             "Arava",
             style: TextStyle(
               color: Theme.of(context).colorScheme.primary
             ),
           ),
-          Image.asset(
-            "assets/images/octopus.png",
-            height: 24,
-          )
         ],
       ),
       centerTitle: true

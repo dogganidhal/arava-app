@@ -1,11 +1,18 @@
+import 'package:arava_app/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 
-class MoreAppBar extends AppBar {
+class MoreAppBar extends StatelessWidget implements PreferredSizeWidget {
 
-  MoreAppBar() : super(
-    title: Text("More"),
-    centerTitle: true
-  );
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text(AppLocalizations.of(context).home_More()),
+      centerTitle: true
+    );
+  }
+
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
 }

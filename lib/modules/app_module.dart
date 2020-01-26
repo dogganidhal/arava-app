@@ -6,6 +6,7 @@ import 'package:arava_app/service/cache_manager.dart';
 import 'package:arava_app/service/session.dart';
 import 'package:arava_app/widgets/app/bootstrap.dart';
 import 'package:arava_app/widgets/main/main.dart';
+import 'package:arava_app/widgets/settings.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -41,7 +42,8 @@ class AppModule extends MainModule {
   // here will be the routes of your module
   @override
   List<Router> get routers => [
-    Router("/home", child: (_, args) => Main())
+    Router("/home", child: (_, args) => Main()),
+    Router("/settings", child: (_, args) => Settings()),
   ];
 
   // add your main widget here

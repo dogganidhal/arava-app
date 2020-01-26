@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class AravaTheme {
@@ -28,6 +29,9 @@ class AravaTheme {
     appBarTheme: AppBarTheme(
       elevation: 1,
       color: kLightColor,
+      iconTheme: IconThemeData(
+        color: kLightPrimaryColor
+      ),
       textTheme: TextTheme(
         title: TextStyle(
           color: kDarkColor,
@@ -61,6 +65,9 @@ class AravaTheme {
     appBarTheme: AppBarTheme(
       elevation: 1,
       color: kDarkColor.withAlpha(200),
+      iconTheme: IconThemeData(
+        color: kDarkPrimaryColor
+      ),
       textTheme: TextTheme(
         title: TextStyle(
           color: kLightColor,

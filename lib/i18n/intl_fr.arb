@@ -9,5 +9,75 @@
   "@onboarding_Continue": {
     "type": "text",
     "placeholders": {}
+  },
+  "home_Map": "Carte",
+  "@home_Map": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "home_Featured": "À la une",
+  "@home_Featured": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "home_Favorites": "Favories",
+  "@home_Favorites": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "home_Photos": "Photos",
+  "@home_Photos": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "home_More": "Plus",
+  "@home_More": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_Settings": "Paramètres",
+  "@more_Settings": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_Favorites": "Favories",
+  "@more_Favorites": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_QaA": "FAQ",
+  "@more_QaA": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_EmailUs": "Nous contacter",
+  "@more_EmailUs": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_LoginSignUp": "Se connecter / s'inscrire",
+  "@more_LoginSignUp": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_LastUpdate": "Dernière MàJ",
+  "@more_LastUpdate": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_Update": "Mettre à jour",
+  "@more_Update": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "settings_Title": "Paramètres",
+  "@settings_Title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "settings_Language": "Langue",
+  "@settings_Language": {
+    "type": "text",
+    "placeholders": {}
   }
 }

@@ -21,7 +21,21 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "home_Favorites" : MessageLookupByLibrary.simpleMessage("Favories"),
+    "home_Featured" : MessageLookupByLibrary.simpleMessage("À la une"),
+    "home_Map" : MessageLookupByLibrary.simpleMessage("Carte"),
+    "home_More" : MessageLookupByLibrary.simpleMessage("Plus"),
+    "home_Photos" : MessageLookupByLibrary.simpleMessage("Photos"),
+    "more_EmailUs" : MessageLookupByLibrary.simpleMessage("Nous contacter"),
+    "more_Favorites" : MessageLookupByLibrary.simpleMessage("Favories"),
+    "more_LastUpdate" : MessageLookupByLibrary.simpleMessage("Dernière MàJ"),
+    "more_LoginSignUp" : MessageLookupByLibrary.simpleMessage("Se connecter / s\'inscrire"),
+    "more_QaA" : MessageLookupByLibrary.simpleMessage("FAQ"),
+    "more_Settings" : MessageLookupByLibrary.simpleMessage("Paramètres"),
+    "more_Update" : MessageLookupByLibrary.simpleMessage("Mettre à jour"),
     "onboarding_ChooseLanguage" : MessageLookupByLibrary.simpleMessage("Choisir la langue"),
-    "onboarding_Continue" : MessageLookupByLibrary.simpleMessage("Continuer")
+    "onboarding_Continue" : MessageLookupByLibrary.simpleMessage("Continuer"),
+    "settings_Language" : MessageLookupByLibrary.simpleMessage("Langue"),
+    "settings_Title" : MessageLookupByLibrary.simpleMessage("Paramètres")
   };
 }

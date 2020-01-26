@@ -9,5 +9,75 @@
   "@onboarding_Continue": {
     "type": "text",
     "placeholders": {}
+  },
+  "home_Map": "地图",
+  "@home_Map": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "home_Featured": "精选",
+  "@home_Featured": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "home_Favorites": "最喜欢的",
+  "@home_Favorites": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "home_Photos": "相片",
+  "@home_Photos": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "home_More": "更多",
+  "@home_More": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_Settings": "设定",
+  "@more_Settings": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_Favorites": "最喜欢的",
+  "@more_Favorites": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_QaA": "问答",
+  "@more_QaA": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_EmailUs": "给我们发电子邮件",
+  "@more_EmailUs": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_LoginSignUp": "登陆注册",
+  "@more_LoginSignUp": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_LastUpdate": "最后更新",
+  "@more_LastUpdate": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_Update": "更新应用",
+  "@more_Update": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "settings_Title": "设定",
+  "@settings_Title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "settings_Language": "语言",
+  "@settings_Language": {
+    "type": "text",
+    "placeholders": {}
   }
 }

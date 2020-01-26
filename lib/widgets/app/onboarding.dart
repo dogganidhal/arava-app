@@ -1,37 +1,10 @@
 import 'package:arava_app/blocs/app/app_bloc.dart';
-import 'package:arava_app/i18n/localizations.dart';
+import 'package:arava_app/i18n/app_localizations.dart';
+import 'package:arava_app/widgets/language_selector.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-class _LanguageDropdownData {
-  final String name;
-  final String languageCode;
-
-  _LanguageDropdownData({this.name, this.languageCode});
-}
-
-class OnBoarding extends StatefulWidget {
-
-  @override
-  _OnBoardingState createState() => _OnBoardingState();
-}
-
-class _OnBoardingState extends State<OnBoarding> {
-  int _selectedLanguage;
-  List<_LanguageDropdownData> _languages = [
-    _LanguageDropdownData(name: '🇺🇸 English', languageCode: 'en'),
-    _LanguageDropdownData(name: '🇫🇷 Français', languageCode: 'fr'),
-    _LanguageDropdownData(name: '🇨🇳 中文', languageCode: 'zh_Hans')
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-    final index = _languages.indexWhere((lang) => lang.languageCode == Intl.getCurrentLocale());
-    _selectedLanguage = index != -1 ? index : 0;
-  }
-
+class OnBoarding extends ModularStatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,24 +26,7 @@ class _OnBoardingState extends State<OnBoarding> {
                     .copyWith(color: Theme.of(context).primaryColor)
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(16),
-                child: Text(AppLocalizations.of(context).onboarding_ChooseLanguage()),
-              ),
-              DropdownButton<int>(
-                value: _selectedLanguage,
-                items: _languages
-                  .map(((language) => new DropdownMenuItem<int>(
-                    value: _languages.indexOf(language),
-                    child: new Text(language.name),
-                  )))
-                  .toList(),
-                onChanged: (index) {
-                  BlocProvider.of<AppBloc>(context)
-                    .changeLocale(_languages[index].languageCode);
-                  setState(() => _selectedLanguage = index);
-                },
-              ),
+              LanguageSelector(),
               Expanded(child: Container()),
               Padding(
                 padding: EdgeInsets.all(16),
@@ -79,8 +35,7 @@ class _OnBoardingState extends State<OnBoarding> {
                   minWidth: double.infinity,
                   child: MaterialButton(
                     color: Theme.of(context).primaryColor,
-                    onPressed: () => BlocProvider.of<AppBloc>(context)
-                      .confirmFirstLaunch(),
+                    onPressed: () => get<AppBloc>().confirmFirstLaunch(),
                     child: Text(AppLocalizations.of(context).onboarding_Continue()),
                   ),
                 ),
