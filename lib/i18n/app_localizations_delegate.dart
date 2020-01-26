@@ -1,4 +1,4 @@
-import 'package:arava_app/i18n/app_localizations.dart';
+import 'package:arava/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 

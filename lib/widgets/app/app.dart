@@ -1,6 +1,6 @@
-import 'package:arava_app/model/app_configuration/app_configuration.dart';
-import 'package:arava_app/widgets/app/app_configuration_provider.dart';
-import 'package:arava_app/widgets/main/main.dart';
+import 'package:arava/model/app_configuration/app_configuration.dart';
+import 'package:arava/widgets/app/app_configuration_provider.dart';
+import 'package:arava/widgets/main/main.dart';
 import 'package:flutter/material.dart';
 
 

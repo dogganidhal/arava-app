@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:arava_app/model/api_configuration/api_configuration.dart';
-import 'package:arava_app/model/jwt_auth_credentials/jwt_auth_credentials.dart';
-import 'package:arava_app/service/cache_manager.dart';
+import 'package:arava/model/api_configuration/api_configuration.dart';
+import 'package:arava/model/jwt_auth_credentials/jwt_auth_credentials.dart';
+import 'package:arava/service/cache_manager.dart';
 
 
 class Session {

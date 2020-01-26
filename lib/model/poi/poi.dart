@@ -1,8 +1,8 @@
-import 'package:arava_app/model/comment/comment.dart';
-import 'package:arava_app/model/lat_lng/lat_lng.dart';
-import 'package:arava_app/model/media/media.dart';
-import 'package:arava_app/model/poi_category/poi_category.dart';
-import 'package:arava_app/model/ratings/ratings.dart';
+import 'package:arava/model/comment/comment.dart';
+import 'package:arava/model/lat_lng/lat_lng.dart';
+import 'package:arava/model/media/media.dart';
+import 'package:arava/model/poi_category/poi_category.dart';
+import 'package:arava/model/ratings/ratings.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'poi.g.dart';

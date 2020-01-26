@@ -1,4 +1,4 @@
-import 'package:arava_app/model/app_configuration/app_configuration.dart';
+import 'package:arava/model/app_configuration/app_configuration.dart';
 import 'package:flutter/material.dart';
 
 class AppConfigurationProvider extends InheritedWidget {

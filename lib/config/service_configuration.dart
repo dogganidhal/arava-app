@@ -1,4 +1,4 @@
-import 'package:arava_app/service/session.dart';
+import 'package:arava/service/session.dart';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 

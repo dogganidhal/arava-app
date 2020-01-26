@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:arava_app/i18n/messages_all.dart';
+import 'package:arava/i18n/messages_all.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

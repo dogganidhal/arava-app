@@ -1,7 +1,7 @@
-import 'package:arava_app/model/api_configuration/api_configuration.dart';
-import 'package:arava_app/model/island/island.dart';
-import 'package:arava_app/model/poi_type/poi_type.dart';
-import 'package:arava_app/model/version_configuration/version_configuration.dart';
+import 'package:arava/model/api_configuration/api_configuration.dart';
+import 'package:arava/model/island/island.dart';
+import 'package:arava/model/poi_type/poi_type.dart';
+import 'package:arava/model/version_configuration/version_configuration.dart';
 
 
 class AppConfiguration extends ApiConfiguration {

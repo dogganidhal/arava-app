@@ -1,4 +1,4 @@
-import 'package:arava_app/model/api_configuration/api_configuration.dart';
+import 'package:arava/model/api_configuration/api_configuration.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 

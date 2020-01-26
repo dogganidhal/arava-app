@@ -1,4 +1,4 @@
-import 'package:arava_app/model/jwt_auth_credentials/jwt_auth_credentials.dart';
+import 'package:arava/model/jwt_auth_credentials/jwt_auth_credentials.dart';
 import 'package:dio/dio.dart';
 
 

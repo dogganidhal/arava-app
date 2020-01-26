@@ -1,8 +1,8 @@
-import 'package:arava_app/blocs/app/app_bloc.dart';
-import 'package:arava_app/blocs/app/state/app_state.dart';
-import 'package:arava_app/i18n/app_localizations.dart';
-import 'package:arava_app/modules/app_module.dart';
-import 'package:arava_app/widgets/language_selector.dart';
+import 'package:arava/blocs/app/app_bloc.dart';
+import 'package:arava/blocs/app/state/app_state.dart';
+import 'package:arava/i18n/app_localizations.dart';
+import 'package:arava/modules/app_module.dart';
+import 'package:arava/widgets/language_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';

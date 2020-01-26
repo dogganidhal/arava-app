@@ -1,5 +1,5 @@
-import 'package:arava_app/blocs/navigation/event/navigation_event.dart';
-import 'package:arava_app/blocs/navigation/state/navigation_state.dart';
+import 'package:arava/blocs/navigation/event/navigation_event.dart';
+import 'package:arava/blocs/navigation/state/navigation_state.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 

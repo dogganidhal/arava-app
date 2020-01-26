@@ -1,4 +1,4 @@
-import 'package:arava_app/model/user/user.dart';
+import 'package:arava/model/user/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'comment.g.dart';

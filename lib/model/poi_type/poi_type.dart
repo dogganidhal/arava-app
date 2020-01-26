@@ -1,4 +1,4 @@
-import 'package:arava_app/model/media/media.dart';
+import 'package:arava/model/media/media.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'poi_type.g.dart';

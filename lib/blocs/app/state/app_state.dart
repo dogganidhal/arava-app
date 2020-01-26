@@ -1,5 +1,5 @@
-import 'package:arava_app/exception/app_exception.dart';
-import 'package:arava_app/model/app_configuration/app_configuration.dart';
+import 'package:arava/exception/app_exception.dart';
+import 'package:arava/model/app_configuration/app_configuration.dart';
 import 'package:super_enum/super_enum.dart';
 
 part 'app_state.g.dart';
