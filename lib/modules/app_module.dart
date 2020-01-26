@@ -21,13 +21,14 @@ class AppModule extends MainModule {
     Bind((inject) => NavigationBloc(navigatorState: inject.get()), singleton: true),
     Bind((inject) => CacheManager(), singleton: true),
     Bind((inject) => Session(cacheManager: inject.get())),
-    Bind((inject) => ServiceConfiguration.dev(session: inject.get()), singleton: true),
+    Bind((inject) => ServiceConfiguration.staging(session: inject.get()), singleton: true),
     Bind((inject) {
       final serviceConfiguration = inject.get<ServiceConfiguration>();
       final dio = Dio(BaseOptions(
         baseUrl: serviceConfiguration.apiBaseUrl,
       ));
       dio.interceptors.add(serviceConfiguration.authInterceptor);
+      dio.interceptors.add(serviceConfiguration.userPreferencesInterceptor);
       dio.interceptors.add(serviceConfiguration.logInterceptor);
       return dio;
     }),
@@ -42,7 +43,7 @@ class AppModule extends MainModule {
   // here will be the routes of your module
   @override
   List<Router> get routers => [
-    Router("/home", child: (_, args) => Main()),
+    Router("/", child: (_, args) => Main()),
     Router("/settings", child: (_, args) => Settings()),
   ];
 

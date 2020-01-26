@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:arava_app/model/api_configuration/api_configuration.dart';
 import 'package:arava_app/model/jwt_auth_credentials/jwt_auth_credentials.dart';
 import 'package:arava_app/service/cache_manager.dart';
 
@@ -8,6 +9,7 @@ class Session {
   static final String _kCredentials = "com.arava.credentials";
   static final String _kFirstAppLaunch = "com.arava.first_app_launch";
   static final String _kPreferredLocale = "com.arava.preferred_locale";
+  static final String _kApiConfiguration = "com.arava.api_configuration";
 
   final CacheManager cacheManager;
 
@@ -41,5 +43,18 @@ class Session {
 
   Future<void> setPreferredLocale(String locale) async {
     return await cacheManager.setStringAsync(_kPreferredLocale, locale);
+  }
+
+  Future<ApiConfiguration> getApiConfiguration() async {
+    final jsonString = await cacheManager.getStringAsync(_kApiConfiguration);
+    if (jsonString != null) {
+      final jsonMap = json.decode(jsonString);
+      return ApiConfiguration.fromJson(jsonMap);
+    }
+    return null;
+  }
+
+  Future<void> setApiConfiguration(ApiConfiguration configuration) async {
+    return await cacheManager.setStringAsync(_kApiConfiguration, json.encode(configuration.toJson()));
   }
 }

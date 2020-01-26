@@ -14,10 +14,12 @@ abstract class AppState extends Equatable {
 
   factory AppState.unintialized() = Unintialized;
 
-  factory AppState.firstLaunch() = FirstLaunch;
+  factory AppState.firstLaunch({@required String language}) = FirstLaunch;
 
   factory AppState.appLoaded({@required AppConfiguration appConfiguration}) =
       AppLoaded;
+
+  factory AppState.error({@required AppException exception}) = Error;
 
   final _AppState _type;
 
@@ -26,12 +28,14 @@ abstract class AppState extends Equatable {
       {@required FutureOr<R> Function(Loading) loading,
       @required FutureOr<R> Function(Unintialized) unintialized,
       @required FutureOr<R> Function(FirstLaunch) firstLaunch,
-      @required FutureOr<R> Function(AppLoaded) appLoaded}) {
+      @required FutureOr<R> Function(AppLoaded) appLoaded,
+      @required FutureOr<R> Function(Error) error}) {
     assert(() {
       if (loading == null ||
           unintialized == null ||
           firstLaunch == null ||
-          appLoaded == null) throw 'check for all possible cases';
+          appLoaded == null ||
+          error == null) throw 'check for all possible cases';
       return true;
     }());
     switch (this._type) {
@@ -43,6 +47,8 @@ abstract class AppState extends Equatable {
         return firstLaunch(this as FirstLaunch);
       case _AppState.AppLoaded:
         return appLoaded(this as AppLoaded);
+      case _AppState.Error:
+        return error(this as Error);
     }
   }
 
@@ -51,6 +57,7 @@ abstract class AppState extends Equatable {
       FutureOr<R> Function(Unintialized) unintialized,
       FutureOr<R> Function(FirstLaunch) firstLaunch,
       FutureOr<R> Function(AppLoaded) appLoaded,
+      FutureOr<R> Function(Error) error,
       @required FutureOr<R> Function(AppState) orElse}) {
     assert(() {
       if (orElse == null) throw 'Missing orElse case';
@@ -69,6 +76,9 @@ abstract class AppState extends Equatable {
       case _AppState.AppLoaded:
         if (appLoaded == null) break;
         return appLoaded(this as AppLoaded);
+      case _AppState.Error:
+        if (error == null) break;
+        return error(this as Error);
     }
     return orElse(this);
   }
@@ -77,12 +87,14 @@ abstract class AppState extends Equatable {
       {FutureOr<void> Function(Loading) loading,
       FutureOr<void> Function(Unintialized) unintialized,
       FutureOr<void> Function(FirstLaunch) firstLaunch,
-      FutureOr<void> Function(AppLoaded) appLoaded}) {
+      FutureOr<void> Function(AppLoaded) appLoaded,
+      FutureOr<void> Function(Error) error}) {
     assert(() {
       if (loading == null &&
           unintialized == null &&
           firstLaunch == null &&
-          appLoaded == null) throw 'provide at least one branch';
+          appLoaded == null &&
+          error == null) throw 'provide at least one branch';
       return true;
     }());
     switch (this._type) {
@@ -98,6 +110,9 @@ abstract class AppState extends Equatable {
       case _AppState.AppLoaded:
         if (appLoaded == null) break;
         return appLoaded(this as AppLoaded);
+      case _AppState.Error:
+        if (error == null) break;
+        return error(this as Error);
     }
   }
 
@@ -131,14 +146,14 @@ class Unintialized extends AppState {
 
 @immutable
 class FirstLaunch extends AppState {
-  const FirstLaunch._() : super(_AppState.FirstLaunch);
+  const FirstLaunch({@required this.language}) : super(_AppState.FirstLaunch);
 
-  factory FirstLaunch() {
-    _instance ??= FirstLaunch._();
-    return _instance;
-  }
+  final String language;
 
-  static FirstLaunch _instance;
+  @override
+  String toString() => 'FirstLaunch(language:${this.language})';
+  @override
+  List get props => [language];
 }
 
 @immutable
@@ -152,4 +167,16 @@ class AppLoaded extends AppState {
   String toString() => 'AppLoaded(appConfiguration:${this.appConfiguration})';
   @override
   List get props => [appConfiguration];
+}
+
+@immutable
+class Error extends AppState {
+  const Error({@required this.exception}) : super(_AppState.Error);
+
+  final AppException exception;
+
+  @override
+  String toString() => 'Error(exception:${this.exception})';
+  @override
+  List get props => [exception];
 }

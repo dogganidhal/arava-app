@@ -1,6 +1,5 @@
 import 'package:arava_app/blocs/app/app_bloc.dart';
 import 'package:arava_app/blocs/app/state/app_state.dart';
-import 'package:arava_app/blocs/navigation/navigation_bloc.dart';
 import 'package:arava_app/i18n/app_localizations.dart';
 import 'package:arava_app/modules/app_module.dart';
 import 'package:arava_app/widgets/language_selector.dart';
@@ -22,21 +21,12 @@ class Settings extends ModularStatelessWidget<AppModule> {
         builder: (context, _) => Column(children: <Widget>[
           ListTile(
             leading: Icon(Icons.translate, color: Theme.of(context).primaryColor),
-            trailing: Text(AppLocalizations.currentLanguage),
+//            trailing: Text(AppLocalizations.currentLanguage),
+          trailing: LanguageSelector(),
             title: Text(
               AppLocalizations.of(context).settings_Language(),
               style: TextStyle(color: Theme.of(context).primaryColor)
             ),
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  content: LanguageSelector(
-                    onLanguageSelected: () => get<NavigationBloc>().pop(),
-                  ),
-                )
-              );
-            },
           ),
           Divider(height: 1),
         ]),

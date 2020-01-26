@@ -1,6 +1,6 @@
 import 'package:arava_app/service/session.dart';
 import 'package:dio/dio.dart';
-
+import 'package:intl/intl.dart';
 
 class ServiceConfiguration {
   final String apiBaseUrl;
@@ -8,10 +8,22 @@ class ServiceConfiguration {
 
   Interceptor get authInterceptor => InterceptorsWrapper(
     onRequest: (options) async {
-      final credentials = session.getCredentials();
+      final credentials = await session.getCredentials();
       if (credentials != null) {
+        options.headers['Authorization'] = "${credentials.tokenType} ${credentials.accessToken}";
+      }
+      return options;
+    },
+    onResponse: (options) async {
+      if (options.statusCode == 401) {
 
       }
+      return options;
+    }
+  );
+  Interceptor get userPreferencesInterceptor => InterceptorsWrapper(
+    onRequest: (options) async {
+      options.headers['Accept-Language'] = Intl.defaultLocale;
       return options;
     }
   );

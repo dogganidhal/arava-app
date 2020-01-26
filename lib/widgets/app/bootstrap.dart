@@ -51,7 +51,8 @@ class _BootstrapState extends ModularState<Bootstrap, AppModule> {
           loading: _loading,
           unintialized: _loading,
           appLoaded: _loadedApp,
-          firstLaunch: _firstLaunch
+          firstLaunch: _firstLaunch,
+          error: _error
         )
       )
     );
@@ -66,4 +67,13 @@ class _BootstrapState extends ModularState<Bootstrap, AppModule> {
   Widget _loadedApp(AppState state) => Main();
 
   Widget _firstLaunch(AppState state) => OnBoarding();
+
+  Widget _error(Error error) => Scaffold(
+    body: Container(
+      padding: EdgeInsets.all(16),
+      child: Center(
+        child: Text(error.exception.getLocalizedMessage(context)),
+      ),
+    ),
+  );
 }

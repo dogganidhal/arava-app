@@ -13,7 +13,9 @@ import 'package:flutter/material.dart';
 
 
 class Main extends StatefulWidget {
-  Main({Key key, this.title}) : super(key: key);
+  final int selectedTab;
+
+  Main({Key key, this.title, this.selectedTab}) : super(key: key);
 
   final String title;
 
@@ -22,7 +24,7 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
-  int _selectedTab = 0;
+  int _selectedTab;
 
   final PageStorageBucket _bucket = PageStorageBucket();
 
@@ -41,6 +43,12 @@ class _MainState extends State<Main> {
     PhotosAppBar(),
     MoreAppBar()
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedTab = widget.selectedTab ?? 0;
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -22,7 +22,7 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     add(NavigationEvent.pop());
   }
 
-  void goToHome() {
+  void navigateToHome() {
     add(NavigationEvent.goToHome());
   }
 
@@ -35,7 +35,7 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
   }
 
   Stream<NavigationState> _goToHome(GoToHome event) async* {
-    navigatorState.currentState.pushReplacementNamed("/home");
+    navigatorState.currentState.pushReplacementNamed("/");
   }
 
   Stream<NavigationState> _push(Push event) async* {
