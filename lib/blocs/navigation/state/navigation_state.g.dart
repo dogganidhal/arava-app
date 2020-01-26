@@ -10,7 +10,8 @@ part of 'navigation_state.dart';
 abstract class NavigationState extends Equatable {
   const NavigationState(this._type);
 
-  factory NavigationState.navigator({@required String route}) = Navigator;
+  factory NavigationState.navigator(
+      {@required String route, @required int homeIndex}) = Navigator;
 
   final _NavigationState _type;
 
@@ -59,12 +60,16 @@ abstract class NavigationState extends Equatable {
 
 @immutable
 class Navigator extends NavigationState {
-  const Navigator({@required this.route}) : super(_NavigationState.Navigator);
+  const Navigator({@required this.route, @required this.homeIndex})
+      : super(_NavigationState.Navigator);
 
   final String route;
 
+  final int homeIndex;
+
   @override
-  String toString() => 'Navigator(route:${this.route})';
+  String toString() =>
+      'Navigator(route:${this.route},homeIndex:${this.homeIndex})';
   @override
-  List get props => [route];
+  List get props => [route, homeIndex];
 }

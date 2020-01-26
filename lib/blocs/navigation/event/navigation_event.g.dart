@@ -12,7 +12,8 @@ abstract class NavigationEvent extends Equatable {
 
   factory NavigationEvent.pop() = Pop;
 
-  factory NavigationEvent.goToHome() = GoToHome;
+  factory NavigationEvent.navigateToHome({@required int index}) =
+      NavigateToHome;
 
   factory NavigationEvent.push({@required String route}) = Push;
 
@@ -21,18 +22,18 @@ abstract class NavigationEvent extends Equatable {
 //ignore: missing_return
   FutureOr<R> when<R>(
       {@required FutureOr<R> Function(Pop) pop,
-      @required FutureOr<R> Function(GoToHome) goToHome,
+      @required FutureOr<R> Function(NavigateToHome) navigateToHome,
       @required FutureOr<R> Function(Push) push}) {
     assert(() {
-      if (pop == null || goToHome == null || push == null)
+      if (pop == null || navigateToHome == null || push == null)
         throw 'check for all possible cases';
       return true;
     }());
     switch (this._type) {
       case _NavigationEvent.Pop:
         return pop(this as Pop);
-      case _NavigationEvent.GoToHome:
-        return goToHome(this as GoToHome);
+      case _NavigationEvent.NavigateToHome:
+        return navigateToHome(this as NavigateToHome);
       case _NavigationEvent.Push:
         return push(this as Push);
     }
@@ -40,7 +41,7 @@ abstract class NavigationEvent extends Equatable {
 
   FutureOr<R> whenOrElse<R>(
       {FutureOr<R> Function(Pop) pop,
-      FutureOr<R> Function(GoToHome) goToHome,
+      FutureOr<R> Function(NavigateToHome) navigateToHome,
       FutureOr<R> Function(Push) push,
       @required FutureOr<R> Function(NavigationEvent) orElse}) {
     assert(() {
@@ -51,9 +52,9 @@ abstract class NavigationEvent extends Equatable {
       case _NavigationEvent.Pop:
         if (pop == null) break;
         return pop(this as Pop);
-      case _NavigationEvent.GoToHome:
-        if (goToHome == null) break;
-        return goToHome(this as GoToHome);
+      case _NavigationEvent.NavigateToHome:
+        if (navigateToHome == null) break;
+        return navigateToHome(this as NavigateToHome);
       case _NavigationEvent.Push:
         if (push == null) break;
         return push(this as Push);
@@ -63,10 +64,10 @@ abstract class NavigationEvent extends Equatable {
 
   FutureOr<void> whenPartial(
       {FutureOr<void> Function(Pop) pop,
-      FutureOr<void> Function(GoToHome) goToHome,
+      FutureOr<void> Function(NavigateToHome) navigateToHome,
       FutureOr<void> Function(Push) push}) {
     assert(() {
-      if (pop == null && goToHome == null && push == null)
+      if (pop == null && navigateToHome == null && push == null)
         throw 'provide at least one branch';
       return true;
     }());
@@ -74,9 +75,9 @@ abstract class NavigationEvent extends Equatable {
       case _NavigationEvent.Pop:
         if (pop == null) break;
         return pop(this as Pop);
-      case _NavigationEvent.GoToHome:
-        if (goToHome == null) break;
-        return goToHome(this as GoToHome);
+      case _NavigationEvent.NavigateToHome:
+        if (navigateToHome == null) break;
+        return navigateToHome(this as NavigateToHome);
       case _NavigationEvent.Push:
         if (push == null) break;
         return push(this as Push);
@@ -100,15 +101,16 @@ class Pop extends NavigationEvent {
 }
 
 @immutable
-class GoToHome extends NavigationEvent {
-  const GoToHome._() : super(_NavigationEvent.GoToHome);
+class NavigateToHome extends NavigationEvent {
+  const NavigateToHome({@required this.index})
+      : super(_NavigationEvent.NavigateToHome);
 
-  factory GoToHome() {
-    _instance ??= GoToHome._();
-    return _instance;
-  }
+  final int index;
 
-  static GoToHome _instance;
+  @override
+  String toString() => 'NavigateToHome(index:${this.index})';
+  @override
+  List get props => [index];
 }
 
 @immutable

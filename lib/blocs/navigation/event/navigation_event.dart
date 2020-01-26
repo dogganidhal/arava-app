@@ -6,8 +6,10 @@ part 'navigation_event.g.dart';
 enum _NavigationEvent {
   @object
   Pop,
-  @object
-  GoToHome,
+  @Data(fields: [
+    DataField('index', int)
+  ])
+  NavigateToHome,
   @Data(fields: [
     DataField('route', String)
   ])

@@ -43,7 +43,7 @@ class AppModule extends MainModule {
   // here will be the routes of your module
   @override
   List<Router> get routers => [
-    Router("/", child: (_, args) => Main()),
+    Router("/home", child: (_, args) => Main()),
     Router("/settings", child: (_, args) => Settings()),
   ];
 

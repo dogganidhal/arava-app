@@ -58,9 +58,11 @@ class _BootstrapState extends ModularState<Bootstrap, AppModule> {
     );
   }
 
-  Widget _loading(AppState state) => Container(
-    child: Center(
-      child: CircularProgressIndicator(),
+  Widget _loading(AppState state) => Scaffold(
+    body: Container(
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
     ),
   );
 

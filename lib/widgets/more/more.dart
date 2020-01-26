@@ -30,7 +30,7 @@ class More extends ModularStatelessWidget<AppModule> {
               color: Theme.of(context).primaryColor)
           ),
           onTap: () {
-            debugPrint("Favorites");
+            get<NavigationBloc>().navigateToHome(2);
           },
         ),
         Divider(height: 1),

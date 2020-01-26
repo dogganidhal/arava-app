@@ -1,4 +1,7 @@
+import 'package:arava_app/blocs/navigation/navigation_bloc.dart';
+import 'package:arava_app/blocs/navigation/state/navigation_state.dart';
 import 'package:arava_app/i18n/app_localizations.dart';
+import 'package:arava_app/modules/app_module.dart';
 import 'package:arava_app/widgets/favorites/favorites.dart';
 import 'package:arava_app/widgets/favorites/favorites_app_bar.dart';
 import 'package:arava_app/widgets/featured/featured.dart';
@@ -10,24 +13,12 @@ import 'package:arava_app/widgets/more/more_app_bar.dart';
 import 'package:arava_app/widgets/photos/photos.dart';
 import 'package:arava_app/widgets/photos/photos_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 
-class Main extends StatefulWidget {
-  final int selectedTab;
-
-  Main({Key key, this.title, this.selectedTab}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MainState createState() => _MainState();
-}
-
-class _MainState extends State<Main> {
-  int _selectedTab;
-
+class Main extends ModularStatelessWidget<AppModule> {
   final PageStorageBucket _bucket = PageStorageBucket();
-
   final List<Widget> _widgets = [
     Map(key: PageStorageKey('mapWidget')),
     Featured(key: PageStorageKey('featuredWidget')),
@@ -35,7 +26,6 @@ class _MainState extends State<Main> {
     Photos(key: PageStorageKey('photosWidget')),
     More(key: PageStorageKey('moreWidget'))
   ];
-
   final List<PreferredSizeWidget> _appBars = [
     MapAppBar(),
     FeaturedAppBar(),
@@ -45,25 +35,24 @@ class _MainState extends State<Main> {
   ];
 
   @override
-  void initState() {
-    super.initState();
-    _selectedTab = widget.selectedTab ?? 0;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appBars[_selectedTab],
-      body: PageStorage(
-        bucket: _bucket,
-        child: _widgets[_selectedTab]
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedTab,
-        onTap: (index) => setState(() => _selectedTab = index),
-        selectedItemColor: Theme.of(context).colorScheme.primary,
-        unselectedItemColor: Theme.of(context).colorScheme.primary.withOpacity(0.25),
-        items: _bottomNavigationBarItems(context),
+    return BlocBuilder<NavigationBloc, NavigationState>(
+      bloc: get(),
+      builder: (context, state) => state.when<Widget>(
+        navigator: (state) => Scaffold(
+          appBar: _appBars[state.homeIndex],
+          body: PageStorage(
+            bucket: _bucket,
+            child: _widgets[state.homeIndex]
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: state.homeIndex,
+            onTap: (index) => get<NavigationBloc>().navigateToHome(index),
+            selectedItemColor: Theme.of(context).colorScheme.primary,
+            unselectedItemColor: Theme.of(context).colorScheme.primary.withOpacity(0.25),
+            items: _bottomNavigationBarItems(context),
+          ),
+        )
       ),
     );
   }

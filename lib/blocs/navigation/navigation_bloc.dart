@@ -9,12 +9,15 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
   NavigationBloc({@required this.navigatorState});
 
   @override
-  NavigationState get initialState => NavigationState.navigator(route: "/");
+  NavigationState get initialState => NavigationState.navigator(
+    route: "/home",
+    homeIndex: 0
+  );
 
   @override
   Stream<NavigationState> mapEventToState(NavigationEvent event) => event.when(
     pop: _pop,
-    goToHome: _goToHome,
+    navigateToHome: _navigateToHome,
     push: _push
   );
 
@@ -22,8 +25,8 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     add(NavigationEvent.pop());
   }
 
-  void navigateToHome() {
-    add(NavigationEvent.goToHome());
+  void navigateToHome([int index]) {
+    add(NavigationEvent.navigateToHome(index: index));
   }
 
   void push(String route) {
@@ -34,8 +37,11 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     navigatorState.currentState.pop();
   }
 
-  Stream<NavigationState> _goToHome(GoToHome event) async* {
-    navigatorState.currentState.pushReplacementNamed("/");
+  Stream<NavigationState> _navigateToHome(NavigateToHome event) async* {
+    yield NavigationState.navigator(
+      route: "/home/${event.index}",
+      homeIndex: event.index
+    );
   }
 
   Stream<NavigationState> _push(Push event) async* {

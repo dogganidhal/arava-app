@@ -50,7 +50,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     yield AppState.loading();
     final firstLaunch = await session.getFirstAppLaunch();
     if (firstLaunch) {
-      yield AppState.firstLaunch();
+      yield AppState.firstLaunch(language: Intl.defaultLocale);
     } else {
       try {
         final apiConfiguration = await _loadAppConfiguration();
