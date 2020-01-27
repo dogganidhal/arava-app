@@ -1,5 +1,6 @@
 import 'package:arava/blocs/app/app_bloc.dart';
 import 'package:arava/blocs/app/state/app_state.dart';
+import 'package:arava/i18n/app_localizations.dart';
 import 'package:arava/i18n/app_localizations_delegate.dart';
 import 'package:arava/modules/app_module.dart';
 import 'package:arava/theme/arava_theme.dart';
@@ -47,12 +48,14 @@ class _BootstrapState extends ModularState<Bootstrap, AppModule> {
           const Locale('fr'),
           const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'),
         ],
-        home: state.when(
-          loading: _loading,
-          unintialized: _loading,
-          appLoaded: _loadedApp,
-          firstLaunch: _firstLaunch,
-          error: _error
+        home: Builder(
+          builder: (context) => state.when(
+            loading: _loading,
+            unintialized: _loading,
+            appLoaded: _loadedApp,
+            firstLaunch: _firstLaunch,
+            error: (state) => _error(context, state)
+          ),
         )
       )
     );
@@ -66,16 +69,32 @@ class _BootstrapState extends ModularState<Bootstrap, AppModule> {
     ),
   );
 
-  Widget _loadedApp(AppState state) => Main();
+  Widget _loadedApp(AppLoaded state) => Main(configuration: state.appConfiguration);
 
   Widget _firstLaunch(AppState state) => OnBoarding();
 
-  Widget _error(Error error) => Scaffold(
-    body: Container(
-      padding: EdgeInsets.all(16),
-      child: Center(
-        child: Text(error.exception.getLocalizedMessage(context)),
-      ),
+  Widget _error(BuildContext context, Error error) => Scaffold(
+    body: Column(
+      children: [
+        Flexible(child: Container()),
+        Padding(
+          padding: EdgeInsets.all(16),
+          child: Text(error.exception.getLocalizedMessage(context)),
+        ),
+        Flexible(child: Container()),
+        Padding(
+          padding: EdgeInsets.all(16),
+          child: ButtonTheme(
+            height: 48,
+            minWidth: double.infinity,
+            child: MaterialButton(
+              color: Theme.of(context).primaryColor,
+              onPressed: () => get<AppBloc>().loadApp(),
+              child: Text(AppLocalizations.of(context).onboarding_Retry()),
+            ),
+          ),
+        )
+      ],
     ),
   );
 }

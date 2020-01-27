@@ -5,7 +5,11 @@ class AppConfigurationProvider extends InheritedWidget {
   final Widget child;
   final AppConfiguration configuration;
 
-  AppConfigurationProvider({Key key, this.child, this.configuration}) : super(key: key, child: child);
+  AppConfigurationProvider({
+    Key key,
+    @required this.child,
+    @required this.configuration
+  }) : super(key: key, child: child);
 
   static AppConfiguration of(BuildContext context) {
     try {

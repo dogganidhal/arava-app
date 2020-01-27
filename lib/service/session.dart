@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:arava/model/api_configuration/api_configuration.dart';
 import 'package:arava/model/jwt_auth_credentials/jwt_auth_credentials.dart';
 import 'package:arava/service/cache_manager.dart';
+import 'package:meta/meta.dart';
 
 
 class Session {
@@ -13,7 +14,7 @@ class Session {
 
   final CacheManager cacheManager;
 
-  Session({this.cacheManager});
+  Session({@required this.cacheManager});
 
   Future<void> persistCredentials(JwtAuthCredentials credentials) async {
     await cacheManager.setStringAsync(_kCredentials, json.encode(credentials));

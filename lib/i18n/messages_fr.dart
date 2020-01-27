@@ -21,6 +21,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "appName" : MessageLookupByLibrary.simpleMessage("Arava"),
+    "general_Island" : MessageLookupByLibrary.simpleMessage("Île"),
     "home_Favorites" : MessageLookupByLibrary.simpleMessage("Favories"),
     "home_Featured" : MessageLookupByLibrary.simpleMessage("À la une"),
     "home_Map" : MessageLookupByLibrary.simpleMessage("Carte"),
@@ -35,6 +37,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "more_Update" : MessageLookupByLibrary.simpleMessage("Mettre à jour"),
     "onboarding_ChooseLanguage" : MessageLookupByLibrary.simpleMessage("Choisir la langue"),
     "onboarding_Continue" : MessageLookupByLibrary.simpleMessage("Continuer"),
+    "onboarding_Retry" : MessageLookupByLibrary.simpleMessage("Réessayer"),
+    "search_Filter" : MessageLookupByLibrary.simpleMessage("Affiner"),
+    "search_SelectIsland" : MessageLookupByLibrary.simpleMessage("Sélectionner les îles"),
     "settings_Language" : MessageLookupByLibrary.simpleMessage("Langue"),
     "settings_Title" : MessageLookupByLibrary.simpleMessage("Paramètres")
   };

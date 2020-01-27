@@ -28,4 +28,7 @@ class Poi {
     this.category, this.coordinate, this.description,
     this.medias, this.comments, this.ratings
   });
+
+  factory Poi.fromJson(Map<String, dynamic> json) => _$PoiFromJson(json);
+  Map<String, dynamic> toJson() => _$PoiToJson(this);
 }

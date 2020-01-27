@@ -30,7 +30,17 @@ class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
+  String appName() => Intl.message(
+    'Arava',
+    name: 'appName'
+  );
+
   // region Onboarding
+
+  String onboarding_Retry() => Intl.message(
+    'retry',
+    name: 'onboarding_Retry'
+  );
 
   String onboarding_ChooseLanguage() => Intl.message(
     'Choose language',
@@ -125,4 +135,28 @@ class AppLocalizations {
   );
 
   // endregion
+
+  // region General
+
+  String general_Island() => Intl.message(
+    'Island',
+    name: 'general_Island'
+  );
+
+  // endregion
+
+  // region Search
+
+  String search_SelectIsland() => Intl.message(
+    'Select islands',
+    name: 'search_SelectIsland'
+  );
+
+  String search_Filter() => Intl.message(
+    'Refine',
+    name: 'search_Filter'
+  );
+
+  // endregion
+
 }

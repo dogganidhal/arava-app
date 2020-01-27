@@ -1,5 +1,15 @@
 {
-  "@@last_modified": "2020-01-26T14:11:31.126875",
+  "@@last_modified": "2020-01-27T21:49:57.579632",
+  "appName": "Arava",
+  "@appName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "onboarding_Retry": "Retry",
+  "@onboarding_Retry": {
+    "type": "text",
+    "placeholders": {}
+  },
   "onboarding_ChooseLanguage": "Choose language",
   "@onboarding_ChooseLanguage": {
     "type": "text",
@@ -77,6 +87,21 @@
   },
   "settings_Language": "Language",
   "@settings_Language": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "general_Island": "Island",
+  "@general_Island": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "search_SelectIsland": "Select islands",
+  "@search_SelectIsland": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "search_Filter": "Refine",
+  "@search_Filter": {
     "type": "text",
     "placeholders": {}
   }

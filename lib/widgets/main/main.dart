@@ -12,12 +12,16 @@ import 'package:arava/widgets/more/more.dart';
 import 'package:arava/widgets/more/more_app_bar.dart';
 import 'package:arava/widgets/photos/photos.dart';
 import 'package:arava/widgets/photos/photos_app_bar.dart';
+import 'package:arava/model/app_configuration/app_configuration.dart';
+import 'package:arava/widgets/app/app_configuration_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 
 class Main extends ModularStatelessWidget<AppModule> {
+  final AppConfiguration configuration;
+
   final PageStorageBucket _bucket = PageStorageBucket();
   final List<Widget> _widgets = [
     Map(key: PageStorageKey('mapWidget')),
@@ -34,25 +38,30 @@ class Main extends ModularStatelessWidget<AppModule> {
     MoreAppBar()
   ];
 
+  Main({Key key, this.configuration}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NavigationBloc, NavigationState>(
-      bloc: get(),
-      builder: (context, state) => state.when<Widget>(
-        navigator: (state) => Scaffold(
-          appBar: _appBars[state.homeIndex],
-          body: PageStorage(
-            bucket: _bucket,
-            child: _widgets[state.homeIndex]
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: state.homeIndex,
-            onTap: (index) => get<NavigationBloc>().navigateToHome(index),
-            selectedItemColor: Theme.of(context).colorScheme.primary,
-            unselectedItemColor: Theme.of(context).colorScheme.primary.withOpacity(0.25),
-            items: _bottomNavigationBarItems(context),
-          ),
-        )
+    return AppConfigurationProvider(
+      configuration: configuration,
+      child: BlocBuilder<NavigationBloc, NavigationState>(
+        bloc: get(),
+        builder: (context, state) => state.when<Widget>(
+          navigator: (state) => Scaffold(
+            appBar: _appBars[state.homeIndex],
+            body: PageStorage(
+              bucket: _bucket,
+              child: _widgets[state.homeIndex]
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              currentIndex: state.homeIndex,
+              onTap: (index) => get<NavigationBloc>().navigateToHome(index),
+              selectedItemColor: Theme.of(context).colorScheme.primary,
+              unselectedItemColor: Theme.of(context).colorScheme.primary.withOpacity(0.25),
+              items: _bottomNavigationBarItems(context),
+            ),
+          )
+        ),
       ),
     );
   }

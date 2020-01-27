@@ -1,5 +1,15 @@
 {
   "@@last_modified": "2020-01-25T22:34:02.427918",
+  "appName": "阿拉瓦",
+  "@appName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "onboarding_Retry": "重试",
+  "@onboarding_Retry": {
+    "type": "text",
+    "placeholders": {}
+  },
   "onboarding_ChooseLanguage": "选择语言",
   "@onboarding_ChooseLanguage": {
     "type": "text",
@@ -77,6 +87,21 @@
   },
   "settings_Language": "语言",
   "@settings_Language": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "general_Island": "岛",
+  "@general_Island": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "search_SelectIsland": "选择岛屿",
+  "@search_SelectIsland": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "search_Filter": "提炼",
+  "@search_Filter": {
     "type": "text",
     "placeholders": {}
   }

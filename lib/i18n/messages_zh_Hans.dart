@@ -21,6 +21,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "appName" : MessageLookupByLibrary.simpleMessage("阿拉瓦"),
+    "general_Island" : MessageLookupByLibrary.simpleMessage("岛"),
     "home_Favorites" : MessageLookupByLibrary.simpleMessage("最喜欢的"),
     "home_Featured" : MessageLookupByLibrary.simpleMessage("精选"),
     "home_Map" : MessageLookupByLibrary.simpleMessage("地图"),
@@ -35,6 +37,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "more_Update" : MessageLookupByLibrary.simpleMessage("更新应用"),
     "onboarding_ChooseLanguage" : MessageLookupByLibrary.simpleMessage("选择语言"),
     "onboarding_Continue" : MessageLookupByLibrary.simpleMessage("续集"),
+    "onboarding_Retry" : MessageLookupByLibrary.simpleMessage("重试"),
+    "search_Filter" : MessageLookupByLibrary.simpleMessage("提炼"),
+    "search_SelectIsland" : MessageLookupByLibrary.simpleMessage("选择岛屿"),
     "settings_Language" : MessageLookupByLibrary.simpleMessage("语言"),
     "settings_Title" : MessageLookupByLibrary.simpleMessage("设定")
   };
