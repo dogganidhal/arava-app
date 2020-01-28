@@ -33,18 +33,20 @@ class _LanguageSelectorState extends ModularState<LanguageSelector, AppModule> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<int>(
-      value: _selectedLanguage,
-      items: _languages
-        .map(((language) => DropdownMenuItem<int>(
-        value: _languages.indexOf(language),
-        child: Text(language.name),
-      )))
-        .toList(),
-      onChanged: (index) {
-        get<AppBloc>().changeLocale(_languages[index].languageCode);
-        setState(() => _selectedLanguage = index);
-      },
+    return DropdownButtonHideUnderline(
+      child: DropdownButton<int>(
+        value: _selectedLanguage,
+        items: _languages
+          .map(((language) => DropdownMenuItem<int>(
+          value: _languages.indexOf(language),
+          child: Text(language.name),
+        )))
+          .toList(),
+        onChanged: (index) {
+          get<AppBloc>().changeLocale(_languages[index].languageCode);
+          setState(() => _selectedLanguage = index);
+        },
+      ),
     );
   }
 }

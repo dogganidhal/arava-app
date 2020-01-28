@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 
 part 'search_sort.g.dart';
 
@@ -10,6 +11,7 @@ enum SearchSortDirection {
 }
 
 @JsonSerializable()
+@immutable
 class SearchSort {
   final SearchSortDirection direction;
   final String field;

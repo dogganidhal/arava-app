@@ -4,10 +4,12 @@ import 'package:arava/model/media/media.dart';
 import 'package:arava/model/poi_category/poi_category.dart';
 import 'package:arava/model/ratings/ratings.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 
 part 'poi.g.dart';
 
 @JsonSerializable()
+@immutable
 class Poi {
   final String id;
   final String island;

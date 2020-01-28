@@ -2,10 +2,12 @@ import 'package:arava/model/island/island.dart';
 import 'package:arava/model/poi_type/poi_type.dart';
 import 'package:arava/model/version_configuration/version_configuration.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 
 part 'api_configuration.g.dart';
 
 @JsonSerializable()
+@immutable
 class ApiConfiguration {
   final VersionConfiguration versionConfiguration;
   final List<Island> islands;

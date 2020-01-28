@@ -1,9 +1,11 @@
 import 'package:arava/model/search_sort/search_sort.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 
 part 'search_request.g.dart';
 
 @JsonSerializable()
+@immutable
 class SearchRequest {
   @JsonKey(nullable: true)
   final String title;

@@ -1,8 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 
 part 'jwt_auth_credentials.g.dart';
 
 @JsonSerializable()
+@immutable
 class JwtAuthCredentials {
 
   final String accessToken;

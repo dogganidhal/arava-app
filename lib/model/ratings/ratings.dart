@@ -1,8 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 
 part 'ratings.g.dart';
 
 @JsonSerializable()
+@immutable
 class Ratings {
   final int count;
   final double averageScore;

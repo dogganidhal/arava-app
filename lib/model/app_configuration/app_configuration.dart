@@ -2,8 +2,9 @@ import 'package:arava/model/api_configuration/api_configuration.dart';
 import 'package:arava/model/island/island.dart';
 import 'package:arava/model/poi_type/poi_type.dart';
 import 'package:arava/model/version_configuration/version_configuration.dart';
+import 'package:meta/meta.dart';
 
-
+@immutable
 class AppConfiguration extends ApiConfiguration {
   @override
   final List<Island> islands;

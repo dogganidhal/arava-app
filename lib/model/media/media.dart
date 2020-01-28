@@ -1,8 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 
 part 'media.g.dart';
 
 @JsonSerializable()
+@immutable
 class Media {
   final String id;
   final String url;

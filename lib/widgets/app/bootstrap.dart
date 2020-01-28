@@ -4,6 +4,7 @@ import 'package:arava/i18n/app_localizations.dart';
 import 'package:arava/i18n/app_localizations_delegate.dart';
 import 'package:arava/modules/app_module.dart';
 import 'package:arava/theme/arava_theme.dart';
+import 'package:arava/widgets/app/app_configuration_provider.dart';
 import 'package:arava/widgets/app/onboarding.dart';
 import 'package:arava/widgets/main/main.dart';
 import 'package:flutter/material.dart';
@@ -31,32 +32,37 @@ class _BootstrapState extends ModularState<Bootstrap, AppModule> {
   Widget build(BuildContext context) {
     return BlocBuilder<AppBloc, AppState>(
       bloc: _appBloc,
-      builder: (context, state) => MaterialApp(
-        title: 'Arava',
-        theme: AravaTheme.kLightTheme,
-        darkTheme: AravaTheme.kDarkTheme,
-        onGenerateRoute: Modular.generateRoute,
-        navigatorKey: get(),
-        localizationsDelegates: [
-          AppLocalizationsDelegate(),
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate
-        ],
-        supportedLocales: [
-          const Locale('en'),
-          const Locale('fr'),
-          const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'),
-        ],
-        home: Builder(
-          builder: (context) => state.when(
-            loading: _loading,
-            unintialized: _loading,
-            appLoaded: _loadedApp,
-            firstLaunch: _firstLaunch,
-            error: (state) => _error(context, state)
-          ),
-        )
+      builder: (context, state) => AppConfigurationProvider(
+        configuration: state.whenPartial(
+          appLoaded: (appLoadedState) => appLoadedState.appConfiguration
+        ),
+        child: MaterialApp(
+          title: 'Arava',
+          theme: AravaTheme.kLightTheme,
+          darkTheme: AravaTheme.kDarkTheme,
+          onGenerateRoute: Modular.generateRoute,
+          navigatorKey: get(),
+          localizationsDelegates: [
+            AppLocalizationsDelegate(),
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate
+          ],
+          supportedLocales: [
+            const Locale('en'),
+            const Locale('fr'),
+            const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'),
+          ],
+          home: Builder(
+            builder: (context) => state.when(
+              loading: _loading,
+              unintialized: _loading,
+              appLoaded: _loadedApp,
+              firstLaunch: _firstLaunch,
+              error: (state) => _error(context, state)
+            ),
+          )
+        ),
       )
     );
   }

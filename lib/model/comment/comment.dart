@@ -1,9 +1,11 @@
 import 'package:arava/model/user/user.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 
 part 'comment.g.dart';
 
 @JsonSerializable()
+@immutable
 class Comment {
   final String id;
   final String content;

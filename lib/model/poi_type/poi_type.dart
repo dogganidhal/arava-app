@@ -1,9 +1,11 @@
 import 'package:arava/model/media/media.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 
 part 'poi_type.g.dart';
 
 @JsonSerializable()
+@immutable
 class PoiType {
   final String id;
   final Map<String, String> name;

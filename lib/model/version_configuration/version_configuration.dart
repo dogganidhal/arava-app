@@ -1,7 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 
 part 'version_configuration.g.dart';
 
+@immutable
 @JsonSerializable()
 class VersionConfiguration {
   final int minVersion;

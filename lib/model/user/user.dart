@@ -1,9 +1,11 @@
 import 'package:arava/model/media/media.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 
 part 'user.g.dart';
 
 @JsonSerializable()
+@immutable
 class User {
   final String id;
   final String fullName;
