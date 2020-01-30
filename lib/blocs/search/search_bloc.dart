@@ -41,16 +41,15 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> with InjectMixinBase<App
 
   Stream<SearchState> _selectIsland(SelectIsland event) async* {
     get<NavigationBloc>().pop();
-    await Future.delayed(Duration(seconds: 1));
+    yield state.copyWith(
+      island: event.island
+    );
     if (_mapController != null) {
       _mapController.animateCamera(CameraUpdate.newLatLngZoom(
         LatLng(event.island.center.latitude, event.island.center.longitude),
         event.island.zoom
       ));
     }
-    yield state.copyWith(
-      island: event.island
-    );
   }
 
   Stream<SearchState> _mapLoaded(MapLoaded event) async* {

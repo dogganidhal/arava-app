@@ -16,20 +16,49 @@ class IslandSelector extends StatefulWidget {
 
 
 class _IslandSelectorState extends ModularState<IslandSelector, AppModule> {
-  List<IslandCard> _islandCards;
+  List<Widget> _archipelagoWidgets;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _islandCards = AppConfigurationProvider.of(context)
-      .islands
-      .map((island) => IslandCard(
-        island: island,
-        onSelected: () => get<SearchBloc>()
-          .selectIsland(SearchEvent.selectIsland(
-          island: island
-        )),
-      ))
+    _archipelagoWidgets = AppConfigurationProvider.of(context)
+      .archipelagos
+      .map((archipelago) {
+        final islandCards = archipelago.islands
+          .map((island) => IslandCard(
+            island: island,
+            onSelected: () => get<SearchBloc>()
+              .selectIsland(SearchEvent.selectIsland(
+              island: island
+            )),
+          ))
+          .toList();
+        return Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(8),
+              child: Text(
+                archipelago.name.toUpperCase(),
+                style: Theme.of(context).textTheme.headline
+                  .copyWith(
+                    fontSize: 16
+                  ),
+              ),
+            ),
+            StaggeredGridView.countBuilder(
+              physics: NeverScrollableScrollPhysics(),
+              addAutomaticKeepAlives: true,
+              shrinkWrap: true,
+              crossAxisCount: 2,
+              itemCount: islandCards.length,
+              itemBuilder: (BuildContext context, int index) => islandCards[index],
+              staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+              mainAxisSpacing: 4.0,
+              crossAxisSpacing: 4.0,
+            )
+          ],
+        );
+      })
       .toList();
   }
 
@@ -40,19 +69,14 @@ class _IslandSelectorState extends ModularState<IslandSelector, AppModule> {
         title: Text(AppLocalizations.of(context).search_SelectIsland()),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.all(4),
-        child: StaggeredGridView.countBuilder(
-          addAutomaticKeepAlives: true,
-          shrinkWrap: true,
-          crossAxisCount: 2,
-          itemCount: _islandCards.length,
-          itemBuilder: (BuildContext context, int index) => _islandCards[index],
-          staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-          mainAxisSpacing: 4.0,
-          crossAxisSpacing: 4.0,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(4),
+          child: Column(
+            children: _archipelagoWidgets,
+          ),
         ),
-      ),
+      )
     );
   }
 }

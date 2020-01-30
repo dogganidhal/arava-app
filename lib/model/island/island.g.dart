@@ -10,7 +10,9 @@ Island _$IslandFromJson(Map<String, dynamic> json) {
   return Island(
     id: json['id'] as String,
     name: json['name'] as String,
-    archipelago: json['archipelago'] as String,
+    archipelago: json['archipelago'] == null
+        ? null
+        : Archipelago.fromJson(json['archipelago'] as Map<String, dynamic>),
     center: json['center'] == null
         ? null
         : LatLng.fromJson(json['center'] as Map<String, dynamic>),

@@ -1,5 +1,5 @@
 import 'package:arava/model/api_configuration/api_configuration.dart';
-import 'package:arava/model/island/island.dart';
+import 'package:arava/model/archipelago/archipelago.dart';
 import 'package:arava/model/poi_type/poi_type.dart';
 import 'package:arava/model/version_configuration/version_configuration.dart';
 import 'package:meta/meta.dart';
@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class AppConfiguration extends ApiConfiguration {
   @override
-  final List<Island> islands;
+  final List<Archipelago> archipelagos;
   @override
   final List<PoiType> poiTypes;
   @override
@@ -15,7 +15,7 @@ class AppConfiguration extends ApiConfiguration {
   final String preferredLocale;
 
   AppConfiguration({
-    this.islands, this.poiTypes, this.versionConfiguration,
+    this.archipelagos, this.poiTypes, this.versionConfiguration,
     this.preferredLocale
   });
 
@@ -23,7 +23,7 @@ class AppConfiguration extends ApiConfiguration {
     ApiConfiguration apiConfiguration,
     String preferredLocale
   }) => AppConfiguration(
-    islands: apiConfiguration.islands,
+    archipelagos: apiConfiguration.archipelagos,
     poiTypes: apiConfiguration.poiTypes,
     versionConfiguration: apiConfiguration.versionConfiguration,
     preferredLocale: preferredLocale

@@ -78,7 +78,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       final oldConfiguration = (state as AppLoaded).appConfiguration;
       yield AppState.appLoaded(
         appConfiguration: AppConfiguration(
-          islands: oldConfiguration.islands,
+          archipelagos: oldConfiguration.archipelagos,
           poiTypes: oldConfiguration.poiTypes,
           versionConfiguration: oldConfiguration.versionConfiguration,
           preferredLocale: event.locale

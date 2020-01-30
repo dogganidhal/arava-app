@@ -1,3 +1,4 @@
+import 'package:arava/model/archipelago/archipelago.dart';
 import 'package:arava/model/lat_lng/lat_lng.dart';
 import 'package:arava/model/media/media.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -10,7 +11,7 @@ part 'island.g.dart';
 class Island {
   final String id;
   final String name;
-  final String archipelago;
+  final Archipelago archipelago;
   final LatLng center;
   final double zoom;
   final Media image;

@@ -23,7 +23,7 @@ class AppModule extends MainModule {
     // Api services
     Bind((inject) => CacheManager(), singleton: true),
     Bind((inject) => Session(cacheManager: inject.get())),
-    Bind((inject) => ServiceConfiguration.staging(session: inject.get()), singleton: true),
+    Bind((inject) => ServiceConfiguration.dev(session: inject.get()), singleton: true),
     Bind((inject) {
       final serviceConfiguration = inject.get<ServiceConfiguration>();
       final dio = Dio(BaseOptions(

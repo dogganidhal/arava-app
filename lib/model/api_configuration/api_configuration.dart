@@ -1,3 +1,4 @@
+import 'package:arava/model/archipelago/archipelago.dart';
 import 'package:arava/model/island/island.dart';
 import 'package:arava/model/poi_type/poi_type.dart';
 import 'package:arava/model/version_configuration/version_configuration.dart';
@@ -10,11 +11,11 @@ part 'api_configuration.g.dart';
 @immutable
 class ApiConfiguration {
   final VersionConfiguration versionConfiguration;
-  final List<Island> islands;
+  final List<Archipelago> archipelagos;
   final List<PoiType> poiTypes;
 
   ApiConfiguration({
-    this.versionConfiguration, this.islands, this.poiTypes
+    this.versionConfiguration, this.archipelagos, this.poiTypes
   });
 
   factory ApiConfiguration.fromJson(Map<String, dynamic> json) => _$ApiConfigurationFromJson(json);
