@@ -29,7 +29,9 @@ class MapAppBar extends ModularStatelessWidget<AppModule> implements PreferredSi
                   ),
                 ),
                 Text(
-                  AppLocalizations.of(context).general_Island(),
+                  state.island != null ?
+                    state.island.name :
+                    AppLocalizations.of(context).general_Island(),
                   style: TextStyle(
                     color: Theme.of(context).primaryColor)
                 ),
@@ -39,9 +41,12 @@ class MapAppBar extends ModularStatelessWidget<AppModule> implements PreferredSi
         ],
         title: Row(
           children: <Widget>[
-            Image.asset(
-              "assets/images/octopus.png",
-              height: 24,
+            Padding(
+              padding: EdgeInsets.only(right: 8),
+              child: Image.asset(
+                "assets/images/octopus.png",
+                height: 24,
+              ),
             ),
             Text(
               AppLocalizations.of(context).appName(),

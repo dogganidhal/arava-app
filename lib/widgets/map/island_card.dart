@@ -7,7 +7,7 @@ class IslandCard extends StatefulWidget {
   final Island island;
   final VoidCallback onSelected;
 
-  IslandCard({
+  const IslandCard({
     Key key, @required this.island, @required this.onSelected
   }) : super(key: key);
 

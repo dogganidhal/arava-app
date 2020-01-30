@@ -1,4 +1,3 @@
-import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/blocs/search/event/search_event.dart';
 import 'package:arava/blocs/search/search_bloc.dart';
 import 'package:arava/i18n/app_localizations.dart';
@@ -10,7 +9,30 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class IslandSelector extends ModularStatelessWidget<AppModule> {
+class IslandSelector extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _IslandSelectorState();
+}
+
+
+class _IslandSelectorState extends ModularState<IslandSelector, AppModule> {
+  List<IslandCard> _islandCards;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _islandCards = AppConfigurationProvider.of(context)
+      .islands
+      .map((island) => IslandCard(
+        island: island,
+        onSelected: () => get<SearchBloc>()
+          .selectIsland(SearchEvent.selectIsland(
+          island: island
+        )),
+      ))
+      .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,32 +40,18 @@ class IslandSelector extends ModularStatelessWidget<AppModule> {
         title: Text(AppLocalizations.of(context).search_SelectIsland()),
         centerTitle: true,
       ),
-      body: Builder(
-        builder: (context) {
-          final islands = AppConfigurationProvider.of(context).islands;
-          return Padding(
-            padding: EdgeInsets.all(4),
-            child: StaggeredGridView.countBuilder(
-              addAutomaticKeepAlives: true,
-              shrinkWrap: true,
-              crossAxisCount: 2,
-              itemCount: islands.length,
-              itemBuilder: (BuildContext context, int index) => IslandCard(
-                island: islands[index],
-                onSelected: () {
-                  get<SearchBloc>()
-                    .selectIsland(SearchEvent.selectIsland(
-                      island: islands[index]
-                    ));
-                  get<NavigationBloc>().pop();
-                },
-              ),
-              staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-              mainAxisSpacing: 4.0,
-              crossAxisSpacing: 4.0,
-            ),
-          );
-        },
+      body: Padding(
+        padding: EdgeInsets.all(4),
+        child: StaggeredGridView.countBuilder(
+          addAutomaticKeepAlives: true,
+          shrinkWrap: true,
+          crossAxisCount: 2,
+          itemCount: _islandCards.length,
+          itemBuilder: (BuildContext context, int index) => _islandCards[index],
+          staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+          mainAxisSpacing: 4.0,
+          crossAxisSpacing: 4.0,
+        ),
       ),
     );
   }
