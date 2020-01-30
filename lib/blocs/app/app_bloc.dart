@@ -53,13 +53,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       yield AppState.firstLaunch(language: Intl.defaultLocale);
     } else {
       try {
-        final apiConfiguration = await _loadAppConfiguration();
-        session.setApiConfiguration(apiConfiguration);
-        Locale locale = apiConfiguration.preferredLocale != null ?
-        Locale(apiConfiguration.preferredLocale) :
-        Intl.defaultLocale;
+        final appConfiguration = await _loadAppConfiguration();
+        session.setApiConfiguration(appConfiguration);
+        Locale locale = appConfiguration.preferredLocale != null ?
+          Locale(appConfiguration.preferredLocale) :
+          Locale(Intl.defaultLocale);
         AppLocalizations.load(locale);
-        yield AppState.appLoaded(appConfiguration: apiConfiguration);
+        yield AppState.appLoaded(appConfiguration: appConfiguration);
       } on AppException catch (exception) {
         yield AppState.error(exception: exception);
       }
