@@ -1,8 +1,10 @@
 import 'package:arava/blocs/app/app_bloc.dart';
+import 'package:arava/blocs/auth/auth_bloc.dart';
 import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/blocs/search/search_bloc.dart';
 import 'package:arava/config/service_configuration.dart';
 import 'package:arava/service/app_service.dart';
+import 'package:arava/service/auth_service.dart';
 import 'package:arava/service/cache_manager.dart';
 import 'package:arava/service/session.dart';
 import 'package:arava/widgets/app/bootstrap.dart';
@@ -35,6 +37,7 @@ class AppModule extends MainModule {
       return dio;
     }),
     Bind((inject) => AppService(dio: inject.get())),
+    Bind((inject) => AuthService(dio: inject.get())),
     // BLoCs
     Bind((inject) => AppBloc(
       appService: inject.get(),
@@ -42,7 +45,11 @@ class AppModule extends MainModule {
       navigationBloc: inject.get()
     ), singleton: true),
     Bind((inject) => NavigationBloc(navigatorState: inject.get()), singleton: true),
-    Bind((inject) => SearchBloc())
+    Bind((inject) => SearchBloc()),
+    Bind((inject) => AuthBloc(
+      session: inject.get(),
+      authService: inject.get()
+    ))
   ];
 
   // here will be the routes of your module

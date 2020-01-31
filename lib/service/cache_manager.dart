@@ -23,4 +23,9 @@ class CacheManager {
     final instance = await _instance;
     await instance.setBool(key, value);
   }
+
+  Future<void> removeAsync(String key) async {
+    final instance = await _instance;
+    instance.remove(key);
+  }
 }
