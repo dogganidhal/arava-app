@@ -49,7 +49,7 @@ class AravaTheme {
     primaryColor: kDarkAccentColor,
     colorScheme: ColorScheme.dark(
       primary: kDarkPrimaryColor,
-      brightness: Brightness.light
+      brightness: Brightness.dark
     ),
     fontFamily: 'CircularStd',
     backgroundColor: kDarkColor,
@@ -77,7 +77,7 @@ class AravaTheme {
         )
       ),
       brightness: Brightness.dark,
-    )
+    ),
   );
 
 }

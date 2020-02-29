@@ -18,7 +18,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 
-class Main extends ModularStatelessWidget<AppModule> {
+class Main extends StatelessWidget {
   final AppConfiguration configuration;
 
   final PageStorageBucket _bucket = PageStorageBucket();
@@ -42,7 +42,7 @@ class Main extends ModularStatelessWidget<AppModule> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NavigationBloc, NavigationState>(
-      bloc: get(),
+      bloc: Modular.get<NavigationBloc>(),
       builder: (context, state) => state.when<Widget>(
         navigator: (state) => Scaffold(
           appBar: _appBars[state.homeIndex],
@@ -52,7 +52,7 @@ class Main extends ModularStatelessWidget<AppModule> {
           ),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: state.homeIndex,
-            onTap: (index) => get<NavigationBloc>().navigateToHome(index),
+            onTap: (index) => Modular.get<NavigationBloc>().navigateToHome(index),
             selectedItemColor: Theme.of(context).colorScheme.primary,
             unselectedItemColor: Theme.of(context).colorScheme.primary.withOpacity(0.25),
             items: _bottomNavigationBarItems(context),

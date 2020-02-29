@@ -18,7 +18,7 @@ class LanguageSelector extends StatefulWidget {
   _LanguageSelectorState createState() => _LanguageSelectorState();
 }
 
-class _LanguageSelectorState extends ModularState<LanguageSelector, AppModule> {
+class _LanguageSelectorState extends State<LanguageSelector> {
   int _selectedLanguage;
   List<_LanguageDropdownData> _languages = AppLocalizations.locales.entries
     .map((entry) => _LanguageDropdownData(name: entry.value, languageCode: entry.key))
@@ -43,7 +43,7 @@ class _LanguageSelectorState extends ModularState<LanguageSelector, AppModule> {
         )))
           .toList(),
         onChanged: (index) {
-          get<AppBloc>().changeLocale(_languages[index].languageCode);
+          Modular.get<AppBloc>().changeLocale(_languages[index].languageCode);
           setState(() => _selectedLanguage = index);
         },
       ),

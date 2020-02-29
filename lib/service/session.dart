@@ -84,4 +84,6 @@ class Session {
   Future<void> setApiConfiguration(ApiConfiguration configuration) async {
     return await cacheManager.setStringAsync(_kApiConfiguration, json.encode(configuration.toJson()));
   }
+
+
 }

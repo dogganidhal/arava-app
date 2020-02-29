@@ -1,10 +1,9 @@
 import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/i18n/app_localizations.dart';
-import 'package:arava/modules/app_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class More extends ModularStatelessWidget<AppModule> {
+class More extends StatelessWidget {
 
   More({Key key}) : super(key: key);
 
@@ -19,7 +18,7 @@ class More extends ModularStatelessWidget<AppModule> {
             style: TextStyle(
               color: Theme.of(context).primaryColor)
           ),
-          onTap: () => get<NavigationBloc>().push("/settings"),
+          onTap: () => Modular.get<NavigationBloc>().push("/settings"),
         ),
         Divider(height: 1),
         ListTile(
@@ -30,7 +29,7 @@ class More extends ModularStatelessWidget<AppModule> {
               color: Theme.of(context).primaryColor)
           ),
           onTap: () {
-            get<NavigationBloc>().navigateToHome(2);
+            Modular.get<NavigationBloc>().navigateToHome(2);
           },
         ),
         Divider(height: 1),
@@ -66,7 +65,7 @@ class More extends ModularStatelessWidget<AppModule> {
               color: Theme.of(context).primaryColor)
           ),
           onTap: () {
-            debugPrint("Login / signup");
+            Modular.get<NavigationBloc>().push("/auth");
           },
         )
       ],

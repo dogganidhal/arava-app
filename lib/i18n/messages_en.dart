@@ -22,7 +22,15 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "appName" : MessageLookupByLibrary.simpleMessage("Arava"),
+    "auth_EmailFieldPlaceholder" : MessageLookupByLibrary.simpleMessage("Email"),
+    "auth_InvalidEmailErrorMessage" : MessageLookupByLibrary.simpleMessage("Invalid email address"),
+    "auth_LoginSubtitle" : MessageLookupByLibrary.simpleMessage("Please login to continue"),
+    "auth_LoginTitle" : MessageLookupByLibrary.simpleMessage("Login"),
+    "auth_PasswordFieldPlaceholder" : MessageLookupByLibrary.simpleMessage("Password"),
+    "auth_SignUpSubtitle" : MessageLookupByLibrary.simpleMessage("Please sign up to continue"),
+    "auth_SignUpTitle" : MessageLookupByLibrary.simpleMessage("Sign up"),
     "general_Island" : MessageLookupByLibrary.simpleMessage("Island"),
+    "general_RequiredField" : MessageLookupByLibrary.simpleMessage("This field is required"),
     "home_Favorites" : MessageLookupByLibrary.simpleMessage("Favorites"),
     "home_Featured" : MessageLookupByLibrary.simpleMessage("Featured"),
     "home_Map" : MessageLookupByLibrary.simpleMessage("Map"),

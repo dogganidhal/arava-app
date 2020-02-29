@@ -15,7 +15,7 @@ class IslandSelector extends StatefulWidget {
 }
 
 
-class _IslandSelectorState extends ModularState<IslandSelector, AppModule> {
+class _IslandSelectorState extends State<IslandSelector> {
   List<Widget> _archipelagoWidgets;
 
   @override
@@ -27,7 +27,7 @@ class _IslandSelectorState extends ModularState<IslandSelector, AppModule> {
         final islandCards = archipelago.islands
           .map((island) => IslandCard(
             island: island,
-            onSelected: () => get<SearchBloc>()
+            onSelected: () => Modular.get<SearchBloc>()
               .selectIsland(SearchEvent.selectIsland(
               island: island
             )),

@@ -95,6 +95,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "general_RequiredField": "Ce champs est requis",
+  "@general_RequiredField": {
+    "type": "text",
+    "placeholders": {}
+  },
   "search_SelectIsland": "Sélectionner les îles",
   "@search_SelectIsland": {
     "type": "text",
@@ -102,6 +107,41 @@
   },
   "search_Filter": "Affiner",
   "@search_Filter": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "auth_LoginTitle": "Connexion",
+  "@auth_LoginTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "auth_SignUpTitle": "Inscription",
+  "@auth_SignUpTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "auth_LoginSubtitle": "Connectez vous pour continuer",
+  "@auth_LoginSubtitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "auth_SignUpSubtitle": "Inscrivez vous pour continuer",
+  "@auth_SignUpSubtitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "auth_EmailFieldPlaceholder": "Adresse email",
+  "@auth_EmailFieldPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "auth_InvalidEmailErrorMessage": "Adresse email non valide",
+  "@auth_InvalidEmailErrorMessage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "auth_PasswordFieldPlaceholder": "Mot de passe",
+  "@auth_PasswordFieldPlaceholder": {
     "type": "text",
     "placeholders": {}
   }

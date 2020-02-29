@@ -9,16 +9,14 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
 class Map extends StatefulWidget {
-
   Map({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _Map();
-
 }
 
 
-class _Map extends ModularState<Map, AppModule> with AutomaticKeepAliveClientMixin {
+class _Map extends State<Map> with AutomaticKeepAliveClientMixin {
 
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
@@ -27,16 +25,17 @@ class _Map extends ModularState<Map, AppModule> with AutomaticKeepAliveClientMix
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return new Scaffold(
       body: GoogleMap(
         mapType: MapType.hybrid,
         initialCameraPosition: _kGooglePlex,
         onMapCreated: (GoogleMapController controller) {
-          get<SearchBloc>()
+          Modular.get<SearchBloc>()
             .mapLoaded(SearchEvent.mapLoaded(mapController: controller));
           String brightness = MediaQuery.of(context).platformBrightness == Brightness.dark ?
-          "dark" :
-          "light";
+            "dark" :
+            "light";
           rootBundle.loadString("assets/map_styles/$brightness.json")
             .then((string) => controller.setMapStyle(string));
         },

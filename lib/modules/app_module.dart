@@ -8,6 +8,7 @@ import 'package:arava/service/auth_service.dart';
 import 'package:arava/service/cache_manager.dart';
 import 'package:arava/service/session.dart';
 import 'package:arava/widgets/app/bootstrap.dart';
+import 'package:arava/widgets/auth/auth.dart';
 import 'package:arava/widgets/main/main.dart';
 import 'package:arava/widgets/map/island_selector.dart';
 import 'package:arava/widgets/settings.dart';
@@ -57,7 +58,8 @@ class AppModule extends MainModule {
   List<Router> get routers => [
     Router("/home", child: (_, args) => Main()),
     Router("/settings", child: (_, args) => Settings()),
-    Router("/search/selectIslands", child: (_, args) => IslandSelector())
+    Router("/search/selectIslands", child: (_, args) => IslandSelector()),
+    Router("/auth", child: (_, args) => Auth())
   ];
 
   // add your main widget here

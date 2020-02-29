@@ -1,8 +1,13 @@
+import 'dart:io';
+
+import 'package:arava/model/user/user.dart';
 import 'package:arava/service/auth_service.dart';
 import 'package:arava/service/session.dart';
+import 'package:device_info/device_info.dart';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
+import 'package:package_info/package_info.dart';
 
 class ServiceConfiguration {
   final AuthService authService;
@@ -35,7 +40,8 @@ class ServiceConfiguration {
   );
   Interceptor get userPreferencesInterceptor => InterceptorsWrapper(
     onRequest: (options) async {
-      options.headers['Accept-Language'] = Intl.defaultLocale;
+      options.headers['Accept-Language'] = await session.getPreferredLocale();
+      options.headers['User-Agent'] = await _buildUserAgent(await session.getUser());
       return options;
     }
   );
@@ -53,4 +59,15 @@ class ServiceConfiguration {
     session: session,
     authService: authService
   );
+
+  Future<String> _buildUserAgent(User user) async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    final model = Platform.isIOS ?
+      await DeviceInfoPlugin().iosInfo.then((info) => info.model) :
+      await DeviceInfoPlugin().androidInfo.then((info) => info.model);;
+    // <product> / <product-version> / <device-model>
+    return "Arava Mobile / "
+      "${packageInfo.version} (${packageInfo.buildNumber}) / "
+      "${model}";
+  }
 }

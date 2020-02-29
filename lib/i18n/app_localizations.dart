@@ -143,6 +143,11 @@ class AppLocalizations {
     name: 'general_Island'
   );
 
+  String general_RequiredField() => Intl.message(
+    'This field is required',
+    name: 'general_RequiredField'
+  );
+
   // endregion
 
   // region Search
@@ -155,6 +160,45 @@ class AppLocalizations {
   String search_Filter() => Intl.message(
     'Refine',
     name: 'search_Filter'
+  );
+
+  // endregion
+
+  // region Auth
+
+  String auth_LoginTitle() => Intl.message(
+    'Login',
+    name: 'auth_LoginTitle'
+  );
+
+  String auth_LoginSubtitle() => Intl.message(
+    'Please login to continue',
+    name: 'auth_LoginSubtitle'
+  );
+
+  String auth_EmailFieldPlaceholder() => Intl.message(
+    'Email',
+    name: 'auth_EmailFieldPlaceholder'
+  );
+
+  String auth_InvalidEmailErrorMessage() => Intl.message(
+    'Invalid email address',
+    name: 'auth_InvalidEmailErrorMessage'
+  );
+
+  String auth_PasswordFieldPlaceholder() => Intl.message(
+    'Password',
+    name: 'auth_PasswordFieldPlaceholder'
+  );
+
+  String auth_SignUpTitle() => Intl.message(
+    'Sign up',
+    name: 'auth_SignUpTitle'
+  );
+
+  String auth_SignUpSubtitle() => Intl.message(
+    'Please sign up to continue',
+    name: 'auth_SignUpSubtitle'
   );
 
   // endregion

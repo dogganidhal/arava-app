@@ -22,7 +22,15 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "appName" : MessageLookupByLibrary.simpleMessage("阿拉瓦"),
+    "auth_EmailFieldPlaceholder" : MessageLookupByLibrary.simpleMessage("电子邮件地址"),
+    "auth_InvalidEmailErrorMessage" : MessageLookupByLibrary.simpleMessage("无效的邮件地址"),
+    "auth_LoginSubtitle" : MessageLookupByLibrary.simpleMessage("请登录访问更多内容"),
+    "auth_LoginTitle" : MessageLookupByLibrary.simpleMessage("登录"),
+    "auth_PasswordFieldPlaceholder" : MessageLookupByLibrary.simpleMessage("密码"),
+    "auth_SignUpSubtitle" : MessageLookupByLibrary.simpleMessage("请注册以继续"),
+    "auth_SignUpTitle" : MessageLookupByLibrary.simpleMessage("报名"),
     "general_Island" : MessageLookupByLibrary.simpleMessage("岛"),
+    "general_RequiredField" : MessageLookupByLibrary.simpleMessage("这是必填栏"),
     "home_Favorites" : MessageLookupByLibrary.simpleMessage("最喜欢的"),
     "home_Featured" : MessageLookupByLibrary.simpleMessage("精选"),
     "home_Map" : MessageLookupByLibrary.simpleMessage("地图"),

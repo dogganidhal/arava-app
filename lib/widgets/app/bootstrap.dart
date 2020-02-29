@@ -19,13 +19,14 @@ class Bootstrap extends StatefulWidget {
   _BootstrapState createState() => _BootstrapState();
 }
 
-class _BootstrapState extends ModularState<Bootstrap, AppModule> {
+class _BootstrapState extends State<Bootstrap> {
   AppBloc _appBloc;
 
   @override
   void initState() {
     super.initState();
-    _appBloc = get()..loadApp();
+    _appBloc = Modular.get<AppBloc>()
+      ..loadApp();
   }
 
   @override
@@ -41,7 +42,7 @@ class _BootstrapState extends ModularState<Bootstrap, AppModule> {
           theme: AravaTheme.kLightTheme,
           darkTheme: AravaTheme.kDarkTheme,
           onGenerateRoute: Modular.generateRoute,
-          navigatorKey: get(),
+          navigatorKey: Modular.get(),
           localizationsDelegates: [
             AppLocalizationsDelegate(),
             GlobalMaterialLocalizations.delegate,
@@ -95,7 +96,7 @@ class _BootstrapState extends ModularState<Bootstrap, AppModule> {
             minWidth: double.infinity,
             child: MaterialButton(
               color: Theme.of(context).primaryColor,
-              onPressed: () => get<AppBloc>().loadApp(),
+              onPressed: () => Modular.get<AppBloc>().loadApp(),
               child: Text(AppLocalizations.of(context).onboarding_Retry()),
             ),
           ),

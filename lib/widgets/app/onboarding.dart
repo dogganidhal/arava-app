@@ -1,18 +1,18 @@
 import 'package:arava/blocs/app/app_bloc.dart';
 import 'package:arava/blocs/app/state/app_state.dart';
 import 'package:arava/i18n/app_localizations.dart';
-import 'package:arava/modules/app_module.dart';
+import 'package:arava/theme/arava_assets.dart';
 import 'package:arava/widgets/language_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class OnBoarding extends ModularStatelessWidget<AppModule> {
+class OnBoarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocListener<AppBloc, AppState>(
-        bloc: get(),
+        bloc: Modular.get<AppBloc>(),
         condition: (previous, next) => true,
         listener: (context, state) {},
         child: Container(
@@ -21,7 +21,7 @@ class OnBoarding extends ModularStatelessWidget<AppModule> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Expanded(child: Container()),
-                Image.asset("assets/images/octopus.png", height: 96),
+                Image.asset(AravaAssets.Logo, height: 96),
                 Padding(
                   padding: EdgeInsets.all(24),
                   child: Text(
@@ -46,7 +46,7 @@ class OnBoarding extends ModularStatelessWidget<AppModule> {
                     minWidth: double.infinity,
                     child: MaterialButton(
                       color: Theme.of(context).primaryColor,
-                      onPressed: () => get<AppBloc>().confirmFirstLaunch(),
+                      onPressed: () => Modular.get<AppBloc>().confirmFirstLaunch(),
                       child: Text(AppLocalizations.of(context).onboarding_Continue()),
                     ),
                   ),

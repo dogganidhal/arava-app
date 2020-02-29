@@ -95,6 +95,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "general_RequiredField": "这是必填栏",
+  "@general_RequiredField": {
+    "type": "text",
+    "placeholders": {}
+  },
   "search_SelectIsland": "选择岛屿",
   "@search_SelectIsland": {
     "type": "text",
@@ -102,6 +107,41 @@
   },
   "search_Filter": "提炼",
   "@search_Filter": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "auth_LoginTitle": "登录",
+  "@auth_LoginTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "auth_SignUpTitle": "报名",
+  "@auth_SignUpTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "auth_LoginSubtitle": "请登录访问更多内容",
+  "@auth_Login": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "auth_SignUpSubtitle": "请注册以继续",
+  "@auth_SignUpSubtitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "auth_EmailFieldPlaceholder": "电子邮件地址",
+  "@auth_EmailFieldPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "auth_InvalidEmailErrorMessage": "无效的邮件地址",
+  "@auth_InvalidEmailErrorMessage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "auth_PasswordFieldPlaceholder": "密码",
+  "@auth_PasswordFieldPlaceholder": {
     "type": "text",
     "placeholders": {}
   }
