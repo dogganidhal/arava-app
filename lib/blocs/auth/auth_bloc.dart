@@ -1,5 +1,6 @@
 import 'package:arava/blocs/auth/event/auth_event.dart';
 import 'package:arava/blocs/auth/state/auth_state.dart';
+import 'package:arava/exception/app_exception.dart';
 import 'package:arava/service/auth_service.dart';
 import 'package:arava/service/session.dart';
 import 'package:bloc/bloc.dart';
@@ -82,9 +83,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         credentials: credentials,
         user: user
       );
-    } catch (exception) {
-      // TODO: Handle exception
-      yield AuthState.anonymous();
+    } on AppException catch (exception) {
+      yield AuthState.failed(exception: exception);
     }
   }
 
@@ -102,9 +102,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         credentials: credentials,
         user: user
       );
-    } catch (exception) {
-      // TODO: Handle exception
-      yield AuthState.anonymous();
+    } on AppException catch (exception) {
+      yield AuthState.failed(exception: exception);
     }
   }
 

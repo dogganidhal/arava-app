@@ -45,6 +45,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "more_Profile": "Profil",
+  "@more_Profile": {
+    "type": "text",
+    "placeholders": {}
+  },
   "more_Settings": "Paramètres",
   "@more_Settings": {
     "type": "text",
@@ -67,6 +72,16 @@
   },
   "more_LoginSignUp": "Se connecter / s'inscrire",
   "@more_LoginSignUp": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_LogoutConfirmation": "Voulez vous vraiment vous déconnecter ?",
+  "@more_LogoutConfirmation": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_Logout": "Se déconnecter",
+  "@more_Logout": {
     "type": "text",
     "placeholders": {}
   },
@@ -97,6 +112,11 @@
   },
   "general_RequiredField": "Ce champs est requis",
   "@general_RequiredField": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "general_Cancel": "Annuler",
+  "@general_Cancel": {
     "type": "text",
     "placeholders": {}
   },

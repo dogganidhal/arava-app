@@ -1,7 +1,6 @@
 import 'package:arava/blocs/search/event/search_event.dart';
 import 'package:arava/blocs/search/search_bloc.dart';
 import 'package:arava/i18n/app_localizations.dart';
-import 'package:arava/modules/app_module.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';

@@ -85,6 +85,11 @@ class AppLocalizations {
 
   // region More
 
+  String more_Profile() => Intl.message(
+    'Profile',
+    name: 'more_Profile'
+  );
+
   String more_Settings() => Intl.message(
     'Settings',
     name: 'more_Settings'
@@ -108,6 +113,16 @@ class AppLocalizations {
   String more_LoginSignUp() => Intl.message(
     'Login / Sign up',
     name: 'more_LoginSignUp'
+  );
+
+  String more_LogoutConfirmation() => Intl.message(
+    'Do you really want to logout ?',
+    name: 'more_LogoutConfirmation'
+  );
+
+  String more_Logout() => Intl.message(
+    'Logout',
+    name: 'more_Logout'
   );
 
   String more_LastUpdate() => Intl.message(
@@ -146,6 +161,11 @@ class AppLocalizations {
   String general_RequiredField() => Intl.message(
     'This field is required',
     name: 'general_RequiredField'
+  );
+
+  String general_Cancel() => Intl.message(
+    'Cancel',
+    name: 'general_Cancel'
   );
 
   // endregion

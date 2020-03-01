@@ -1,5 +1,6 @@
 import 'package:arava/blocs/app/event/app_event.dart';
 import 'package:arava/blocs/app/state/app_state.dart';
+import 'package:arava/blocs/auth/auth_bloc.dart';
 import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/exception/app_exception.dart';
 import 'package:arava/i18n/app_localizations.dart';
@@ -15,13 +16,14 @@ import 'package:meta/meta.dart';
 
 
 class AppBloc extends Bloc<AppEvent, AppState> {
+  final AuthBloc authBloc;
   final NavigationBloc navigationBloc;
   final AppService appService;
   final Session session;
 
   AppBloc({
     @required this.appService, @required this.session,
-    @required this.navigationBloc
+    @required this.navigationBloc, @required this.authBloc
   });
 
   @override
@@ -48,6 +50,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   Stream<AppState> _loadApp(LoadApp event) async* {
     yield AppState.loading();
+    authBloc.loadAuth();
     final firstLaunch = await session.getFirstAppLaunch();
     if (firstLaunch) {
       yield AppState.firstLaunch(language: Intl.defaultLocale);

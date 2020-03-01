@@ -1,7 +1,6 @@
 import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/blocs/navigation/state/navigation_state.dart';
 import 'package:arava/i18n/app_localizations.dart';
-import 'package:arava/modules/app_module.dart';
 import 'package:arava/widgets/favorites/favorites.dart';
 import 'package:arava/widgets/favorites/favorites_app_bar.dart';
 import 'package:arava/widgets/featured/featured.dart';

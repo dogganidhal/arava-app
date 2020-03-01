@@ -1,6 +1,5 @@
 import 'package:arava/blocs/search/search_bloc.dart';
 import 'package:arava/blocs/search/state/search_state.dart';
-import 'package:arava/modules/app_module.dart';
 import 'package:arava/i18n/app_localizations.dart';
 import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/theme/arava_assets.dart';

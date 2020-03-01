@@ -26,15 +26,6 @@ class ServiceConfiguration {
         options.headers['Authorization'] = "${credentials.tokenType} ${credentials.accessToken}";
       }
       return options;
-    },
-    onResponse: (options) async {
-      if (options.statusCode == 401) {
-        final credentials = await session.getCredentials();
-        if (credentials != null) {
-          // TODO: Refresh credentials and retry
-        }
-      }
-      return options;
     }
   );
   Interceptor get userPreferencesInterceptor => InterceptorsWrapper(

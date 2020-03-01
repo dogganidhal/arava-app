@@ -2,7 +2,6 @@ import 'package:arava/blocs/app/app_bloc.dart';
 import 'package:arava/blocs/app/state/app_state.dart';
 import 'package:arava/i18n/app_localizations.dart';
 import 'package:arava/i18n/app_localizations_delegate.dart';
-import 'package:arava/modules/app_module.dart';
 import 'package:arava/theme/arava_theme.dart';
 import 'package:arava/widgets/app/app_configuration_provider.dart';
 import 'package:arava/widgets/app/onboarding.dart';

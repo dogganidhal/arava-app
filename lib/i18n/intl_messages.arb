@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-02-29T17:34:57.936134",
+  "@@last_modified": "2020-03-01T10:44:17.692693",
   "appName": "Arava",
   "@appName": {
     "type": "text",
@@ -45,6 +45,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "more_Profile": "Profile",
+  "@more_Profile": {
+    "type": "text",
+    "placeholders": {}
+  },
   "more_Settings": "Settings",
   "@more_Settings": {
     "type": "text",
@@ -67,6 +72,16 @@
   },
   "more_LoginSignUp": "Login / Sign up",
   "@more_LoginSignUp": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_LogoutConfirmation": "Do you really want to logout ?",
+  "@more_LogoutConfirmation": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_Logout": "Logout",
+  "@more_Logout": {
     "type": "text",
     "placeholders": {}
   },
@@ -97,6 +112,11 @@
   },
   "general_RequiredField": "This field is required",
   "@general_RequiredField": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "general_Cancel": "Cancel",
+  "@general_Cancel": {
     "type": "text",
     "placeholders": {}
   },
@@ -137,11 +157,6 @@
   },
   "auth_SignUpTitle": "Sign up",
   "@auth_SignUpTitle": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "auth_SignUpButtonTitle": "Sign up",
-  "@auth_SignUpButtonTitle": {
     "type": "text",
     "placeholders": {}
   },

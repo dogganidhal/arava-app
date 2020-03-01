@@ -1,16 +1,15 @@
 import 'package:arava/model/jwt_auth_credentials/jwt_auth_credentials.dart';
 import 'package:arava/model/user/user.dart';
+import 'package:arava/service/dio_service.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 
 
-class AuthService {
-  final Dio dio;
-
-  AuthService({@required this.dio});
+class AuthService extends DioService {
+  AuthService({@required Dio dio}) : super(dio: dio);
 
   Future<JwtAuthCredentials> login(String email, String password) async {
-    final response = await dio.post("/auth/login", data: {
+    final response = await post("/auth/login", data: {
       "email": email,
       "password": password
     });
@@ -21,7 +20,7 @@ class AuthService {
     String email, String password,
     String firstName, String lastName
   }) async {
-    final response = await dio.post("/auth/signup", data: {
+    final response = await post("/auth/signup", data: {
       "email": email,
       "password": password,
       "firstName": firstName,
@@ -31,7 +30,7 @@ class AuthService {
   }
 
   Future<User> getUser() async {
-    final response = await dio.get("/user");
+    final response = await get("/user");
     return User.fromJson(response.data);
   }
 }

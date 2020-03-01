@@ -43,106 +43,126 @@ class _LoginState extends State<Login> with AutomaticKeepAliveClientMixin {
           child: FormBuilder(
             autovalidate: false,
             key: _formKey,
-            child: Column(
-              children: <Widget>[
-                Expanded(child: Container()),
-                Image.asset(AravaAssets.Logo, height: 96),
-                Padding(
-                  padding: EdgeInsets.all(24),
-                  child: Text(
-                    AppLocalizations.of(context).auth_LoginTitle(),
+            child: BlocBuilder<AuthBloc, AuthState>(
+              bloc: Modular.get<AuthBloc>(),
+              builder: (context, state) => Column(
+                children: <Widget>[
+                  Expanded(child: Container()),
+                  Image.asset(AravaAssets.Logo, height: 96),
+                  Padding(
+                    padding: EdgeInsets.all(24),
+                    child: Text(
+                      AppLocalizations.of(context).auth_LoginTitle(),
+                      style: Theme
+                        .of(context)
+                        .textTheme
+                        .display1
+                        .copyWith(color: Theme.of(context).primaryColor)
+                    ),
+                  ),
+                  Text(
+                    AppLocalizations.of(context).auth_LoginSubtitle(),
                     style: Theme
                       .of(context)
                       .textTheme
-                      .display1
-                      .copyWith(color: Theme.of(context).primaryColor)
+                      .display2
+                      .copyWith(fontSize: 20)
                   ),
-                ),
-                Text(
-                  AppLocalizations.of(context).auth_LoginSubtitle(),
-                  style: Theme
-                    .of(context)
-                    .textTheme
-                    .display2
-                    .copyWith(fontSize: 20)
-                ),
-                SizedBox(height: 16),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                  child: FormBuilderTextField(
-                    attribute: _kEmailFormAttribute,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 0.5,
+                  SizedBox(height: 16),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                    child: FormBuilderTextField(
+                      attribute: _kEmailFormAttribute,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 0.5,
+                          ),
                         ),
+                        labelText: AppLocalizations.of(context).auth_EmailFieldPlaceholder(),
                       ),
-                      labelText: AppLocalizations.of(context).auth_EmailFieldPlaceholder(),
+                      validators: [
+                        FormBuilderValidators.required(errorText: AppLocalizations.of(context).general_RequiredField()),
+                        FormBuilderValidators.email(errorText: AppLocalizations.of(context).auth_InvalidEmailErrorMessage())
+                      ],
                     ),
-                    validators: [
-                      FormBuilderValidators.required(errorText: AppLocalizations.of(context).general_RequiredField()),
-                      FormBuilderValidators.email(errorText: AppLocalizations.of(context).auth_InvalidEmailErrorMessage())
-                    ],
                   ),
-                ),
-                SizedBox(height: 16),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                  child: FormBuilderTextField(
-                    attribute: _kPasswordFormAttribute,
-                    maxLines: 1,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: AppLocalizations.of(context).auth_PasswordFieldPlaceholder(),
-                      suffixIcon: IconButton(
-                        padding: EdgeInsets.zero,
-                        icon: Icon(
-                          this._isPasswordTextObscure ?
-                          Icons.visibility :
-                          Icons.visibility_off
+                  SizedBox(height: 16),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                    child: FormBuilderTextField(
+                      attribute: _kPasswordFormAttribute,
+                      maxLines: 1,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: AppLocalizations.of(context).auth_PasswordFieldPlaceholder(),
+                        suffixIcon: IconButton(
+                          padding: EdgeInsets.zero,
+                          icon: Icon(
+                            this._isPasswordTextObscure ?
+                            Icons.visibility :
+                            Icons.visibility_off
+                          ),
+                          onPressed: this._togglePasswordObscureText,
+                        )
+                      ),
+                      obscureText: this._isPasswordTextObscure,
+                      validators: [
+                        FormBuilderValidators.required(errorText: AppLocalizations.of(context).general_RequiredField())
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(16),
+                    child: state.whenOrElse(
+                      orElse: (_) => Container(),
+                      failed: (failedState) => Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).errorColor.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(4),
+                          border: Border.all(
+                            color: Theme.of(context).errorColor,
+                            width: 0.5
+                          )
                         ),
-                        onPressed: this._togglePasswordObscureText,
+                        child: Text(failedState.exception.getLocalizedMessage(context)),
                       )
-                    ),
-                    obscureText: this._isPasswordTextObscure,
-                    validators: [
-                      FormBuilderValidators.required(errorText: AppLocalizations.of(context).general_RequiredField())
-                    ],
+                    ) as Widget,
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      FlatButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4)
+                  Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        FlatButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4)
+                          ),
+                          textColor: Theme.of(context).primaryColor,
+                          onPressed: this.widget.onSignUpButtonTapped,
+                          child: Text(AppLocalizations.of(context).auth_SignUpTitle()),
                         ),
-                        textColor: Theme.of(context).primaryColor,
-                        onPressed: this.widget.onSignUpButtonTapped,
-                        child: Text(AppLocalizations.of(context).auth_SignUpTitle()),
-                      ),
-                      BlocBuilder<AuthBloc, AuthState>(
-                        bloc: Modular.get<AuthBloc>(),
-                        builder: (context, state) => FlatButton(
+                        FlatButton(
                           colorBrightness: Brightness.dark,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4)
                           ),
                           color: Theme.of(context).primaryColor,
-                          onPressed: state.whenPartial(
+                          onPressed: state.whenOrElse(
                             loading: (_) => null,
-                            anonymous: (anonymousState) => _login
+                            orElse: (anonymousState) => _login
                           ),
                           child: Text(AppLocalizations.of(context).auth_LoginTitle()),
                         ),
-                      )
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Expanded(child: Container())
-              ],
+                  Expanded(child: Container())
+                ],
+              ),
             ),
           ),
         ),

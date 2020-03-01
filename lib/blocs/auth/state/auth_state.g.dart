@@ -18,16 +18,21 @@ abstract class AuthState extends Equatable {
       {@required JwtAuthCredentials credentials,
       @required User user}) = Authenticated;
 
+  factory AuthState.failed({@required AppException exception}) = Failed;
+
   final _AuthState _type;
 
 //ignore: missing_return
   FutureOr<R> when<R>(
       {@required FutureOr<R> Function(Loading) loading,
       @required FutureOr<R> Function(Anonymous) anonymous,
-      @required FutureOr<R> Function(Authenticated) authenticated}) {
+      @required FutureOr<R> Function(Authenticated) authenticated,
+      @required FutureOr<R> Function(Failed) failed}) {
     assert(() {
-      if (loading == null || anonymous == null || authenticated == null)
-        throw 'check for all possible cases';
+      if (loading == null ||
+          anonymous == null ||
+          authenticated == null ||
+          failed == null) throw 'check for all possible cases';
       return true;
     }());
     switch (this._type) {
@@ -37,6 +42,8 @@ abstract class AuthState extends Equatable {
         return anonymous(this as Anonymous);
       case _AuthState.Authenticated:
         return authenticated(this as Authenticated);
+      case _AuthState.Failed:
+        return failed(this as Failed);
     }
   }
 
@@ -44,6 +51,7 @@ abstract class AuthState extends Equatable {
       {FutureOr<R> Function(Loading) loading,
       FutureOr<R> Function(Anonymous) anonymous,
       FutureOr<R> Function(Authenticated) authenticated,
+      FutureOr<R> Function(Failed) failed,
       @required FutureOr<R> Function(AuthState) orElse}) {
     assert(() {
       if (orElse == null) throw 'Missing orElse case';
@@ -59,6 +67,9 @@ abstract class AuthState extends Equatable {
       case _AuthState.Authenticated:
         if (authenticated == null) break;
         return authenticated(this as Authenticated);
+      case _AuthState.Failed:
+        if (failed == null) break;
+        return failed(this as Failed);
     }
     return orElse(this);
   }
@@ -66,10 +77,13 @@ abstract class AuthState extends Equatable {
   FutureOr<void> whenPartial(
       {FutureOr<void> Function(Loading) loading,
       FutureOr<void> Function(Anonymous) anonymous,
-      FutureOr<void> Function(Authenticated) authenticated}) {
+      FutureOr<void> Function(Authenticated) authenticated,
+      FutureOr<void> Function(Failed) failed}) {
     assert(() {
-      if (loading == null && anonymous == null && authenticated == null)
-        throw 'provide at least one branch';
+      if (loading == null &&
+          anonymous == null &&
+          authenticated == null &&
+          failed == null) throw 'provide at least one branch';
       return true;
     }());
     switch (this._type) {
@@ -82,6 +96,9 @@ abstract class AuthState extends Equatable {
       case _AuthState.Authenticated:
         if (authenticated == null) break;
         return authenticated(this as Authenticated);
+      case _AuthState.Failed:
+        if (failed == null) break;
+        return failed(this as Failed);
     }
   }
 
@@ -127,4 +144,16 @@ class Authenticated extends AuthState {
       'Authenticated(credentials:${this.credentials},user:${this.user})';
   @override
   List get props => [credentials, user];
+}
+
+@immutable
+class Failed extends AuthState {
+  const Failed({@required this.exception}) : super(_AuthState.Failed);
+
+  final AppException exception;
+
+  @override
+  String toString() => 'Failed(exception:${this.exception})';
+  @override
+  List get props => [exception];
 }

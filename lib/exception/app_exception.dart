@@ -1,8 +1,7 @@
 import 'package:arava/i18n/app_localizations.dart';
+import 'package:arava/model/error_code/error_code.dart';
 import 'package:flutter/material.dart';
 
-/// TODO: This is a very naïve approach to localize error messages,
-/// better find a better way
 
 class LocalizedErrorMessage {
   final String english;
@@ -56,5 +55,59 @@ class ConnectivityException extends AppException {
     english: "Internet connection is required for the requested resource",
     french: "La connexion internet est requise pour la ressource demandée",
     chinese: "要求的资源需要Internet连接"
+  );
+}
+
+typedef LocalizedRemoteException LocalizedExceptionCreator();
+
+abstract class LocalizedRemoteException extends AppException {
+  static final Map<ErrorCode, LocalizedExceptionCreator> _kLocalizedExceptionMap = {
+    ErrorCode.AUTH_BAD_CREDENTIALS: () => BadCredentialsException(),
+    ErrorCode.AUTH_USER_EXISTS: () => UserExistsException()
+  };
+
+  @override
+  String get code;
+  @override
+  LocalizedErrorMessage get localizedMessage;
+
+  static LocalizedRemoteException fromErrorCode(ErrorCode errorCode) {
+    return _kLocalizedExceptionMap[errorCode]();
+  }
+}
+
+class UserExistsException extends LocalizedRemoteException {
+  @override
+  String get code => "AUTH_USER_EXISTS";
+
+  @override
+  LocalizedErrorMessage get localizedMessage => LocalizedErrorMessage(
+    english: "User exists already, try to login instead",
+    french: "Cet utilisateur existe déjà, veuillez vous connectez",
+    chinese: "用户已经存在，请尝试登录"
+  );
+}
+
+class BadCredentialsException extends LocalizedRemoteException {
+  @override
+  String get code => "AUTH_BAD_CREDENTIALS";
+
+  @override
+  LocalizedErrorMessage get localizedMessage => LocalizedErrorMessage(
+    english: "Incorrect email or password",
+    french: "Adresse email ou mot de passe incorrect",
+    chinese: "错误的邮箱帐号或密码"
+  );
+}
+
+class InternalServerException extends LocalizedRemoteException {
+  @override
+  String get code => "GENERAL_INTERNAL_SERVER_ERROR";
+
+  @override
+  LocalizedErrorMessage get localizedMessage => LocalizedErrorMessage(
+    english: "Server is having some trouble right now, please come back later",
+    french: "Le serveur est actuellement indisponible, veuillez réessayer ultérieurement",
+    chinese: "服务器出现问题，请稍后再回来"
   );
 }

@@ -43,7 +43,8 @@ class AppModule extends MainModule {
     Bind((inject) => AppBloc(
       appService: inject.get(),
       session: inject.get(),
-      navigationBloc: inject.get()
+      navigationBloc: inject.get(),
+      authBloc: inject.get()
     ), singleton: true),
     Bind((inject) => NavigationBloc(navigatorState: inject.get()), singleton: true),
     Bind((inject) => SearchBloc()),

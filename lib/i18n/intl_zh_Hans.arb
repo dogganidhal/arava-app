@@ -45,6 +45,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "more_Profile": "更多",
+  "@more_Profile": {
+    "type": "text",
+    "placeholders": {}
+  },
   "more_Settings": "设定",
   "@more_Settings": {
     "type": "text",
@@ -67,6 +72,16 @@
   },
   "more_LoginSignUp": "登陆注册",
   "@more_LoginSignUp": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_LogoutConfirmation": "您真的要注销吗？",
+  "@more_LogoutConfirmation": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "more_Logout": "登出",
+  "@more_Logout": {
     "type": "text",
     "placeholders": {}
   },
@@ -97,6 +112,11 @@
   },
   "general_RequiredField": "这是必填栏",
   "@general_RequiredField": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "general_Cancel": "取消",
+  "@general_Cancel": {
     "type": "text",
     "placeholders": {}
   },
