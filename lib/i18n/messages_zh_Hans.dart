@@ -23,10 +23,13 @@ class MessageLookup extends MessageLookupByLibrary {
   static _notInlinedMessages(_) => <String, Function> {
     "appName" : MessageLookupByLibrary.simpleMessage("阿拉瓦"),
     "auth_EmailFieldPlaceholder" : MessageLookupByLibrary.simpleMessage("电子邮件地址"),
+    "auth_FirstNameFieldPlaceholder" : MessageLookupByLibrary.simpleMessage("名字"),
     "auth_InvalidEmailErrorMessage" : MessageLookupByLibrary.simpleMessage("无效的邮件地址"),
+    "auth_LastNameFieldPlaceholder" : MessageLookupByLibrary.simpleMessage("姓"),
     "auth_LoginSubtitle" : MessageLookupByLibrary.simpleMessage("请登录访问更多内容"),
     "auth_LoginTitle" : MessageLookupByLibrary.simpleMessage("登录"),
     "auth_PasswordFieldPlaceholder" : MessageLookupByLibrary.simpleMessage("密码"),
+    "auth_PasswordMinimumLengthErrorMessage" : MessageLookupByLibrary.simpleMessage("密码必须至少包含6个字符"),
     "auth_SignUpSubtitle" : MessageLookupByLibrary.simpleMessage("请注册以继续"),
     "auth_SignUpTitle" : MessageLookupByLibrary.simpleMessage("报名"),
     "general_Cancel" : MessageLookupByLibrary.simpleMessage("取消"),

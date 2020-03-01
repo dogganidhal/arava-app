@@ -211,6 +211,21 @@ class AppLocalizations {
     name: 'auth_PasswordFieldPlaceholder'
   );
 
+  String auth_PasswordMinimumLengthErrorMessage() => Intl.message(
+    'Password must have at least 6 characters',
+    name: 'auth_PasswordMinimumLengthErrorMessage'
+  );
+
+  String auth_FirstNameFieldPlaceholder() => Intl.message(
+    'First name',
+    name: 'auth_FirstNameFieldPlaceholder'
+  );
+
+  String auth_LastNameFieldPlaceholder() => Intl.message(
+    'Last name',
+    name: 'auth_LastNameFieldPlaceholder'
+  );
+
   String auth_SignUpTitle() => Intl.message(
     'Sign up',
     name: 'auth_SignUpTitle'

@@ -23,10 +23,13 @@ class MessageLookup extends MessageLookupByLibrary {
   static _notInlinedMessages(_) => <String, Function> {
     "appName" : MessageLookupByLibrary.simpleMessage("Arava"),
     "auth_EmailFieldPlaceholder" : MessageLookupByLibrary.simpleMessage("Adresse email"),
+    "auth_FirstNameFieldPlaceholder" : MessageLookupByLibrary.simpleMessage("Prénom"),
     "auth_InvalidEmailErrorMessage" : MessageLookupByLibrary.simpleMessage("Adresse email non valide"),
+    "auth_LastNameFieldPlaceholder" : MessageLookupByLibrary.simpleMessage("Nom"),
     "auth_LoginSubtitle" : MessageLookupByLibrary.simpleMessage("Connectez vous pour continuer"),
     "auth_LoginTitle" : MessageLookupByLibrary.simpleMessage("Connexion"),
     "auth_PasswordFieldPlaceholder" : MessageLookupByLibrary.simpleMessage("Mot de passe"),
+    "auth_PasswordMinimumLengthErrorMessage" : MessageLookupByLibrary.simpleMessage("Le mot de passe doit avoir au moins 6 charactères"),
     "auth_SignUpSubtitle" : MessageLookupByLibrary.simpleMessage("Inscrivez vous pour continuer"),
     "auth_SignUpTitle" : MessageLookupByLibrary.simpleMessage("Inscription"),
     "general_Cancel" : MessageLookupByLibrary.simpleMessage("Annuler"),

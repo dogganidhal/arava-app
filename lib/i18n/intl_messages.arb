@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-03-01T10:44:17.692693",
+  "@@last_modified": "2020-03-01T11:44:17.243493",
   "appName": "Arava",
   "@appName": {
     "type": "text",
@@ -152,6 +152,21 @@
   },
   "auth_PasswordFieldPlaceholder": "Password",
   "@auth_PasswordFieldPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "auth_PasswordMinimumLengthErrorMessage": "Password must have at least 6 characters",
+  "@auth_PasswordMinimumLengthErrorMessage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "auth_FirstNameFieldPlaceholder": "First name",
+  "@auth_FirstNameFieldPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "auth_LastNameFieldPlaceholder": "Last name",
+  "@auth_LastNameFieldPlaceholder": {
     "type": "text",
     "placeholders": {}
   },

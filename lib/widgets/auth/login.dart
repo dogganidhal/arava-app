@@ -40,6 +40,9 @@ class _LoginState extends State<Login> with AutomaticKeepAliveClientMixin {
       child: SingleChildScrollView(
         child: Container(
           height: screenSize.height - safeAreaPadding.top - safeAreaPadding.bottom - (2 * kToolbarHeight),
+          constraints: BoxConstraints(
+            minHeight: 600
+          ),
           child: FormBuilder(
             autovalidate: false,
             key: _formKey,

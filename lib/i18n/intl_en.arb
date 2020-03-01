@@ -164,5 +164,20 @@
   "@auth_PasswordFieldPlaceholder": {
     "type": "text",
     "placeholders": {}
+  },
+  "auth_FirstNameFieldPlaceholder": "First name",
+  "@auth_FirstNameFieldPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "auth_LastNameFieldPlaceholder": "Last name",
+  "@auth_LastNameFieldPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "auth_PasswordMinimumLengthErrorMessage": "Password must have at least 6 characters",
+  "@auth_PasswordMinimumLengthErrorMessage": {
+    "type": "text",
+    "placeholders": {}
   }
 }
