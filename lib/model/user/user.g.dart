@@ -9,15 +9,15 @@ part of 'user.dart';
 User _$UserFromJson(Map<String, dynamic> json) {
   return User(
     id: json['id'] as String,
-    fullName: json['fullName'] as String,
-    avatar: json['avatar'] == null
-        ? null
-        : Media.fromJson(json['avatar'] as Map<String, dynamic>),
+    firstName: json['firstName'] as String,
+    lastName: json['lastName'] as String,
+    email: json['email'] as String,
   );
 }
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'id': instance.id,
-      'fullName': instance.fullName,
-      'avatar': instance.avatar,
+      'firstName': instance.firstName,
+      'lastName': instance.lastName,
+      'email': instance.email,
     };

@@ -1,5 +1,6 @@
 import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/i18n/app_localizations.dart';
+import 'package:arava/widgets/auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -65,7 +66,12 @@ class More extends StatelessWidget {
               color: Theme.of(context).primaryColor)
           ),
           onTap: () {
-            Modular.get<NavigationBloc>().push("/auth");
+            final navigationBloc = Modular.get<NavigationBloc>();
+            navigationBloc.pushRoute(MaterialPageRoute(
+              builder: (context) => Auth(
+                onAuthenticationSuccessful: (user) => navigationBloc.pop(),
+              )
+            ));
           },
         )
       ],

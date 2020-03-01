@@ -1,3 +1,4 @@
+import 'package:arava/model/jwt_auth_credentials/jwt_auth_credentials.dart';
 import 'package:arava/model/user/user.dart';
 import 'package:super_enum/super_enum.dart';
 
@@ -10,6 +11,7 @@ enum _AuthState {
   @object
   Anonymous,
   @Data(fields: [
+    DataField('credentials', JwtAuthCredentials),
     DataField('user', User)
   ])
   Authenticated

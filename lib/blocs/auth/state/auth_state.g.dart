@@ -14,7 +14,9 @@ abstract class AuthState extends Equatable {
 
   factory AuthState.anonymous() = Anonymous;
 
-  factory AuthState.authenticated({@required User user}) = Authenticated;
+  factory AuthState.authenticated(
+      {@required JwtAuthCredentials credentials,
+      @required User user}) = Authenticated;
 
   final _AuthState _type;
 
@@ -113,12 +115,16 @@ class Anonymous extends AuthState {
 
 @immutable
 class Authenticated extends AuthState {
-  const Authenticated({@required this.user}) : super(_AuthState.Authenticated);
+  const Authenticated({@required this.credentials, @required this.user})
+      : super(_AuthState.Authenticated);
+
+  final JwtAuthCredentials credentials;
 
   final User user;
 
   @override
-  String toString() => 'Authenticated(user:${this.user})';
+  String toString() =>
+      'Authenticated(credentials:${this.credentials},user:${this.user})';
   @override
-  List get props => [user];
+  List get props => [credentials, user];
 }

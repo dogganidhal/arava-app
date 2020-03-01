@@ -11,8 +11,21 @@ class AuthService {
 
   Future<JwtAuthCredentials> login(String email, String password) async {
     final response = await dio.post("/auth/login", data: {
-      email: email,
-      password: password
+      "email": email,
+      "password": password
+    });
+    return JwtAuthCredentials.fromJson(response.data);
+  }
+
+  Future<JwtAuthCredentials> signUp({
+    String email, String password,
+    String firstName, String lastName
+  }) async {
+    final response = await dio.post("/auth/signup", data: {
+      "email": email,
+      "password": password,
+      "firstName": firstName,
+      "lastName": lastName
     });
     return JwtAuthCredentials.fromJson(response.data);
   }

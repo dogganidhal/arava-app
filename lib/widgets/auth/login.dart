@@ -1,9 +1,13 @@
+import 'package:arava/blocs/auth/auth_bloc.dart';
+import 'package:arava/blocs/auth/state/auth_state.dart';
 import 'package:arava/i18n/app_localizations.dart';
 import 'package:arava/theme/arava_assets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 
 class Login extends StatefulWidget {
@@ -17,6 +21,9 @@ class Login extends StatefulWidget {
 
 
 class _LoginState extends State<Login> with AutomaticKeepAliveClientMixin {
+  static final String _kEmailFormAttribute = "email";
+  static final String _kPasswordFormAttribute = "password";
+
   final GlobalKey<FormBuilderState> _formKey = GlobalKey();
 
   bool _isPasswordTextObscure = true;
@@ -63,7 +70,7 @@ class _LoginState extends State<Login> with AutomaticKeepAliveClientMixin {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                   child: FormBuilderTextField(
-                    attribute: "email",
+                    attribute: _kEmailFormAttribute,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -82,7 +89,7 @@ class _LoginState extends State<Login> with AutomaticKeepAliveClientMixin {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                   child: FormBuilderTextField(
-                    attribute: "password",
+                    attribute: _kPasswordFormAttribute,
                     maxLines: 1,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
@@ -116,14 +123,20 @@ class _LoginState extends State<Login> with AutomaticKeepAliveClientMixin {
                         onPressed: this.widget.onSignUpButtonTapped,
                         child: Text(AppLocalizations.of(context).auth_SignUpTitle()),
                       ),
-                      FlatButton(
-                        colorBrightness: Brightness.dark,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4)
+                      BlocBuilder<AuthBloc, AuthState>(
+                        bloc: Modular.get<AuthBloc>(),
+                        builder: (context, state) => FlatButton(
+                          colorBrightness: Brightness.dark,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4)
+                          ),
+                          color: Theme.of(context).primaryColor,
+                          onPressed: state.whenPartial(
+                            loading: (_) => null,
+                            anonymous: (anonymousState) => _login
+                          ),
+                          child: Text(AppLocalizations.of(context).auth_LoginTitle()),
                         ),
-                        color: Theme.of(context).primaryColor,
-                        onPressed: _login,
-                        child: Text(AppLocalizations.of(context).auth_LoginTitle()),
                       )
                     ],
                   ),
@@ -142,5 +155,12 @@ class _LoginState extends State<Login> with AutomaticKeepAliveClientMixin {
   }
 
   void _login() {
+    if (!_formKey.currentState.saveAndValidate()) {
+      return;
+    }
+    final values = _formKey.currentState.value;
+    final String email = values[_kEmailFormAttribute];
+    final String password = values[_kPasswordFormAttribute];
+    Modular.get<AuthBloc>().tryLogin(email, password);
   }
 }

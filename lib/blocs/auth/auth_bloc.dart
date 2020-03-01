@@ -3,7 +3,6 @@ import 'package:arava/blocs/auth/state/auth_state.dart';
 import 'package:arava/service/auth_service.dart';
 import 'package:arava/service/session.dart';
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 
 
@@ -14,7 +13,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({@required this.session, @required this.authService});
 
   @override
-  AuthState get initialState => AuthState.loading();
+  AuthState get initialState => AuthState.anonymous();
 
   @override
   Stream<AuthState> mapEventToState(AuthEvent event) => event.when(
@@ -24,15 +23,43 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     trySignUp: _trySignUp
   );
 
+  void loadAuth() {
+    add(AuthEvent.loadAuth());
+  }
+
+  void logout() {
+    add(AuthEvent.logOut());
+  }
+
+  void tryLogin(String email, String password) {
+    add(AuthEvent.tryLogin(email: email, password: password));
+  }
+
+  void trySignUp({
+    String email, String password,
+    String firstName, String lastName
+  }) {
+    add(AuthEvent.trySignUp(
+      email: email, password: password,
+      firstName: firstName, lastName: lastName
+    ));
+  }
+
   Stream<AuthState> _loadAuth(LoadAuth event) async* {
     yield AuthState.loading();
     final persistedCredentials = await session.getCredentials();
     if (persistedCredentials != null) {
       final persistedUser = await session.getUser();
-      yield AuthState.authenticated(user: persistedUser);
+      yield AuthState.authenticated(
+        user: persistedUser,
+        credentials: persistedCredentials
+      );
       final userFromApi = await authService.getUser();
       await session.setUser(userFromApi);
-      yield AuthState.authenticated(user: userFromApi);
+      yield AuthState.authenticated(
+        user: userFromApi,
+        credentials: persistedCredentials
+      );
     } else {
       yield AuthState.anonymous();
     }
@@ -46,11 +73,39 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Stream<AuthState> _tryLogin(TryLogin event) async* {
-
+    yield AuthState.loading();
+    try {
+      final credentials = await authService.login(event.email, event.password);
+      await session.persistCredentials(credentials);
+      final user = await authService.getUser();
+      yield AuthState.authenticated(
+        credentials: credentials,
+        user: user
+      );
+    } catch (exception) {
+      // TODO: Handle exception
+      yield AuthState.anonymous();
+    }
   }
 
   Stream<AuthState> _trySignUp(TrySignUp event) async* {
-
+    yield AuthState.loading();
+    try {
+      final credentials = await authService.signUp(
+        email: event.email, password: event.password,
+        firstName: event.firstName,
+        lastName: event.lastName
+      );
+      await session.persistCredentials(credentials);
+      final user = await authService.getUser();
+      yield AuthState.authenticated(
+        credentials: credentials,
+        user: user
+      );
+    } catch (exception) {
+      // TODO: Handle exception
+      yield AuthState.anonymous();
+    }
   }
 
 }

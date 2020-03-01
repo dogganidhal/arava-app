@@ -17,6 +17,11 @@ class SignUp extends StatefulWidget {
 
 
 class _SignUpState extends State<SignUp> with AutomaticKeepAliveClientMixin {
+  static final String _kEmailFormAttribute = "email";
+  static final String _kPasswordFormAttribute = "password";
+  static final String _kFirstNameFormAttribute = "firstName";
+  static final String _kLastNameFormAttribute = "lastName";
+
   final GlobalKey<FormBuilderState> _formKey = GlobalKey();
 
   bool _isPasswordTextObscure = true;
@@ -62,8 +67,61 @@ class _SignUpState extends State<SignUp> with AutomaticKeepAliveClientMixin {
                 SizedBox(height: 16),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Flexible(
+                        child: Container(
+                          padding: EdgeInsets.only(right: 6),
+                          child: FormBuilderTextField(
+                            attribute: _kFirstNameFormAttribute,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 0.5,
+                                ),
+                              ),
+                              labelText: AppLocalizations.of(context).auth_EmailFieldPlaceholder(),
+                            ),
+                            validators: [
+                              FormBuilderValidators.required(
+                                errorText: AppLocalizations.of(context).general_RequiredField()
+                              ),
+                              FormBuilderValidators.email(
+                                errorText: AppLocalizations.of(context).auth_InvalidEmailErrorMessage()
+                              )
+                            ],
+                          )
+                        ),
+                      ),
+                      Flexible(
+                        child: Container(
+                          padding: EdgeInsets.only(left: 6),
+                          child: FormBuilderTextField(
+                            attribute: _kLastNameFormAttribute,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 0.5,
+                                ),
+                              ),
+                              labelText: AppLocalizations.of(context).auth_EmailFieldPlaceholder(),
+                            ),
+                            validators: [
+                              FormBuilderValidators.required(errorText: AppLocalizations.of(context).general_RequiredField()),
+                              FormBuilderValidators.email(errorText: AppLocalizations.of(context).auth_InvalidEmailErrorMessage())
+                            ],
+                          )
+                        )
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(height: 16),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                   child: FormBuilderTextField(
-                    attribute: "email",
+                    attribute: _kEmailFormAttribute,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -82,7 +140,7 @@ class _SignUpState extends State<SignUp> with AutomaticKeepAliveClientMixin {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                   child: FormBuilderTextField(
-                    attribute: "password",
+                    attribute: _kPasswordFormAttribute,
                     maxLines: 1,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),

@@ -38,7 +38,7 @@ class Session {
   }
 
   Future<void> persistCredentials(JwtAuthCredentials credentials) async {
-    await cacheManager.setStringAsync(_kCredentials, json.encode(credentials));
+    await cacheManager.setStringAsync(_kCredentials, json.encode(credentials.toJson()));
   }
 
   Future<JwtAuthCredentials> getCredentials() async {

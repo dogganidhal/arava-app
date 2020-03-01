@@ -5,7 +5,6 @@ import 'package:arava/service/auth_service.dart';
 import 'package:arava/service/session.dart';
 import 'package:device_info/device_info.dart';
 import 'package:dio/dio.dart';
-import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 import 'package:package_info/package_info.dart';
 

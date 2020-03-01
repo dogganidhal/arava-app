@@ -1,4 +1,3 @@
-import 'package:arava/model/media/media.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
@@ -8,11 +7,12 @@ part 'user.g.dart';
 @immutable
 class User {
   final String id;
-  final String fullName;
-  final Media avatar;
+  final String firstName;
+  final String lastName;
+  final String email;
 
   User({
-    this.id, this.fullName, this.avatar
+    this.id, this.firstName, this.lastName, this.email
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
