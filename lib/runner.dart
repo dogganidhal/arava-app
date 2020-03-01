@@ -7,9 +7,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:sentry/sentry.dart' as sentry;
 
 
-void main() {
+void runApplication(AppModule appModule) async {
   final sentryClient = sentry.SentryClient(dsn: "https://4aaee05198044a30b7480dac58957f14@sentry.io/2088250");
-  final appModule = AppModule();
   runZoned(() => runApp(ModularApp(module: appModule)), onError: (exception, stackTrace) async {
     // Print the exception to the console.
     print('Caught error: $exception');

@@ -8,6 +8,10 @@ import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 import 'package:package_info/package_info.dart';
 
+enum ServiceConfigurationType {
+  DEV, STAGING, PROD
+}
+
 class ServiceConfiguration {
   final AuthService authService;
   final String apiBaseUrl;
@@ -45,6 +49,12 @@ class ServiceConfiguration {
   );
 
   factory ServiceConfiguration.staging({@required Session session, AuthService authService}) => ServiceConfiguration(
+    apiBaseUrl: "https://api.arava.ga",
+    session: session,
+    authService: authService
+  );
+
+  factory ServiceConfiguration.production({@required Session session, AuthService authService}) => ServiceConfiguration(
     apiBaseUrl: "https://api.arava.ga",
     session: session,
     authService: authService

@@ -18,6 +18,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 
 class AppModule extends MainModule {
+  final ServiceConfigurationType serviceConfiguration;
+
+  AppModule(this.serviceConfiguration);
 
   // here will be any class you want to inject into your project (eg bloc, dependency)
   @override
@@ -26,7 +29,17 @@ class AppModule extends MainModule {
     // Api services
     Bind((inject) => CacheManager(), singleton: true),
     Bind((inject) => Session(cacheManager: inject.get())),
-    Bind((inject) => ServiceConfiguration.dev(session: inject.get()), singleton: true),
+    Bind((inject) {
+      final session = inject.get<Session>();
+      switch(serviceConfiguration) {
+        case ServiceConfigurationType.DEV:
+          return ServiceConfiguration.dev(session: session);
+        case ServiceConfigurationType.STAGING:
+          return ServiceConfiguration.staging(session: session);
+        default:
+          return ServiceConfiguration.production(session: session);
+      }
+    }, singleton: true),
     Bind((inject) {
       final serviceConfiguration = inject.get<ServiceConfiguration>();
       final dio = Dio(BaseOptions(
@@ -67,4 +80,7 @@ class AppModule extends MainModule {
   @override
   Widget get bootstrap => Bootstrap();
 
+  factory AppModule.dev() => AppModule(ServiceConfigurationType.DEV);
+  factory AppModule.staging() => AppModule(ServiceConfigurationType.STAGING);
+  factory AppModule.production() => AppModule(ServiceConfigurationType.PROD);
 }
