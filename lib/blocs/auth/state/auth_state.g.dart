@@ -10,95 +10,106 @@ part of 'auth_state.dart';
 abstract class AuthState extends Equatable {
   const AuthState(this._type);
 
-  factory AuthState.loading() = Loading;
+  factory AuthState.authLoadingState() = AuthLoadingState;
 
-  factory AuthState.anonymous() = Anonymous;
+  factory AuthState.authAnonymousState() = AuthAnonymousState;
 
-  factory AuthState.authenticated(
+  factory AuthState.authAuthenticatedState(
       {@required JwtAuthCredentials credentials,
-      @required User user}) = Authenticated;
+      @required User user}) = AuthAuthenticatedState;
 
-  factory AuthState.failed({@required AppException exception}) = Failed;
+  factory AuthState.authFailedState({@required AppException exception}) =
+      AuthFailedState;
 
   final _AuthState _type;
 
 //ignore: missing_return
-  FutureOr<R> when<R>(
-      {@required FutureOr<R> Function(Loading) loading,
-      @required FutureOr<R> Function(Anonymous) anonymous,
-      @required FutureOr<R> Function(Authenticated) authenticated,
-      @required FutureOr<R> Function(Failed) failed}) {
+  R when<R>(
+      {@required
+          FutureOr<R> Function(AuthLoadingState) authLoadingState,
+      @required
+          FutureOr<R> Function(AuthAnonymousState) authAnonymousState,
+      @required
+          FutureOr<R> Function(AuthAuthenticatedState) authAuthenticatedState,
+      @required
+          FutureOr<R> Function(AuthFailedState) authFailedState}) {
     assert(() {
-      if (loading == null ||
-          anonymous == null ||
-          authenticated == null ||
-          failed == null) throw 'check for all possible cases';
+      if (authLoadingState == null ||
+          authAnonymousState == null ||
+          authAuthenticatedState == null ||
+          authFailedState == null) {
+        throw 'check for all possible cases';
+      }
       return true;
     }());
     switch (this._type) {
-      case _AuthState.Loading:
-        return loading(this as Loading);
-      case _AuthState.Anonymous:
-        return anonymous(this as Anonymous);
-      case _AuthState.Authenticated:
-        return authenticated(this as Authenticated);
-      case _AuthState.Failed:
-        return failed(this as Failed);
+      case _AuthState.AuthLoadingState:
+        return authLoadingState(this as AuthLoadingState);
+      case _AuthState.AuthAnonymousState:
+        return authAnonymousState(this as AuthAnonymousState);
+      case _AuthState.AuthAuthenticatedState:
+        return authAuthenticatedState(this as AuthAuthenticatedState);
+      case _AuthState.AuthFailedState:
+        return authFailedState(this as AuthFailedState);
     }
   }
 
-  FutureOr<R> whenOrElse<R>(
-      {FutureOr<R> Function(Loading) loading,
-      FutureOr<R> Function(Anonymous) anonymous,
-      FutureOr<R> Function(Authenticated) authenticated,
-      FutureOr<R> Function(Failed) failed,
+  R whenOrElse<R>(
+      {FutureOr<R> Function(AuthLoadingState) authLoadingState,
+      FutureOr<R> Function(AuthAnonymousState) authAnonymousState,
+      FutureOr<R> Function(AuthAuthenticatedState) authAuthenticatedState,
+      FutureOr<R> Function(AuthFailedState) authFailedState,
       @required FutureOr<R> Function(AuthState) orElse}) {
     assert(() {
-      if (orElse == null) throw 'Missing orElse case';
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
       return true;
     }());
     switch (this._type) {
-      case _AuthState.Loading:
-        if (loading == null) break;
-        return loading(this as Loading);
-      case _AuthState.Anonymous:
-        if (anonymous == null) break;
-        return anonymous(this as Anonymous);
-      case _AuthState.Authenticated:
-        if (authenticated == null) break;
-        return authenticated(this as Authenticated);
-      case _AuthState.Failed:
-        if (failed == null) break;
-        return failed(this as Failed);
+      case _AuthState.AuthLoadingState:
+        if (authLoadingState == null) break;
+        return authLoadingState(this as AuthLoadingState);
+      case _AuthState.AuthAnonymousState:
+        if (authAnonymousState == null) break;
+        return authAnonymousState(this as AuthAnonymousState);
+      case _AuthState.AuthAuthenticatedState:
+        if (authAuthenticatedState == null) break;
+        return authAuthenticatedState(this as AuthAuthenticatedState);
+      case _AuthState.AuthFailedState:
+        if (authFailedState == null) break;
+        return authFailedState(this as AuthFailedState);
     }
     return orElse(this);
   }
 
   FutureOr<void> whenPartial(
-      {FutureOr<void> Function(Loading) loading,
-      FutureOr<void> Function(Anonymous) anonymous,
-      FutureOr<void> Function(Authenticated) authenticated,
-      FutureOr<void> Function(Failed) failed}) {
+      {FutureOr<void> Function(AuthLoadingState) authLoadingState,
+      FutureOr<void> Function(AuthAnonymousState) authAnonymousState,
+      FutureOr<void> Function(AuthAuthenticatedState) authAuthenticatedState,
+      FutureOr<void> Function(AuthFailedState) authFailedState}) {
     assert(() {
-      if (loading == null &&
-          anonymous == null &&
-          authenticated == null &&
-          failed == null) throw 'provide at least one branch';
+      if (authLoadingState == null &&
+          authAnonymousState == null &&
+          authAuthenticatedState == null &&
+          authFailedState == null) {
+        throw 'provide at least one branch';
+      }
       return true;
     }());
     switch (this._type) {
-      case _AuthState.Loading:
-        if (loading == null) break;
-        return loading(this as Loading);
-      case _AuthState.Anonymous:
-        if (anonymous == null) break;
-        return anonymous(this as Anonymous);
-      case _AuthState.Authenticated:
-        if (authenticated == null) break;
-        return authenticated(this as Authenticated);
-      case _AuthState.Failed:
-        if (failed == null) break;
-        return failed(this as Failed);
+      case _AuthState.AuthLoadingState:
+        if (authLoadingState == null) break;
+        return authLoadingState(this as AuthLoadingState);
+      case _AuthState.AuthAnonymousState:
+        if (authAnonymousState == null) break;
+        return authAnonymousState(this as AuthAnonymousState);
+      case _AuthState.AuthAuthenticatedState:
+        if (authAuthenticatedState == null) break;
+        return authAuthenticatedState(this as AuthAuthenticatedState);
+      case _AuthState.AuthFailedState:
+        if (authFailedState == null) break;
+        return authFailedState(this as AuthFailedState);
     }
   }
 
@@ -107,33 +118,34 @@ abstract class AuthState extends Equatable {
 }
 
 @immutable
-class Loading extends AuthState {
-  const Loading._() : super(_AuthState.Loading);
+class AuthLoadingState extends AuthState {
+  const AuthLoadingState._() : super(_AuthState.AuthLoadingState);
 
-  factory Loading() {
-    _instance ??= Loading._();
+  factory AuthLoadingState() {
+    _instance ??= AuthLoadingState._();
     return _instance;
   }
 
-  static Loading _instance;
+  static AuthLoadingState _instance;
 }
 
 @immutable
-class Anonymous extends AuthState {
-  const Anonymous._() : super(_AuthState.Anonymous);
+class AuthAnonymousState extends AuthState {
+  const AuthAnonymousState._() : super(_AuthState.AuthAnonymousState);
 
-  factory Anonymous() {
-    _instance ??= Anonymous._();
+  factory AuthAnonymousState() {
+    _instance ??= AuthAnonymousState._();
     return _instance;
   }
 
-  static Anonymous _instance;
+  static AuthAnonymousState _instance;
 }
 
 @immutable
-class Authenticated extends AuthState {
-  const Authenticated({@required this.credentials, @required this.user})
-      : super(_AuthState.Authenticated);
+class AuthAuthenticatedState extends AuthState {
+  const AuthAuthenticatedState(
+      {@required this.credentials, @required this.user})
+      : super(_AuthState.AuthAuthenticatedState);
 
   final JwtAuthCredentials credentials;
 
@@ -141,19 +153,20 @@ class Authenticated extends AuthState {
 
   @override
   String toString() =>
-      'Authenticated(credentials:${this.credentials},user:${this.user})';
+      'AuthAuthenticatedState(credentials:${this.credentials},user:${this.user})';
   @override
   List get props => [credentials, user];
 }
 
 @immutable
-class Failed extends AuthState {
-  const Failed({@required this.exception}) : super(_AuthState.Failed);
+class AuthFailedState extends AuthState {
+  const AuthFailedState({@required this.exception})
+      : super(_AuthState.AuthFailedState);
 
   final AppException exception;
 
   @override
-  String toString() => 'Failed(exception:${this.exception})';
+  String toString() => 'AuthFailedState(exception:${this.exception})';
   @override
   List get props => [exception];
 }

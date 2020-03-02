@@ -5,8 +5,8 @@ part 'navigation_state.g.dart';
 @superEnum
 enum _NavigationState {
   @Data(fields: [
-    DataField('route', String),
-    DataField('homeIndex', int)
+    DataField<String>('route'),
+    DataField<int>('homeIndex')
   ])
-  Navigator
+  NavigatorState
 }

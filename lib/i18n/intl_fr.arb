@@ -179,5 +179,30 @@
   "@auth_PasswordMinimumLengthErrorMessage": {
     "type": "text",
     "placeholders": {}
+  },
+  "general_Loading": "Chargement ...",
+  "@general_Loading": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_CurrentPasswordFieldPlaceholder": "Mot de passe actuel",
+  "@profile_CurrentPasswordFieldPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_NewPasswordFieldPlaceholder": "Nouveau mot de passe",
+  "@profile_NewPasswordFieldPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_SubmitProfileUpdate": "Sauvegarder",
+  "@profile_SubmitProfileUpdate": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_ProfileUpdateSuccessful": "Profil sauvegardé avec succès",
+  "@profile_ProfileUpdateSuccessful": {
+    "type": "text",
+    "placeholders": {}
   }
 }

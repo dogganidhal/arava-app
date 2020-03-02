@@ -7,19 +7,19 @@ part 'app_state.g.dart';
 @superEnum
 enum _AppState {
   @object
-  Loading,
+  AppLoadingState,
   @object
-  Unintialized,
+  AppUnintializedState,
   @Data(fields: [
-    DataField('language', String)
+    DataField<String>('language')
   ])
-  FirstLaunch,
+  AppFirstLaunchState,
   @Data(fields: [
-    DataField('appConfiguration', AppConfiguration)
+    DataField<AppConfiguration>('appConfiguration')
   ])
-  AppLoaded,
+  AppLoadedState,
   @Data(fields: [
-    DataField('exception', AppException)
+    DataField<AppException>('exception')
   ])
-  Error
+  AppErrorState
 }

@@ -1,5 +1,5 @@
 import 'package:arava/blocs/navigation/event/navigation_event.dart';
-import 'package:arava/blocs/navigation/state/navigation_state.dart';
+import 'package:arava/blocs/navigation/state/navigation_state.dart' show NavigationState;
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -9,46 +9,46 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
   NavigationBloc({@required this.navigatorState});
 
   @override
-  NavigationState get initialState => NavigationState.navigator(
+  NavigationState get initialState => NavigationState.navigatorState(
     route: "/home",
     homeIndex: 0
   );
 
   @override
   Stream<NavigationState> mapEventToState(NavigationEvent event) => event.when(
-    pop: _pop,
-    navigateToHome: _navigateToHome,
-    push: _push
+    navigationPopEvent: _pop,
+    navigateToHomeEvent: _navigateToHome,
+    navigationPushEvent: _push
   );
 
   void pop() {
-    add(NavigationEvent.pop());
+    add(NavigationEvent.navigationPopEvent());
   }
 
   void navigateToHome([int index]) {
-    add(NavigationEvent.navigateToHome(index: index));
+    add(NavigationEvent.navigateToHomeEvent(index: index));
   }
 
   void push(String route) {
-    add(NavigationEvent.push(route: route));
+    add(NavigationEvent.navigationPushEvent(route: route));
   }
 
   void pushRoute<T>(Route<T> route) {
     navigatorState.currentState.push(route);
   }
 
-  Stream<NavigationState> _pop(Pop event) async* {
+  Stream<NavigationState> _pop(NavigationPopEvent event) async* {
     navigatorState.currentState.pop();
   }
 
-  Stream<NavigationState> _navigateToHome(NavigateToHome event) async* {
-    yield NavigationState.navigator(
+  Stream<NavigationState> _navigateToHome(NavigateToHomeEvent event) async* {
+    yield NavigationState.navigatorState(
       route: "/home/${event.index}",
       homeIndex: event.index
     );
   }
 
-  Stream<NavigationState> _push(Push event) async* {
+  Stream<NavigationState> _push(NavigationPushEvent event) async* {
     navigatorState.currentState.pushNamed(event.route);
   }
 }

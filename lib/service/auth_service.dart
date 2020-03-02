@@ -1,4 +1,5 @@
 import 'package:arava/model/jwt_auth_credentials/jwt_auth_credentials.dart';
+import 'package:arava/model/update_profile_request/update_profile_request.dart';
 import 'package:arava/model/user/user.dart';
 import 'package:arava/service/dio_service.dart';
 import 'package:dio/dio.dart';
@@ -32,5 +33,9 @@ class AuthService extends DioService {
   Future<User> getUser() async {
     final response = await get("/user");
     return User.fromJson(response.data);
+  }
+
+  Future<void> updateProfile(UpdateProfileRequest request) async {
+    return await put("/user", data: request.toJson());
   }
 }

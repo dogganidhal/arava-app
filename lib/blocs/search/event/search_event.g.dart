@@ -20,13 +20,14 @@ abstract class SearchEvent extends Equatable {
   final _SearchEvent _type;
 
 //ignore: missing_return
-  FutureOr<R> when<R>(
+  R when<R>(
       {@required FutureOr<R> Function(SearchForPois) searchForPois,
       @required FutureOr<R> Function(SelectIsland) selectIsland,
       @required FutureOr<R> Function(MapLoaded) mapLoaded}) {
     assert(() {
-      if (searchForPois == null || selectIsland == null || mapLoaded == null)
+      if (searchForPois == null || selectIsland == null || mapLoaded == null) {
         throw 'check for all possible cases';
+      }
       return true;
     }());
     switch (this._type) {
@@ -39,13 +40,15 @@ abstract class SearchEvent extends Equatable {
     }
   }
 
-  FutureOr<R> whenOrElse<R>(
+  R whenOrElse<R>(
       {FutureOr<R> Function(SearchForPois) searchForPois,
       FutureOr<R> Function(SelectIsland) selectIsland,
       FutureOr<R> Function(MapLoaded) mapLoaded,
       @required FutureOr<R> Function(SearchEvent) orElse}) {
     assert(() {
-      if (orElse == null) throw 'Missing orElse case';
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
       return true;
     }());
     switch (this._type) {
@@ -67,8 +70,9 @@ abstract class SearchEvent extends Equatable {
       FutureOr<void> Function(SelectIsland) selectIsland,
       FutureOr<void> Function(MapLoaded) mapLoaded}) {
     assert(() {
-      if (searchForPois == null && selectIsland == null && mapLoaded == null)
+      if (searchForPois == null && selectIsland == null && mapLoaded == null) {
         throw 'provide at least one branch';
+      }
       return true;
     }());
     switch (this._type) {

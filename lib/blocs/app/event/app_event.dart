@@ -5,11 +5,11 @@ part 'app_event.g.dart';
 @superEnum
 enum _AppEvent {
   @object
-  LoadApp,
+  LoadAppEvent,
   @Data(fields: [
-    DataField('locale', String)
+    DataField<String>('locale')
   ])
-  ChangeLocale,
+  ChangeLocaleEvent,
   @object
-  ConfirmFirstLaunch
+  ConfirmFirstLaunchEvent
 }

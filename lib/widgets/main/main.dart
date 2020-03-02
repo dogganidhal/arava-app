@@ -43,7 +43,7 @@ class Main extends StatelessWidget {
     return BlocBuilder<NavigationBloc, NavigationState>(
       bloc: Modular.get<NavigationBloc>(),
       builder: (context, state) => state.when<Widget>(
-        navigator: (state) => Scaffold(
+        navigatorState: (state) => Scaffold(
           appBar: _appBars[state.homeIndex],
           body: PageStorage(
             bucket: _bucket,

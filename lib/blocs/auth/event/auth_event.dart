@@ -5,19 +5,19 @@ part 'auth_event.g.dart';
 @superEnum
 enum _AuthEvent {
   @object
-  LoadAuth,
+  LoadAuthEvent,
   @object
-  LogOut,
+  LogOutEvent,
   @Data(fields: [
-    DataField('email', String),
-    DataField('password', String)
+    DataField<String>('email'),
+    DataField<String>('password')
   ])
-  TryLogin,
+  TryLoginEvent,
   @Data(fields: [
-    DataField('email', String),
-    DataField('firstName', String),
-    DataField('lastName', String),
-    DataField('password', String)
+    DataField<String>('email'),
+    DataField<String>('firstName'),
+    DataField<String>('lastName'),
+    DataField<String>('password')
   ])
-  TrySignUp
+  TrySignUpEvent
 }

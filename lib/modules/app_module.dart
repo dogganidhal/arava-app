@@ -1,6 +1,7 @@
 import 'package:arava/blocs/app/app_bloc.dart';
 import 'package:arava/blocs/auth/auth_bloc.dart';
 import 'package:arava/blocs/navigation/navigation_bloc.dart';
+import 'package:arava/blocs/profile/profile_bloc.dart';
 import 'package:arava/blocs/search/search_bloc.dart';
 import 'package:arava/config/service_configuration.dart';
 import 'package:arava/service/app_service.dart';
@@ -11,6 +12,7 @@ import 'package:arava/widgets/app/bootstrap.dart';
 import 'package:arava/widgets/auth/auth.dart';
 import 'package:arava/widgets/main/main.dart';
 import 'package:arava/widgets/map/island_selector.dart';
+import 'package:arava/widgets/profile/profile.dart';
 import 'package:arava/widgets/settings.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +66,10 @@ class AppModule extends MainModule {
     Bind((inject) => AuthBloc(
       session: inject.get(),
       authService: inject.get()
+    )),
+    Bind((inject) => ProfileBloc(
+      authService: inject.get(),
+      session: inject.get()
     ))
   ];
 
@@ -73,7 +79,8 @@ class AppModule extends MainModule {
     Router("/home", child: (_, args) => Main()),
     Router("/settings", child: (_, args) => Settings()),
     Router("/search/selectIslands", child: (_, args) => IslandSelector()),
-    Router("/auth", child: (_, args) => Auth())
+    Router("/auth", child: (_, args) => Auth()),
+    Router("/profile", child: (_, args) => Profile())
   ];
 
   // add your main widget here

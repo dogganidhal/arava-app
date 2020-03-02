@@ -8,7 +8,7 @@ class AppService extends DioService {
   AppService({@required Dio dio}) : super(dio: dio);
 
   Future<ApiConfiguration> loadApiConfiguration() async {
-    final response = await dio.get("/app/configuration");
+    final response = await get("/app/configuration");
     return ApiConfiguration.fromJson(response.data);
   }
 }

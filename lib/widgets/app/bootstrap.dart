@@ -34,7 +34,7 @@ class _BootstrapState extends State<Bootstrap> {
       bloc: _appBloc,
       builder: (context, state) => AppConfigurationProvider(
         configuration: state.whenPartial(
-          appLoaded: (appLoadedState) => appLoadedState.appConfiguration
+          appLoadedState: (appLoadedState) => appLoadedState.appConfiguration
         ),
         child: MaterialApp(
           title: 'Arava',
@@ -55,11 +55,11 @@ class _BootstrapState extends State<Bootstrap> {
           ],
           home: Builder(
             builder: (context) => state.when(
-              loading: _loading,
-              unintialized: _loading,
-              appLoaded: _loadedApp,
-              firstLaunch: _firstLaunch,
-              error: (state) => _error(context, state)
+              appLoadingState: _loading,
+              appUnintializedState: _loading,
+              appLoadedState: _loadedApp,
+              appFirstLaunchState: _firstLaunch,
+              appErrorState: (state) => _error(context, state)
             ),
           )
         ),
@@ -75,11 +75,11 @@ class _BootstrapState extends State<Bootstrap> {
     ),
   );
 
-  Widget _loadedApp(AppLoaded state) => Main(configuration: state.appConfiguration);
+  Widget _loadedApp(AppLoadedState state) => Main(configuration: state.appConfiguration);
 
   Widget _firstLaunch(AppState state) => OnBoarding();
 
-  Widget _error(BuildContext context, Error error) => Scaffold(
+  Widget _error(BuildContext context, AppErrorState error) => Scaffold(
     body: Column(
       children: [
         Flexible(child: Container()),

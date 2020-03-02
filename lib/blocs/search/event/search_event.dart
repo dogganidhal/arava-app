@@ -7,15 +7,15 @@ part 'search_event.g.dart';
 @superEnum
 enum _SearchEvent {
   @Data(fields: [
-    DataField('query', String)
+    DataField<String>('query')
   ])
   SearchForPois,
   @Data(fields: [
-    DataField('island', Island)
+    DataField<Island>('island')
   ])
   SelectIsland,
   @Data(fields: [
-    DataField('mapController', GoogleMapController)
+    DataField<GoogleMapController>('mapController')
   ])
   MapLoaded
 }

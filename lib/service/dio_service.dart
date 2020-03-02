@@ -5,30 +5,32 @@ import 'package:flutter/foundation.dart';
 import 'package:super_enum/super_enum.dart';
 
 abstract class DioService {
-  final Dio dio;
+  final Dio _dio;
 
-  DioService({@required this.dio});
+  DioService({@required Dio dio}) : _dio = dio;
 
   @protected
   Future<Response<T>> get<T>(String uri) async {
     try {
-      return await dio.get(uri);
+      return await _dio.get(uri);
     } catch (exception) {
       _catchException(exception);
     }
   }
 
+  @protected
   Future<Response<T>> post<T>(String uri, {Map<String, dynamic> data}) async {
     try {
-      return await dio.post(uri, data: data);
+      return await _dio.post(uri, data: data);
     } catch (exception) {
       _catchException(exception);
     }
   }
 
+  @protected
   Future<Response<T>> put<T>(String uri, {Map<String, dynamic> data}) async {
     try {
-      return await dio.put(uri, data: data);
+      return await _dio.put(uri, data: data);
     } catch (exception) {
       _catchException(exception);
     }

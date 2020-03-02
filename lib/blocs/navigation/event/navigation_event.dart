@@ -5,13 +5,13 @@ part 'navigation_event.g.dart';
 @superEnum
 enum _NavigationEvent {
   @object
-  Pop,
+  NavigationPopEvent,
   @Data(fields: [
-    DataField('index', int)
+    DataField<int>('index')
   ])
-  NavigateToHome,
+  NavigateToHomeEvent,
   @Data(fields: [
-    DataField('route', String)
+    DataField<String>('route')
   ])
-  Push
+  NavigationPushEvent
 }

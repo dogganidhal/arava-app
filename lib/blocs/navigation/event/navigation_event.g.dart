@@ -10,77 +10,89 @@ part of 'navigation_event.dart';
 abstract class NavigationEvent extends Equatable {
   const NavigationEvent(this._type);
 
-  factory NavigationEvent.pop() = Pop;
+  factory NavigationEvent.navigationPopEvent() = NavigationPopEvent;
 
-  factory NavigationEvent.navigateToHome({@required int index}) =
-      NavigateToHome;
+  factory NavigationEvent.navigateToHomeEvent({@required int index}) =
+      NavigateToHomeEvent;
 
-  factory NavigationEvent.push({@required String route}) = Push;
+  factory NavigationEvent.navigationPushEvent({@required String route}) =
+      NavigationPushEvent;
 
   final _NavigationEvent _type;
 
 //ignore: missing_return
-  FutureOr<R> when<R>(
-      {@required FutureOr<R> Function(Pop) pop,
-      @required FutureOr<R> Function(NavigateToHome) navigateToHome,
-      @required FutureOr<R> Function(Push) push}) {
+  R when<R>(
+      {@required
+          FutureOr<R> Function(NavigationPopEvent) navigationPopEvent,
+      @required
+          FutureOr<R> Function(NavigateToHomeEvent) navigateToHomeEvent,
+      @required
+          FutureOr<R> Function(NavigationPushEvent) navigationPushEvent}) {
     assert(() {
-      if (pop == null || navigateToHome == null || push == null)
+      if (navigationPopEvent == null ||
+          navigateToHomeEvent == null ||
+          navigationPushEvent == null) {
         throw 'check for all possible cases';
+      }
       return true;
     }());
     switch (this._type) {
-      case _NavigationEvent.Pop:
-        return pop(this as Pop);
-      case _NavigationEvent.NavigateToHome:
-        return navigateToHome(this as NavigateToHome);
-      case _NavigationEvent.Push:
-        return push(this as Push);
+      case _NavigationEvent.NavigationPopEvent:
+        return navigationPopEvent(this as NavigationPopEvent);
+      case _NavigationEvent.NavigateToHomeEvent:
+        return navigateToHomeEvent(this as NavigateToHomeEvent);
+      case _NavigationEvent.NavigationPushEvent:
+        return navigationPushEvent(this as NavigationPushEvent);
     }
   }
 
-  FutureOr<R> whenOrElse<R>(
-      {FutureOr<R> Function(Pop) pop,
-      FutureOr<R> Function(NavigateToHome) navigateToHome,
-      FutureOr<R> Function(Push) push,
+  R whenOrElse<R>(
+      {FutureOr<R> Function(NavigationPopEvent) navigationPopEvent,
+      FutureOr<R> Function(NavigateToHomeEvent) navigateToHomeEvent,
+      FutureOr<R> Function(NavigationPushEvent) navigationPushEvent,
       @required FutureOr<R> Function(NavigationEvent) orElse}) {
     assert(() {
-      if (orElse == null) throw 'Missing orElse case';
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
       return true;
     }());
     switch (this._type) {
-      case _NavigationEvent.Pop:
-        if (pop == null) break;
-        return pop(this as Pop);
-      case _NavigationEvent.NavigateToHome:
-        if (navigateToHome == null) break;
-        return navigateToHome(this as NavigateToHome);
-      case _NavigationEvent.Push:
-        if (push == null) break;
-        return push(this as Push);
+      case _NavigationEvent.NavigationPopEvent:
+        if (navigationPopEvent == null) break;
+        return navigationPopEvent(this as NavigationPopEvent);
+      case _NavigationEvent.NavigateToHomeEvent:
+        if (navigateToHomeEvent == null) break;
+        return navigateToHomeEvent(this as NavigateToHomeEvent);
+      case _NavigationEvent.NavigationPushEvent:
+        if (navigationPushEvent == null) break;
+        return navigationPushEvent(this as NavigationPushEvent);
     }
     return orElse(this);
   }
 
   FutureOr<void> whenPartial(
-      {FutureOr<void> Function(Pop) pop,
-      FutureOr<void> Function(NavigateToHome) navigateToHome,
-      FutureOr<void> Function(Push) push}) {
+      {FutureOr<void> Function(NavigationPopEvent) navigationPopEvent,
+      FutureOr<void> Function(NavigateToHomeEvent) navigateToHomeEvent,
+      FutureOr<void> Function(NavigationPushEvent) navigationPushEvent}) {
     assert(() {
-      if (pop == null && navigateToHome == null && push == null)
+      if (navigationPopEvent == null &&
+          navigateToHomeEvent == null &&
+          navigationPushEvent == null) {
         throw 'provide at least one branch';
+      }
       return true;
     }());
     switch (this._type) {
-      case _NavigationEvent.Pop:
-        if (pop == null) break;
-        return pop(this as Pop);
-      case _NavigationEvent.NavigateToHome:
-        if (navigateToHome == null) break;
-        return navigateToHome(this as NavigateToHome);
-      case _NavigationEvent.Push:
-        if (push == null) break;
-        return push(this as Push);
+      case _NavigationEvent.NavigationPopEvent:
+        if (navigationPopEvent == null) break;
+        return navigationPopEvent(this as NavigationPopEvent);
+      case _NavigationEvent.NavigateToHomeEvent:
+        if (navigateToHomeEvent == null) break;
+        return navigateToHomeEvent(this as NavigateToHomeEvent);
+      case _NavigationEvent.NavigationPushEvent:
+        if (navigationPushEvent == null) break;
+        return navigationPushEvent(this as NavigationPushEvent);
     }
   }
 
@@ -89,38 +101,39 @@ abstract class NavigationEvent extends Equatable {
 }
 
 @immutable
-class Pop extends NavigationEvent {
-  const Pop._() : super(_NavigationEvent.Pop);
+class NavigationPopEvent extends NavigationEvent {
+  const NavigationPopEvent._() : super(_NavigationEvent.NavigationPopEvent);
 
-  factory Pop() {
-    _instance ??= Pop._();
+  factory NavigationPopEvent() {
+    _instance ??= NavigationPopEvent._();
     return _instance;
   }
 
-  static Pop _instance;
+  static NavigationPopEvent _instance;
 }
 
 @immutable
-class NavigateToHome extends NavigationEvent {
-  const NavigateToHome({@required this.index})
-      : super(_NavigationEvent.NavigateToHome);
+class NavigateToHomeEvent extends NavigationEvent {
+  const NavigateToHomeEvent({@required this.index})
+      : super(_NavigationEvent.NavigateToHomeEvent);
 
   final int index;
 
   @override
-  String toString() => 'NavigateToHome(index:${this.index})';
+  String toString() => 'NavigateToHomeEvent(index:${this.index})';
   @override
   List get props => [index];
 }
 
 @immutable
-class Push extends NavigationEvent {
-  const Push({@required this.route}) : super(_NavigationEvent.Push);
+class NavigationPushEvent extends NavigationEvent {
+  const NavigationPushEvent({@required this.route})
+      : super(_NavigationEvent.NavigationPushEvent);
 
   final String route;
 
   @override
-  String toString() => 'Push(route:${this.route})';
+  String toString() => 'NavigationPushEvent(route:${this.route})';
   @override
   List get props => [route];
 }

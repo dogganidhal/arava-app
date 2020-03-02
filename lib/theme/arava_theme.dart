@@ -10,11 +10,14 @@ class AravaTheme {
   static final kDarkAccentColor = Color(0xFF03DAC6);
   static final kDarkColor = Color(0xFF171717);
   static final kLightColor = Color(0xFFFDFDFD);
+  static final kErrorColor = Color(0xFFFF3C38);
 
   static final kLightTheme = ThemeData(
     brightness: Brightness.light,
     primaryColor: kLightPrimaryColor,
     accentColor: kLightAccentColor,
+    errorColor: kErrorColor,
+    cursorColor: kLightPrimaryColor,
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: kLightAccentColor,
       elevation: 1
@@ -47,13 +50,16 @@ class AravaTheme {
   static final kDarkTheme = ThemeData(
     brightness: Brightness.dark,
     primaryColor: kDarkAccentColor,
+    errorColor: kErrorColor,
     colorScheme: ColorScheme.dark(
       primary: kDarkPrimaryColor,
-      brightness: Brightness.dark
+      brightness: Brightness.light,
     ),
+    splashColor: kDarkColor.withOpacity(0.4),
     fontFamily: 'CircularStd',
     backgroundColor: kDarkColor,
     scaffoldBackgroundColor: kDarkColor,
+    cursorColor: kDarkPrimaryColor,
     textTheme: TextTheme(
       body1: TextStyle(
         color: kLightColor,

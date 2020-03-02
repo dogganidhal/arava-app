@@ -14,82 +14,82 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({@required this.session, @required this.authService});
 
   @override
-  AuthState get initialState => AuthState.anonymous();
+  AuthState get initialState => AuthState.authAnonymousState();
 
   @override
   Stream<AuthState> mapEventToState(AuthEvent event) => event.when(
-    loadAuth: _loadAuth,
-    logOut: _logOut,
-    tryLogin: _tryLogin,
-    trySignUp: _trySignUp
+    loadAuthEvent: _loadAuth,
+    logOutEvent: _logOut,
+    tryLoginEvent: _tryLogin,
+    trySignUpEvent: _trySignUp
   );
 
   void loadAuth() {
-    add(AuthEvent.loadAuth());
+    add(AuthEvent.loadAuthEvent());
   }
 
   void logout() {
-    add(AuthEvent.logOut());
+    add(AuthEvent.logOutEvent());
   }
 
   void tryLogin(String email, String password) {
-    add(AuthEvent.tryLogin(email: email, password: password));
+    add(AuthEvent.tryLoginEvent(email: email, password: password));
   }
 
   void trySignUp({
     String email, String password,
     String firstName, String lastName
   }) {
-    add(AuthEvent.trySignUp(
+    add(AuthEvent.trySignUpEvent(
       email: email, password: password,
       firstName: firstName, lastName: lastName
     ));
   }
 
-  Stream<AuthState> _loadAuth(LoadAuth event) async* {
-    yield AuthState.loading();
+  Stream<AuthState> _loadAuth(LoadAuthEvent event) async* {
+    yield AuthState.authLoadingState();
     final persistedCredentials = await session.getCredentials();
     if (persistedCredentials != null) {
       final persistedUser = await session.getUser();
-      yield AuthState.authenticated(
+      yield AuthState.authAuthenticatedState(
         user: persistedUser,
         credentials: persistedCredentials
       );
       final userFromApi = await authService.getUser();
       await session.setUser(userFromApi);
-      yield AuthState.authenticated(
+      yield AuthState.authAuthenticatedState(
         user: userFromApi,
         credentials: persistedCredentials
       );
     } else {
-      yield AuthState.anonymous();
+      yield AuthState.authAnonymousState();
     }
   }
 
-  Stream<AuthState> _logOut(LogOut event) async* {
-    yield AuthState.loading();
+  Stream<AuthState> _logOut(LogOutEvent event) async* {
+    yield AuthState.authLoadingState();
     await session.clearCredentials();
     await session.clearUser();
-    yield AuthState.anonymous();
+    yield AuthState.authAnonymousState();
   }
 
-  Stream<AuthState> _tryLogin(TryLogin event) async* {
-    yield AuthState.loading();
+  Stream<AuthState> _tryLogin(TryLoginEvent event) async* {
+    yield AuthState.authLoadingState();
     try {
       final credentials = await authService.login(event.email, event.password);
       await session.persistCredentials(credentials);
       final user = await authService.getUser();
-      yield AuthState.authenticated(
+      yield AuthState.authAuthenticatedState(
         credentials: credentials,
         user: user
       );
     } on AppException catch (exception) {
-      yield AuthState.failed(exception: exception);
+      yield AuthState.authFailedState(exception: exception);
     }
   }
 
-  Stream<AuthState> _trySignUp(TrySignUp event) async* {
-    yield AuthState.loading();
+  Stream<AuthState> _trySignUp(TrySignUpEvent event) async* {
+    yield AuthState.authLoadingState();
     try {
       final credentials = await authService.signUp(
         email: event.email, password: event.password,
@@ -98,12 +98,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
       await session.persistCredentials(credentials);
       final user = await authService.getUser();
-      yield AuthState.authenticated(
+      yield AuthState.authAuthenticatedState(
         credentials: credentials,
         user: user
       );
     } on AppException catch (exception) {
-      yield AuthState.failed(exception: exception);
+      yield AuthState.authFailedState(exception: exception);
     }
   }
 

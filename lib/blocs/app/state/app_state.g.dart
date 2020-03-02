@@ -10,109 +10,117 @@ part of 'app_state.dart';
 abstract class AppState extends Equatable {
   const AppState(this._type);
 
-  factory AppState.loading() = Loading;
+  factory AppState.appLoadingState() = AppLoadingState;
 
-  factory AppState.unintialized() = Unintialized;
+  factory AppState.appUnintializedState() = AppUnintializedState;
 
-  factory AppState.firstLaunch({@required String language}) = FirstLaunch;
+  factory AppState.appFirstLaunchState({@required String language}) =
+      AppFirstLaunchState;
 
-  factory AppState.appLoaded({@required AppConfiguration appConfiguration}) =
-      AppLoaded;
+  factory AppState.appLoadedState(
+      {@required AppConfiguration appConfiguration}) = AppLoadedState;
 
-  factory AppState.error({@required AppException exception}) = Error;
+  factory AppState.appErrorState({@required AppException exception}) =
+      AppErrorState;
 
   final _AppState _type;
 
 //ignore: missing_return
-  FutureOr<R> when<R>(
-      {@required FutureOr<R> Function(Loading) loading,
-      @required FutureOr<R> Function(Unintialized) unintialized,
-      @required FutureOr<R> Function(FirstLaunch) firstLaunch,
-      @required FutureOr<R> Function(AppLoaded) appLoaded,
-      @required FutureOr<R> Function(Error) error}) {
+  R when<R>(
+      {@required FutureOr<R> Function(AppLoadingState) appLoadingState,
+      @required FutureOr<R> Function(AppUnintializedState) appUnintializedState,
+      @required FutureOr<R> Function(AppFirstLaunchState) appFirstLaunchState,
+      @required FutureOr<R> Function(AppLoadedState) appLoadedState,
+      @required FutureOr<R> Function(AppErrorState) appErrorState}) {
     assert(() {
-      if (loading == null ||
-          unintialized == null ||
-          firstLaunch == null ||
-          appLoaded == null ||
-          error == null) throw 'check for all possible cases';
+      if (appLoadingState == null ||
+          appUnintializedState == null ||
+          appFirstLaunchState == null ||
+          appLoadedState == null ||
+          appErrorState == null) {
+        throw 'check for all possible cases';
+      }
       return true;
     }());
     switch (this._type) {
-      case _AppState.Loading:
-        return loading(this as Loading);
-      case _AppState.Unintialized:
-        return unintialized(this as Unintialized);
-      case _AppState.FirstLaunch:
-        return firstLaunch(this as FirstLaunch);
-      case _AppState.AppLoaded:
-        return appLoaded(this as AppLoaded);
-      case _AppState.Error:
-        return error(this as Error);
+      case _AppState.AppLoadingState:
+        return appLoadingState(this as AppLoadingState);
+      case _AppState.AppUnintializedState:
+        return appUnintializedState(this as AppUnintializedState);
+      case _AppState.AppFirstLaunchState:
+        return appFirstLaunchState(this as AppFirstLaunchState);
+      case _AppState.AppLoadedState:
+        return appLoadedState(this as AppLoadedState);
+      case _AppState.AppErrorState:
+        return appErrorState(this as AppErrorState);
     }
   }
 
-  FutureOr<R> whenOrElse<R>(
-      {FutureOr<R> Function(Loading) loading,
-      FutureOr<R> Function(Unintialized) unintialized,
-      FutureOr<R> Function(FirstLaunch) firstLaunch,
-      FutureOr<R> Function(AppLoaded) appLoaded,
-      FutureOr<R> Function(Error) error,
+  R whenOrElse<R>(
+      {FutureOr<R> Function(AppLoadingState) appLoadingState,
+      FutureOr<R> Function(AppUnintializedState) appUnintializedState,
+      FutureOr<R> Function(AppFirstLaunchState) appFirstLaunchState,
+      FutureOr<R> Function(AppLoadedState) appLoadedState,
+      FutureOr<R> Function(AppErrorState) appErrorState,
       @required FutureOr<R> Function(AppState) orElse}) {
     assert(() {
-      if (orElse == null) throw 'Missing orElse case';
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
       return true;
     }());
     switch (this._type) {
-      case _AppState.Loading:
-        if (loading == null) break;
-        return loading(this as Loading);
-      case _AppState.Unintialized:
-        if (unintialized == null) break;
-        return unintialized(this as Unintialized);
-      case _AppState.FirstLaunch:
-        if (firstLaunch == null) break;
-        return firstLaunch(this as FirstLaunch);
-      case _AppState.AppLoaded:
-        if (appLoaded == null) break;
-        return appLoaded(this as AppLoaded);
-      case _AppState.Error:
-        if (error == null) break;
-        return error(this as Error);
+      case _AppState.AppLoadingState:
+        if (appLoadingState == null) break;
+        return appLoadingState(this as AppLoadingState);
+      case _AppState.AppUnintializedState:
+        if (appUnintializedState == null) break;
+        return appUnintializedState(this as AppUnintializedState);
+      case _AppState.AppFirstLaunchState:
+        if (appFirstLaunchState == null) break;
+        return appFirstLaunchState(this as AppFirstLaunchState);
+      case _AppState.AppLoadedState:
+        if (appLoadedState == null) break;
+        return appLoadedState(this as AppLoadedState);
+      case _AppState.AppErrorState:
+        if (appErrorState == null) break;
+        return appErrorState(this as AppErrorState);
     }
     return orElse(this);
   }
 
   FutureOr<void> whenPartial(
-      {FutureOr<void> Function(Loading) loading,
-      FutureOr<void> Function(Unintialized) unintialized,
-      FutureOr<void> Function(FirstLaunch) firstLaunch,
-      FutureOr<void> Function(AppLoaded) appLoaded,
-      FutureOr<void> Function(Error) error}) {
+      {FutureOr<void> Function(AppLoadingState) appLoadingState,
+      FutureOr<void> Function(AppUnintializedState) appUnintializedState,
+      FutureOr<void> Function(AppFirstLaunchState) appFirstLaunchState,
+      FutureOr<void> Function(AppLoadedState) appLoadedState,
+      FutureOr<void> Function(AppErrorState) appErrorState}) {
     assert(() {
-      if (loading == null &&
-          unintialized == null &&
-          firstLaunch == null &&
-          appLoaded == null &&
-          error == null) throw 'provide at least one branch';
+      if (appLoadingState == null &&
+          appUnintializedState == null &&
+          appFirstLaunchState == null &&
+          appLoadedState == null &&
+          appErrorState == null) {
+        throw 'provide at least one branch';
+      }
       return true;
     }());
     switch (this._type) {
-      case _AppState.Loading:
-        if (loading == null) break;
-        return loading(this as Loading);
-      case _AppState.Unintialized:
-        if (unintialized == null) break;
-        return unintialized(this as Unintialized);
-      case _AppState.FirstLaunch:
-        if (firstLaunch == null) break;
-        return firstLaunch(this as FirstLaunch);
-      case _AppState.AppLoaded:
-        if (appLoaded == null) break;
-        return appLoaded(this as AppLoaded);
-      case _AppState.Error:
-        if (error == null) break;
-        return error(this as Error);
+      case _AppState.AppLoadingState:
+        if (appLoadingState == null) break;
+        return appLoadingState(this as AppLoadingState);
+      case _AppState.AppUnintializedState:
+        if (appUnintializedState == null) break;
+        return appUnintializedState(this as AppUnintializedState);
+      case _AppState.AppFirstLaunchState:
+        if (appFirstLaunchState == null) break;
+        return appFirstLaunchState(this as AppFirstLaunchState);
+      case _AppState.AppLoadedState:
+        if (appLoadedState == null) break;
+        return appLoadedState(this as AppLoadedState);
+      case _AppState.AppErrorState:
+        if (appErrorState == null) break;
+        return appErrorState(this as AppErrorState);
     }
   }
 
@@ -121,62 +129,65 @@ abstract class AppState extends Equatable {
 }
 
 @immutable
-class Loading extends AppState {
-  const Loading._() : super(_AppState.Loading);
+class AppLoadingState extends AppState {
+  const AppLoadingState._() : super(_AppState.AppLoadingState);
 
-  factory Loading() {
-    _instance ??= Loading._();
+  factory AppLoadingState() {
+    _instance ??= AppLoadingState._();
     return _instance;
   }
 
-  static Loading _instance;
+  static AppLoadingState _instance;
 }
 
 @immutable
-class Unintialized extends AppState {
-  const Unintialized._() : super(_AppState.Unintialized);
+class AppUnintializedState extends AppState {
+  const AppUnintializedState._() : super(_AppState.AppUnintializedState);
 
-  factory Unintialized() {
-    _instance ??= Unintialized._();
+  factory AppUnintializedState() {
+    _instance ??= AppUnintializedState._();
     return _instance;
   }
 
-  static Unintialized _instance;
+  static AppUnintializedState _instance;
 }
 
 @immutable
-class FirstLaunch extends AppState {
-  const FirstLaunch({@required this.language}) : super(_AppState.FirstLaunch);
+class AppFirstLaunchState extends AppState {
+  const AppFirstLaunchState({@required this.language})
+      : super(_AppState.AppFirstLaunchState);
 
   final String language;
 
   @override
-  String toString() => 'FirstLaunch(language:${this.language})';
+  String toString() => 'AppFirstLaunchState(language:${this.language})';
   @override
   List get props => [language];
 }
 
 @immutable
-class AppLoaded extends AppState {
-  const AppLoaded({@required this.appConfiguration})
-      : super(_AppState.AppLoaded);
+class AppLoadedState extends AppState {
+  const AppLoadedState({@required this.appConfiguration})
+      : super(_AppState.AppLoadedState);
 
   final AppConfiguration appConfiguration;
 
   @override
-  String toString() => 'AppLoaded(appConfiguration:${this.appConfiguration})';
+  String toString() =>
+      'AppLoadedState(appConfiguration:${this.appConfiguration})';
   @override
   List get props => [appConfiguration];
 }
 
 @immutable
-class Error extends AppState {
-  const Error({@required this.exception}) : super(_AppState.Error);
+class AppErrorState extends AppState {
+  const AppErrorState({@required this.exception})
+      : super(_AppState.AppErrorState);
 
   final AppException exception;
 
   @override
-  String toString() => 'Error(exception:${this.exception})';
+  String toString() => 'AppErrorState(exception:${this.exception})';
   @override
   List get props => [exception];
 }

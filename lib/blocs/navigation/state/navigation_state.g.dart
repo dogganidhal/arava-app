@@ -10,47 +10,54 @@ part of 'navigation_state.dart';
 abstract class NavigationState extends Equatable {
   const NavigationState(this._type);
 
-  factory NavigationState.navigator(
-      {@required String route, @required int homeIndex}) = Navigator;
+  factory NavigationState.navigatorState(
+      {@required String route, @required int homeIndex}) = NavigatorState;
 
   final _NavigationState _type;
 
 //ignore: missing_return
-  FutureOr<R> when<R>({@required FutureOr<R> Function(Navigator) navigator}) {
+  R when<R>({@required FutureOr<R> Function(NavigatorState) navigatorState}) {
     assert(() {
-      if (navigator == null) throw 'check for all possible cases';
+      if (navigatorState == null) {
+        throw 'check for all possible cases';
+      }
       return true;
     }());
     switch (this._type) {
-      case _NavigationState.Navigator:
-        return navigator(this as Navigator);
+      case _NavigationState.NavigatorState:
+        return navigatorState(this as NavigatorState);
     }
   }
 
-  FutureOr<R> whenOrElse<R>(
-      {FutureOr<R> Function(Navigator) navigator,
+  R whenOrElse<R>(
+      {FutureOr<R> Function(NavigatorState) navigatorState,
       @required FutureOr<R> Function(NavigationState) orElse}) {
     assert(() {
-      if (orElse == null) throw 'Missing orElse case';
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
       return true;
     }());
     switch (this._type) {
-      case _NavigationState.Navigator:
-        if (navigator == null) break;
-        return navigator(this as Navigator);
+      case _NavigationState.NavigatorState:
+        if (navigatorState == null) break;
+        return navigatorState(this as NavigatorState);
     }
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial({FutureOr<void> Function(Navigator) navigator}) {
+  FutureOr<void> whenPartial(
+      {FutureOr<void> Function(NavigatorState) navigatorState}) {
     assert(() {
-      if (navigator == null) throw 'provide at least one branch';
+      if (navigatorState == null) {
+        throw 'provide at least one branch';
+      }
       return true;
     }());
     switch (this._type) {
-      case _NavigationState.Navigator:
-        if (navigator == null) break;
-        return navigator(this as Navigator);
+      case _NavigationState.NavigatorState:
+        if (navigatorState == null) break;
+        return navigatorState(this as NavigatorState);
     }
   }
 
@@ -59,9 +66,9 @@ abstract class NavigationState extends Equatable {
 }
 
 @immutable
-class Navigator extends NavigationState {
-  const Navigator({@required this.route, @required this.homeIndex})
-      : super(_NavigationState.Navigator);
+class NavigatorState extends NavigationState {
+  const NavigatorState({@required this.route, @required this.homeIndex})
+      : super(_NavigationState.NavigatorState);
 
   final String route;
 
@@ -69,7 +76,7 @@ class Navigator extends NavigationState {
 
   @override
   String toString() =>
-      'Navigator(route:${this.route},homeIndex:${this.homeIndex})';
+      'NavigatorState(route:${this.route},homeIndex:${this.homeIndex})';
   @override
   List get props => [route, homeIndex];
 }

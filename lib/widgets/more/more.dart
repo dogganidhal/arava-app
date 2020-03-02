@@ -19,7 +19,7 @@ class More extends StatelessWidget {
         children: <Widget>[
           state.whenOrElse(
             orElse: (_) => Container(),
-            authenticated: (authenticatedState) => ListTile(
+            authAuthenticatedState: (authenticatedState) => ListTile(
               leading: Icon(Icons.person, color: Theme.of(context).primaryColor),
               title: Text(
                 AppLocalizations.of(context).more_Profile(),
@@ -76,7 +76,7 @@ class More extends StatelessWidget {
           ),
           Divider(height: 1),
           state.whenOrElse(
-            authenticated: (_) => ListTile(
+            authAuthenticatedState: (_) => ListTile(
               leading: Icon(Icons.block, color: Theme.of(context).primaryColor),
               title: Text(
                 AppLocalizations.of(context).more_Logout(),
@@ -94,7 +94,6 @@ class More extends StatelessWidget {
                     ),
                     actions: <Widget>[
                       FlatButton(
-                        colorBrightness: Brightness.dark,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4)
                         ),
@@ -106,7 +105,6 @@ class More extends StatelessWidget {
                         },
                       ),
                       FlatButton(
-                        colorBrightness: Brightness.dark,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4)
                         ),

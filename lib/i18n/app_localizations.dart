@@ -168,6 +168,11 @@ class AppLocalizations {
     name: 'general_Cancel'
   );
 
+  String general_Loading() => Intl.message(
+    'Loading ...',
+    name: 'general_Loading'
+  );
+
   // endregion
 
   // region Search
@@ -234,6 +239,30 @@ class AppLocalizations {
   String auth_SignUpSubtitle() => Intl.message(
     'Please sign up to continue',
     name: 'auth_SignUpSubtitle'
+  );
+
+  // endregion
+
+  // region Profile
+
+  String profile_CurrentPasswordFieldPlaceholder() => Intl.message(
+    'Current password',
+    name: 'profile_CurrentPasswordFieldPlaceholder'
+  );
+
+  String profile_NewPasswordFieldPlaceholder() => Intl.message(
+    'New password',
+    name: 'profile_NewPasswordFieldPlaceholder'
+  );
+
+  String profile_SubmitProfileUpdate() => Intl.message(
+    'Submit',
+    name: 'profile_SubmitProfileUpdate'
+  );
+
+  String profile_ProfileUpdateSuccessful() => Intl.message(
+    'Profile updated successfully',
+    name: 'profile_ProfileUpdateSuccessful'
   );
 
   // endregion

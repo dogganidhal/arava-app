@@ -56,7 +56,7 @@ class _AuthState extends State<Auth> {
         bloc: Modular.get<AuthBloc>(),
         listener: (context, state) {
           state.whenPartial(
-            authenticated: (authenticatedState) {
+            authAuthenticatedState: (authenticatedState) {
               widget.onAuthenticationSuccessful(authenticatedState.user);
             }
           );

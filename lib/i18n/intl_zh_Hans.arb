@@ -179,5 +179,30 @@
   "@auth_PasswordMinimumLengthErrorMessage": {
     "type": "text",
     "placeholders": {}
+  },
+  "general_Loading": "载入中 ...",
+  "@general_Loading": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_CurrentPasswordFieldPlaceholder": "当前密码",
+  "@profile_CurrentPasswordFieldPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_NewPasswordFieldPlaceholder": "新密码",
+  "@profile_NewPasswordFieldPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_SubmitProfileUpdate": "提交",
+  "@profile_SubmitProfileUpdate": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_ProfileUpdateSuccessful": "个人资料更新成功",
+  "@profile_ProfileUpdateSuccessful": {
+    "type": "text",
+    "placeholders": {}
   }
 }

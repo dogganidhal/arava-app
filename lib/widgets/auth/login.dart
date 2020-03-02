@@ -120,7 +120,7 @@ class _LoginState extends State<Login> with AutomaticKeepAliveClientMixin {
                     padding: EdgeInsets.all(16),
                     child: state.whenOrElse(
                       orElse: (_) => Container(),
-                      failed: (failedState) => Container(
+                      authFailedState: (failedState) => Container(
                         width: double.infinity,
                         padding: EdgeInsets.all(16),
                         decoration: BoxDecoration(
@@ -149,13 +149,12 @@ class _LoginState extends State<Login> with AutomaticKeepAliveClientMixin {
                           child: Text(AppLocalizations.of(context).auth_SignUpTitle()),
                         ),
                         FlatButton(
-                          colorBrightness: Brightness.dark,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4)
                           ),
                           color: Theme.of(context).primaryColor,
                           onPressed: state.whenOrElse(
-                            loading: (_) => null,
+                            authLoadingState: (_) => null,
                             orElse: (anonymousState) => _login
                           ),
                           child: Text(AppLocalizations.of(context).auth_LoginTitle()),

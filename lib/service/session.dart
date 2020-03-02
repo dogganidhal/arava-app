@@ -16,9 +16,15 @@ class Session {
 
   final CacheManager cacheManager;
 
+  final Map<String, dynamic> _cacheMap = {
+    _kUser: null
+  };
+
   Session({@required this.cacheManager});
 
   // region Auth credentials related operations
+
+  User get cachedUser => _cacheMap[_kUser];
 
   Future<User> getUser() async {
     final jsonString = await cacheManager.getStringAsync(_kUser);
@@ -26,15 +32,19 @@ class Session {
       return null;
     }
     final Map<String, dynamic> jsonMap = json.decode(jsonString);
-    return User.fromJson(jsonMap);
+    final User user = User.fromJson(jsonMap);
+    _cacheMap[_kUser] = user;
+    return user;
   }
 
   Future<void> setUser(User user) async {
     await cacheManager.setStringAsync(_kUser, json.encode(user.toJson()));
+    _cacheMap[_kUser] = user;
   }
 
   Future<void> clearUser() async {
     await cacheManager.removeAsync(_kUser);
+    _cacheMap[_kUser] = null;
   }
 
   Future<void> persistCredentials(JwtAuthCredentials credentials) async {

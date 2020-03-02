@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-03-01T11:44:17.243493",
+  "@@last_modified": "2020-03-02T19:28:35.338320",
   "appName": "Arava",
   "@appName": {
     "type": "text",
@@ -120,6 +120,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "general_Loading": "Loading ...",
+  "@general_Loading": {
+    "type": "text",
+    "placeholders": {}
+  },
   "search_SelectIsland": "Select islands",
   "@search_SelectIsland": {
     "type": "text",
@@ -177,6 +182,26 @@
   },
   "auth_SignUpSubtitle": "Please sign up to continue",
   "@auth_SignUpSubtitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_CurrentPasswordFieldPlaceholder": "Current password",
+  "@profile_CurrentPasswordFieldPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_NewPasswordFieldPlaceholder": "New password",
+  "@profile_NewPasswordFieldPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_SubmitProfileUpdate": "Submit",
+  "@profile_SubmitProfileUpdate": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_ProfileUpdateSuccessful": "Profile updated successfully",
+  "@profile_ProfileUpdateSuccessful": {
     "type": "text",
     "placeholders": {}
   }

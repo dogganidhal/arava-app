@@ -10,98 +10,104 @@ part of 'auth_event.dart';
 abstract class AuthEvent extends Equatable {
   const AuthEvent(this._type);
 
-  factory AuthEvent.loadAuth() = LoadAuth;
+  factory AuthEvent.loadAuthEvent() = LoadAuthEvent;
 
-  factory AuthEvent.logOut() = LogOut;
+  factory AuthEvent.logOutEvent() = LogOutEvent;
 
-  factory AuthEvent.tryLogin(
-      {@required String email, @required String password}) = TryLogin;
+  factory AuthEvent.tryLoginEvent(
+      {@required String email, @required String password}) = TryLoginEvent;
 
-  factory AuthEvent.trySignUp(
+  factory AuthEvent.trySignUpEvent(
       {@required String email,
       @required String firstName,
       @required String lastName,
-      @required String password}) = TrySignUp;
+      @required String password}) = TrySignUpEvent;
 
   final _AuthEvent _type;
 
 //ignore: missing_return
-  FutureOr<R> when<R>(
-      {@required FutureOr<R> Function(LoadAuth) loadAuth,
-      @required FutureOr<R> Function(LogOut) logOut,
-      @required FutureOr<R> Function(TryLogin) tryLogin,
-      @required FutureOr<R> Function(TrySignUp) trySignUp}) {
+  R when<R>(
+      {@required FutureOr<R> Function(LoadAuthEvent) loadAuthEvent,
+      @required FutureOr<R> Function(LogOutEvent) logOutEvent,
+      @required FutureOr<R> Function(TryLoginEvent) tryLoginEvent,
+      @required FutureOr<R> Function(TrySignUpEvent) trySignUpEvent}) {
     assert(() {
-      if (loadAuth == null ||
-          logOut == null ||
-          tryLogin == null ||
-          trySignUp == null) throw 'check for all possible cases';
+      if (loadAuthEvent == null ||
+          logOutEvent == null ||
+          tryLoginEvent == null ||
+          trySignUpEvent == null) {
+        throw 'check for all possible cases';
+      }
       return true;
     }());
     switch (this._type) {
-      case _AuthEvent.LoadAuth:
-        return loadAuth(this as LoadAuth);
-      case _AuthEvent.LogOut:
-        return logOut(this as LogOut);
-      case _AuthEvent.TryLogin:
-        return tryLogin(this as TryLogin);
-      case _AuthEvent.TrySignUp:
-        return trySignUp(this as TrySignUp);
+      case _AuthEvent.LoadAuthEvent:
+        return loadAuthEvent(this as LoadAuthEvent);
+      case _AuthEvent.LogOutEvent:
+        return logOutEvent(this as LogOutEvent);
+      case _AuthEvent.TryLoginEvent:
+        return tryLoginEvent(this as TryLoginEvent);
+      case _AuthEvent.TrySignUpEvent:
+        return trySignUpEvent(this as TrySignUpEvent);
     }
   }
 
-  FutureOr<R> whenOrElse<R>(
-      {FutureOr<R> Function(LoadAuth) loadAuth,
-      FutureOr<R> Function(LogOut) logOut,
-      FutureOr<R> Function(TryLogin) tryLogin,
-      FutureOr<R> Function(TrySignUp) trySignUp,
+  R whenOrElse<R>(
+      {FutureOr<R> Function(LoadAuthEvent) loadAuthEvent,
+      FutureOr<R> Function(LogOutEvent) logOutEvent,
+      FutureOr<R> Function(TryLoginEvent) tryLoginEvent,
+      FutureOr<R> Function(TrySignUpEvent) trySignUpEvent,
       @required FutureOr<R> Function(AuthEvent) orElse}) {
     assert(() {
-      if (orElse == null) throw 'Missing orElse case';
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
       return true;
     }());
     switch (this._type) {
-      case _AuthEvent.LoadAuth:
-        if (loadAuth == null) break;
-        return loadAuth(this as LoadAuth);
-      case _AuthEvent.LogOut:
-        if (logOut == null) break;
-        return logOut(this as LogOut);
-      case _AuthEvent.TryLogin:
-        if (tryLogin == null) break;
-        return tryLogin(this as TryLogin);
-      case _AuthEvent.TrySignUp:
-        if (trySignUp == null) break;
-        return trySignUp(this as TrySignUp);
+      case _AuthEvent.LoadAuthEvent:
+        if (loadAuthEvent == null) break;
+        return loadAuthEvent(this as LoadAuthEvent);
+      case _AuthEvent.LogOutEvent:
+        if (logOutEvent == null) break;
+        return logOutEvent(this as LogOutEvent);
+      case _AuthEvent.TryLoginEvent:
+        if (tryLoginEvent == null) break;
+        return tryLoginEvent(this as TryLoginEvent);
+      case _AuthEvent.TrySignUpEvent:
+        if (trySignUpEvent == null) break;
+        return trySignUpEvent(this as TrySignUpEvent);
     }
     return orElse(this);
   }
 
   FutureOr<void> whenPartial(
-      {FutureOr<void> Function(LoadAuth) loadAuth,
-      FutureOr<void> Function(LogOut) logOut,
-      FutureOr<void> Function(TryLogin) tryLogin,
-      FutureOr<void> Function(TrySignUp) trySignUp}) {
+      {FutureOr<void> Function(LoadAuthEvent) loadAuthEvent,
+      FutureOr<void> Function(LogOutEvent) logOutEvent,
+      FutureOr<void> Function(TryLoginEvent) tryLoginEvent,
+      FutureOr<void> Function(TrySignUpEvent) trySignUpEvent}) {
     assert(() {
-      if (loadAuth == null &&
-          logOut == null &&
-          tryLogin == null &&
-          trySignUp == null) throw 'provide at least one branch';
+      if (loadAuthEvent == null &&
+          logOutEvent == null &&
+          tryLoginEvent == null &&
+          trySignUpEvent == null) {
+        throw 'provide at least one branch';
+      }
       return true;
     }());
     switch (this._type) {
-      case _AuthEvent.LoadAuth:
-        if (loadAuth == null) break;
-        return loadAuth(this as LoadAuth);
-      case _AuthEvent.LogOut:
-        if (logOut == null) break;
-        return logOut(this as LogOut);
-      case _AuthEvent.TryLogin:
-        if (tryLogin == null) break;
-        return tryLogin(this as TryLogin);
-      case _AuthEvent.TrySignUp:
-        if (trySignUp == null) break;
-        return trySignUp(this as TrySignUp);
+      case _AuthEvent.LoadAuthEvent:
+        if (loadAuthEvent == null) break;
+        return loadAuthEvent(this as LoadAuthEvent);
+      case _AuthEvent.LogOutEvent:
+        if (logOutEvent == null) break;
+        return logOutEvent(this as LogOutEvent);
+      case _AuthEvent.TryLoginEvent:
+        if (tryLoginEvent == null) break;
+        return tryLoginEvent(this as TryLoginEvent);
+      case _AuthEvent.TrySignUpEvent:
+        if (trySignUpEvent == null) break;
+        return trySignUpEvent(this as TrySignUpEvent);
     }
   }
 
@@ -110,33 +116,33 @@ abstract class AuthEvent extends Equatable {
 }
 
 @immutable
-class LoadAuth extends AuthEvent {
-  const LoadAuth._() : super(_AuthEvent.LoadAuth);
+class LoadAuthEvent extends AuthEvent {
+  const LoadAuthEvent._() : super(_AuthEvent.LoadAuthEvent);
 
-  factory LoadAuth() {
-    _instance ??= LoadAuth._();
+  factory LoadAuthEvent() {
+    _instance ??= LoadAuthEvent._();
     return _instance;
   }
 
-  static LoadAuth _instance;
+  static LoadAuthEvent _instance;
 }
 
 @immutable
-class LogOut extends AuthEvent {
-  const LogOut._() : super(_AuthEvent.LogOut);
+class LogOutEvent extends AuthEvent {
+  const LogOutEvent._() : super(_AuthEvent.LogOutEvent);
 
-  factory LogOut() {
-    _instance ??= LogOut._();
+  factory LogOutEvent() {
+    _instance ??= LogOutEvent._();
     return _instance;
   }
 
-  static LogOut _instance;
+  static LogOutEvent _instance;
 }
 
 @immutable
-class TryLogin extends AuthEvent {
-  const TryLogin({@required this.email, @required this.password})
-      : super(_AuthEvent.TryLogin);
+class TryLoginEvent extends AuthEvent {
+  const TryLoginEvent({@required this.email, @required this.password})
+      : super(_AuthEvent.TryLoginEvent);
 
   final String email;
 
@@ -144,19 +150,19 @@ class TryLogin extends AuthEvent {
 
   @override
   String toString() =>
-      'TryLogin(email:${this.email},password:${this.password})';
+      'TryLoginEvent(email:${this.email},password:${this.password})';
   @override
   List get props => [email, password];
 }
 
 @immutable
-class TrySignUp extends AuthEvent {
-  const TrySignUp(
+class TrySignUpEvent extends AuthEvent {
+  const TrySignUpEvent(
       {@required this.email,
       @required this.firstName,
       @required this.lastName,
       @required this.password})
-      : super(_AuthEvent.TrySignUp);
+      : super(_AuthEvent.TrySignUpEvent);
 
   final String email;
 
@@ -168,7 +174,7 @@ class TrySignUp extends AuthEvent {
 
   @override
   String toString() =>
-      'TrySignUp(email:${this.email},firstName:${this.firstName},lastName:${this.lastName},password:${this.password})';
+      'TrySignUpEvent(email:${this.email},firstName:${this.firstName},lastName:${this.lastName},password:${this.password})';
   @override
   List get props => [email, firstName, lastName, password];
 }

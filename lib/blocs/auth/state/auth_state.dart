@@ -8,16 +8,16 @@ part 'auth_state.g.dart';
 @superEnum
 enum _AuthState {
   @object
-  Loading,
+  AuthLoadingState,
   @object
-  Anonymous,
+  AuthAnonymousState,
   @Data(fields: [
-    DataField('credentials', JwtAuthCredentials),
-    DataField('user', User)
+    DataField<JwtAuthCredentials>('credentials'),
+    DataField<User>('user')
   ])
-  Authenticated,
+  AuthAuthenticatedState,
   @Data(fields: [
-    DataField('exception', AppException)
+    DataField<AppException>('exception')
   ])
-  Failed
+  AuthFailedState
 }

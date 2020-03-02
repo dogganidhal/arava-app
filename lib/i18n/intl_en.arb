@@ -179,5 +179,30 @@
   "@auth_PasswordMinimumLengthErrorMessage": {
     "type": "text",
     "placeholders": {}
+  },
+  "general_Loading": "Loading ...",
+  "@general_Loading": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_CurrentPasswordFieldPlaceholder": "Current password",
+  "@profile_CurrentPasswordFieldPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_NewPasswordFieldPlaceholder": "New password",
+  "@profile_NewPasswordFieldPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_SubmitProfileUpdate": "Submit",
+  "@profile_SubmitProfileUpdate": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_ProfileUpdateSuccessful": "Profile updated successfully",
+  "@profile_ProfileUpdateSuccessful": {
+    "type": "text",
+    "placeholders": {}
   }
 }

@@ -27,33 +27,33 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   });
 
   @override
-  AppState get initialState => AppState.unintialized();
+  AppState get initialState => AppState.appUnintializedState();
 
   @override
   Stream<AppState> mapEventToState(AppEvent event) => event.when(
-    loadApp: _loadApp,
-    changeLocale: _changeLocale,
-    confirmFirstLaunch: _confirmFirstLaunch
+    loadAppEvent: _loadApp,
+    changeLocaleEvent: _changeLocale,
+    confirmFirstLaunchEvent: _confirmFirstLaunch
   );
 
   void loadApp() {
-    add(AppEvent.loadApp());
+    add(AppEvent.loadAppEvent());
   }
 
   void confirmFirstLaunch() {
-    add(AppEvent.confirmFirstLaunch());
+    add(AppEvent.confirmFirstLaunchEvent());
   }
 
   void changeLocale(String locale) {
-    add(AppEvent.changeLocale(locale: locale));
+    add(AppEvent.changeLocaleEvent(locale: locale));
   }
 
-  Stream<AppState> _loadApp(LoadApp event) async* {
-    yield AppState.loading();
+  Stream<AppState> _loadApp(LoadAppEvent event) async* {
+    yield AppState.appLoadingState();
     authBloc.loadAuth();
     final firstLaunch = await session.getFirstAppLaunch();
     if (firstLaunch) {
-      yield AppState.firstLaunch(language: Intl.defaultLocale);
+      yield AppState.appFirstLaunchState(language: Intl.defaultLocale);
     } else {
       try {
         final appConfiguration = await _loadAppConfiguration();
@@ -62,24 +62,24 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           Locale(appConfiguration.preferredLocale) :
           Locale(Intl.defaultLocale);
         AppLocalizations.load(locale);
-        yield AppState.appLoaded(appConfiguration: appConfiguration);
+        yield AppState.appLoadedState(appConfiguration: appConfiguration);
       } on AppException catch (exception) {
-        yield AppState.error(exception: exception);
+        yield AppState.appErrorState(exception: exception);
       }
     }
   }
 
-  Stream<AppState> _confirmFirstLaunch(ConfirmFirstLaunch event) async* {
+  Stream<AppState> _confirmFirstLaunch(ConfirmFirstLaunchEvent event) async* {
     await session.setFirstAppLaunch(false);
     loadApp();
   }
 
-  Stream<AppState> _changeLocale(ChangeLocale event) async* {
+  Stream<AppState> _changeLocale(ChangeLocaleEvent event) async* {
     await AppLocalizations.load(Locale(event.locale));
     await session.setPreferredLocale(event.locale);
-    if (state is AppLoaded) {
-      final oldConfiguration = (state as AppLoaded).appConfiguration;
-      yield AppState.appLoaded(
+    if (state is AppLoadedState) {
+      final oldConfiguration = (state as AppLoadedState).appConfiguration;
+      yield AppState.appLoadedState(
         appConfiguration: AppConfiguration(
           archipelagos: oldConfiguration.archipelagos,
           poiTypes: oldConfiguration.poiTypes,
@@ -88,8 +88,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         )
       );
     }
-    if (state is FirstLaunch) {
-      yield AppState.firstLaunch(language: event.locale);
+    if (state is AppFirstLaunchState) {
+      yield AppState.appFirstLaunchState(language: event.locale);
     }
   }
 
