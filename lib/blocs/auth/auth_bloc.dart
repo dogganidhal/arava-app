@@ -79,6 +79,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final credentials = await authService.login(event.email, event.password);
       await session.persistCredentials(credentials);
       final user = await authService.getUser();
+      await session.setUser(user);
       yield AuthState.authAuthenticatedState(
         credentials: credentials,
         user: user
@@ -98,6 +99,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
       await session.persistCredentials(credentials);
       final user = await authService.getUser();
+      await session.setUser(user);
       yield AuthState.authAuthenticatedState(
         credentials: credentials,
         user: user

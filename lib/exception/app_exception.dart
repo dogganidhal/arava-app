@@ -82,9 +82,9 @@ class UserExistsException extends LocalizedRemoteException {
 
   @override
   LocalizedErrorMessage get localizedMessage => LocalizedErrorMessage(
-    english: "User exists already, try to login instead",
-    french: "Cet utilisateur existe déjà, veuillez vous connectez",
-    chinese: "用户已经存在，请尝试登录"
+    english: "User exists already",
+    french: "Cet utilisateur existe déjà",
+    chinese: "用户已经存在"
   );
 }
 
