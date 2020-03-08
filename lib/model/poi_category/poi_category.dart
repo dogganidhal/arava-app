@@ -11,7 +11,7 @@ class PoiCategory {
   final String id;
   final String name;
   final Media icon;
-  final PoiType type;
+  final PoiTheme type;
 
   PoiCategory({
     this.id, this.name, this.icon, this.type

@@ -26,10 +26,7 @@ class _IslandSelectorState extends State<IslandSelector> {
         final islandCards = archipelago.islands
           .map((island) => IslandCard(
             island: island,
-            onSelected: () => Modular.get<SearchBloc>()
-              .selectIsland(SearchEvent.selectIsland(
-              island: island
-            )),
+            onSelected: () => Modular.get<SearchBloc>().selectIsland(island),
           ))
           .toList();
         return Column(

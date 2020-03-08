@@ -7,11 +7,13 @@ import 'package:arava/config/service_configuration.dart';
 import 'package:arava/service/app_service.dart';
 import 'package:arava/service/auth_service.dart';
 import 'package:arava/service/cache_manager.dart';
+import 'package:arava/service/poi_service.dart';
 import 'package:arava/service/session.dart';
 import 'package:arava/widgets/app/bootstrap.dart';
 import 'package:arava/widgets/auth/auth.dart';
 import 'package:arava/widgets/main/main.dart';
 import 'package:arava/widgets/map/island_selector.dart';
+import 'package:arava/widgets/map/search_filters.dart';
 import 'package:arava/widgets/profile/profile.dart';
 import 'package:arava/widgets/settings.dart';
 import 'package:dio/dio.dart';
@@ -24,13 +26,13 @@ class AppModule extends MainModule {
 
   AppModule(this.serviceConfiguration);
 
-  // here will be any class you want to inject into your project (eg bloc, dependency)
   @override
   List<Bind> get binds => [
     Bind((inject) => GlobalKey<NavigatorState>(), singleton: true),
-    // Api services
     Bind((inject) => CacheManager(), singleton: true),
-    Bind((inject) => Session(cacheManager: inject.get())),
+    Bind((inject) => Session(
+      cacheManager: inject.get())
+    ),
     Bind((inject) {
       final session = inject.get<Session>();
       switch(serviceConfiguration) {
@@ -52,17 +54,27 @@ class AppModule extends MainModule {
       dio.interceptors.add(serviceConfiguration.logInterceptor);
       return dio;
     }),
-    Bind((inject) => AppService(dio: inject.get())),
-    Bind((inject) => AuthService(dio: inject.get())),
-    // BLoCs
+    Bind((inject) => AppService(
+      dio: inject.get()
+    )),
+    Bind((inject) => AuthService(
+      dio: inject.get()
+    )),
+    Bind((inject) => PoiService(
+      dio: inject.get()
+    )),
     Bind((inject) => AppBloc(
       appService: inject.get(),
       session: inject.get(),
       navigationBloc: inject.get(),
       authBloc: inject.get()
-    ), singleton: true),
-    Bind((inject) => NavigationBloc(navigatorState: inject.get()), singleton: true),
-    Bind((inject) => SearchBloc()),
+    )),
+    Bind((inject) => NavigationBloc(
+      navigatorState: inject.get()
+    )),
+    Bind((inject) => SearchBloc(
+      poiService: inject.get()
+    )),
     Bind((inject) => AuthBloc(
       session: inject.get(),
       authService: inject.get()
@@ -73,17 +85,16 @@ class AppModule extends MainModule {
     ))
   ];
 
-  // here will be the routes of your module
   @override
   List<Router> get routers => [
     Router("/home", child: (_, args) => Main()),
     Router("/settings", child: (_, args) => Settings()),
     Router("/search/selectIslands", child: (_, args) => IslandSelector()),
     Router("/auth", child: (_, args) => Auth()),
-    Router("/profile", child: (_, args) => Profile())
+    Router("/profile", child: (_, args) => Profile()),
+    Router("/search/filters", child: (_, args) => SearchFilters())
   ];
 
-  // add your main widget here
   @override
   Widget get bootstrap => Bootstrap();
 

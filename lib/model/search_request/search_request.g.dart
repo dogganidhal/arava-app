@@ -10,8 +10,10 @@ SearchRequest _$SearchRequestFromJson(Map<String, dynamic> json) {
   return SearchRequest(
     title: json['title'] as String,
     island: json['island'] as String,
-    category: json['category'] as String,
-    Region: json['Region'] as String,
+    themeId: json['themeId'] as String,
+    region: json['region'] == null
+        ? null
+        : Region.fromJson(json['region'] as Map<String, dynamic>),
     sort: json['sort'] == null
         ? null
         : SearchSort.fromJson(json['sort'] as Map<String, dynamic>),
@@ -22,7 +24,7 @@ Map<String, dynamic> _$SearchRequestToJson(SearchRequest instance) =>
     <String, dynamic>{
       'title': instance.title,
       'island': instance.island,
-      'category': instance.category,
-      'Region': instance.Region,
+      'themeId': instance.themeId,
+      'region': instance.region,
       'sort': instance.sort,
     };

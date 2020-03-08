@@ -12,7 +12,7 @@ part 'api_configuration.g.dart';
 class ApiConfiguration {
   final VersionConfiguration versionConfiguration;
   final List<Archipelago> archipelagos;
-  final List<PoiType> poiTypes;
+  final List<PoiTheme> poiTypes;
 
   ApiConfiguration({
     this.versionConfiguration, this.archipelagos, this.poiTypes

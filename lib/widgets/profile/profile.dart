@@ -26,6 +26,7 @@ class _ProfileState extends State<Profile> {
   static final String _kFirstNameFormAttribute = "firstName";
   static final String _kLastNameFormAttribute = "lastName";
 
+  final ProfileBloc _profileBloc = Modular.get();
   final GlobalKey<FormBuilderState> _formKey = GlobalKey();
   final User _user = Modular.get<Session>().cachedUser;
 
@@ -40,7 +41,7 @@ class _ProfileState extends State<Profile> {
         centerTitle: true,
         actions: <Widget>[
           BlocBuilder<ProfileBloc, ProfileState>(
-            bloc: Modular.get<ProfileBloc>(),
+            bloc: _profileBloc,
             builder: (context, state) => IconButton(
               icon: Icon(Icons.check),
               onPressed: state.whenOrElse(
@@ -52,7 +53,7 @@ class _ProfileState extends State<Profile> {
         ],
       ),
       body: BlocListener<ProfileBloc, ProfileState>(
-        bloc: Modular.get<ProfileBloc>(),
+        bloc: _profileBloc,
         listener: (context, state) {
           state.whenPartial(
             profileUpdateSuccessState: (successState) => FlushbarHelper.createSuccess(
@@ -61,7 +62,7 @@ class _ProfileState extends State<Profile> {
           );
         },
         child: BlocBuilder<ProfileBloc, ProfileState>(
-          bloc: Modular.get<ProfileBloc>(),
+          bloc: _profileBloc,
           builder: (context, state) {
             return SingleChildScrollView(
               child: FormBuilder(
@@ -271,7 +272,7 @@ class _ProfileState extends State<Profile> {
     final String lastName = values[_kLastNameFormAttribute];
     final String password = values[_kNewPasswordFormAttribute];
     final String currentPassword = values[_kCurrentPasswordFormAttribute];
-    Modular.get<ProfileBloc>().updateProfile(UpdateProfileRequest(
+    _profileBloc.updateProfile(UpdateProfileRequest(
       email: _stringOrNull(email),
       firstName: _stringOrNull(firstName),
       lastName: _stringOrNull(lastName),

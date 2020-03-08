@@ -18,7 +18,7 @@ ApiConfiguration _$ApiConfigurationFromJson(Map<String, dynamic> json) {
         ?.toList(),
     poiTypes: (json['poiTypes'] as List)
         ?.map((e) =>
-            e == null ? null : PoiType.fromJson(e as Map<String, dynamic>))
+            e == null ? null : PoiTheme.fromJson(e as Map<String, dynamic>))
         ?.toList(),
   );
 }

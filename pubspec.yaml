@@ -17,7 +17,7 @@ dependencies:
   bloc: ^3.0.0
   flutter_bloc: ^3.1.0
   super_enum: ^0.4.2
-  google_maps_flutter: ^0.5.21+15
+  google_maps_flutter: ^0.5.24+1
   flutter_modular: ^0.5.2
   dio: ^3.0.8
   json_annotation: ^3.0.1
@@ -52,6 +52,9 @@ flutter:
   assets:
     - assets/images/octopus.png
     - assets/images/beach.png
+    - assets/images/pin-sponsored.png
+    - assets/images/pin.png
+    - assets/images/poi-placeholder.png
     - assets/map_styles/dark.json
     - assets/map_styles/light.json
 

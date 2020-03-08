@@ -12,11 +12,13 @@ Poi _$PoiFromJson(Map<String, dynamic> json) {
     island: json['island'] as String,
     featured: json['featured'] as bool,
     sponsored: json['sponsored'] as bool,
-    thingsToDo: json['thingsToDo'] as bool,
     title: json['title'] as String,
-    category: json['category'] == null
+    mainImage: json['mainImage'] == null
         ? null
-        : PoiCategory.fromJson(json['category'] as Map<String, dynamic>),
+        : Media.fromJson(json['mainImage'] as Map<String, dynamic>),
+    theme: json['theme'] == null
+        ? null
+        : PoiTheme.fromJson(json['theme'] as Map<String, dynamic>),
     coordinate: json['coordinate'] == null
         ? null
         : LatLng.fromJson(json['coordinate'] as Map<String, dynamic>),
@@ -39,12 +41,12 @@ Map<String, dynamic> _$PoiToJson(Poi instance) => <String, dynamic>{
       'id': instance.id,
       'island': instance.island,
       'title': instance.title,
+      'theme': instance.theme,
       'description': instance.description,
       'featured': instance.featured,
       'sponsored': instance.sponsored,
-      'thingsToDo': instance.thingsToDo,
-      'category': instance.category,
       'coordinate': instance.coordinate,
+      'mainImage': instance.mainImage,
       'medias': instance.medias,
       'comments': instance.comments,
       'ratings': instance.ratings,

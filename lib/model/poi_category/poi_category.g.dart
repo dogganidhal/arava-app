@@ -15,7 +15,7 @@ PoiCategory _$PoiCategoryFromJson(Map<String, dynamic> json) {
         : Media.fromJson(json['icon'] as Map<String, dynamic>),
     type: json['type'] == null
         ? null
-        : PoiType.fromJson(json['type'] as Map<String, dynamic>),
+        : PoiTheme.fromJson(json['type'] as Map<String, dynamic>),
   );
 }
 

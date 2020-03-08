@@ -20,14 +20,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 class Main extends StatelessWidget {
   final AppConfiguration configuration;
 
-  final PageStorageBucket _bucket = PageStorageBucket();
-  final List<Widget> _widgets = [
-    Map(key: PageStorageKey('mapWidget')),
-    Featured(key: PageStorageKey('featuredWidget')),
-    Favorites(key: PageStorageKey('favoritesWidget')),
-    Photos(key: PageStorageKey('photosWidget')),
-    More(key: PageStorageKey('moreWidget'))
-  ];
   final List<PreferredSizeWidget> _appBars = [
     MapAppBar(),
     FeaturedAppBar(),
@@ -45,9 +37,15 @@ class Main extends StatelessWidget {
       builder: (context, state) => state.when<Widget>(
         navigatorState: (state) => Scaffold(
           appBar: _appBars[state.homeIndex],
-          body: PageStorage(
-            bucket: _bucket,
-            child: _widgets[state.homeIndex]
+          body: IndexedStack(
+            index: state.homeIndex,
+            children: <Widget>[
+              Map(),
+              Featured(),
+              Favorites(),
+              Photos(),
+              More()
+            ],
           ),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: state.homeIndex,

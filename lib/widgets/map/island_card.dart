@@ -26,6 +26,11 @@ class _IslandCardState extends State<IslandCard> with AutomaticKeepAliveClientMi
       onTap: () => widget.onSelected(),
       child: Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: Theme.of(context).dividerColor, width: 0.5),
+          borderRadius: BorderRadius.circular(4),
+        ),
         child: Column(
           children: <Widget>[
             Image(

@@ -1,8 +1,13 @@
-import 'package:arava/blocs/search/event/search_event.dart';
+import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/blocs/search/search_bloc.dart';
+import 'package:arava/blocs/search/state/search_state.dart';
 import 'package:arava/i18n/app_localizations.dart';
+import 'package:arava/widgets/app/app_configuration_provider.dart';
+import 'package:arava/widgets/poi/poi_preview.dart';
+import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -16,33 +21,109 @@ class Map extends StatefulWidget {
 
 
 class _Map extends State<Map> with AutomaticKeepAliveClientMixin {
+  final SearchBloc _searchBloc = Modular.get();
 
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
+  static final CameraPosition _kTahitiPosition = CameraPosition(
+    target: LatLng(-17.677506137218447, -149.3711729720235),
+    zoom: 10,
   );
+
+  @override
+  void initState() {
+    super.initState();
+    _searchBloc.search();
+  }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return new Scaffold(
-      body: GoogleMap(
-        mapType: MapType.hybrid,
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          Modular.get<SearchBloc>()
-            .mapLoaded(SearchEvent.mapLoaded(mapController: controller));
-          String brightness = MediaQuery.of(context).platformBrightness == Brightness.dark ?
-            "dark" :
-            "light";
-          rootBundle.loadString("assets/map_styles/$brightness.json")
-            .then((string) => controller.setMapStyle(string));
+      body: BlocListener<SearchBloc, SearchState>(
+        bloc: _searchBloc,
+        listener: (context, state) {
+          if (!state.loading && state.response != null && state.response.count == 0)
+            FlushbarHelper.createInformation(
+              message: AppLocalizations.of(context).search_EmptyResponseDescription()
+            )..show(context);
         },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: Text(AppLocalizations.of(context).search_Filter()),
-        icon: Icon(Icons.filter_list),
+        child: BlocBuilder<SearchBloc, SearchState>(
+          bloc: _searchBloc,
+          builder: (context, state) => Stack(
+            children: <Widget>[
+              GoogleMap(
+                mapType: MapType.normal,
+                mapToolbarEnabled: false,
+                initialCameraPosition: _kTahitiPosition,
+                onMapCreated: (GoogleMapController controller) {
+                  _searchBloc.mapLoaded(controller);
+                  String brightness = MediaQuery.of(context).platformBrightness == Brightness.dark ?
+                  "dark" :
+                  "light";
+                  rootBundle.loadString("assets/map_styles/$brightness.json")
+                    .then((string) => controller.setMapStyle(string));
+                },
+                onCameraMove: (cameraPosition) => _searchBloc.cameraUpdated(cameraPosition),
+                myLocationEnabled: true,
+                markers: state.response?.pois
+                  ?.map((poi) => Marker(
+                    markerId: MarkerId(poi.id),
+                    position: LatLng(
+                      poi.coordinate.latitude,
+                      poi.coordinate.longitude
+                    ),
+                    onTap: () => _searchBloc.selectPoi(poi),
+                    icon: poi.sponsored ?
+                      AppConfigurationProvider.of(context).sponsoredPinBitmapDescriptor :
+                      AppConfigurationProvider.of(context).pinBitmapDescriptor
+                  ))
+                  ?.toSet(),
+              ),
+              if (state.loading)
+                Positioned(
+                  top: 0, right: 0, left: 0, height: 4,
+                  child: LinearProgressIndicator()
+                ),
+              Positioned(
+                bottom: 16, right: 16,
+                child: FloatingActionButton.extended(
+                  onPressed: () => Modular.get<NavigationBloc>().push("/search/filters"),
+                  label: Text(AppLocalizations.of(context).search_Filter()),
+                  icon: Icon(Icons.filter_list),
+                ),
+              ),
+              if (state.selectedPoi != null)
+                Positioned(
+                  bottom: 8, left: 8, right: 8,
+                  child: Dismissible(
+                    key: Key(state.selectedPoi.id),
+                    direction: DismissDirection.down,
+                    onDismissed: (_) => _searchBloc.clearSelectedPoi(),
+                    child: Stack(
+                      children: <Widget>[
+                        PoiPreview(poi: state.selectedPoi),
+                        Positioned(
+                          top: 16, left: 16, right: 16,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                height: 4,
+                                width: 32,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(3),
+                                  color: Theme.of(context).textTheme.title.color
+                                ),
+                              )
+                            ],
+                          )
+                        ),
+                      ],
+                    )
+                  ),
+                )
+            ],
+          ),
+        ),
       ),
     );
   }

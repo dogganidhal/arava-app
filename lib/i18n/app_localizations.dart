@@ -187,6 +187,11 @@ class AppLocalizations {
     name: 'search_Filter'
   );
 
+  String search_EmptyResponseDescription() => Intl.message(
+    "No results found in the requested area, try to move the map, or edit search filters",
+    name: 'search_EmptyResponseDescription'
+  );
+
   // endregion
 
   // region Auth

@@ -8,9 +8,11 @@ import 'package:arava/model/api_configuration/api_configuration.dart';
 import 'package:arava/model/app_configuration/app_configuration.dart';
 import 'package:arava/service/app_service.dart';
 import 'package:arava/service/session.dart';
+import 'package:arava/theme/arava_assets.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
@@ -98,9 +100,19 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     try {
       apiConfiguration = await appService.loadApiConfiguration();
       final preferredLocale = await session.getPreferredLocale();
+      final pinDescriptor = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration.empty,
+        AravaAssets.Pin
+      );
+      final sponsoredPinDescriptor = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration.empty,
+        AravaAssets.SponsoredPin
+      );
       return AppConfiguration.fromApiConfiguration(
         apiConfiguration: apiConfiguration,
-        preferredLocale: preferredLocale
+        preferredLocale: preferredLocale,
+        pinBitmapDescriptor: pinDescriptor,
+        sponsoredPinBitmapDescriptor: sponsoredPinDescriptor
       );
     } on DioError {
       apiConfiguration = await session.getApiConfiguration();
