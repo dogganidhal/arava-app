@@ -4,6 +4,7 @@ import 'package:arava/blocs/search/state/search_state.dart';
 import 'package:arava/exception/app_exception.dart';
 import 'package:arava/model/island/island.dart';
 import 'package:arava/model/poi/poi.dart';
+import 'package:arava/model/search_filters/search_filters.dart';
 import 'package:arava/service/poi_service.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,7 +30,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     searchMapLoadedEvent: _mapLoaded,
     searchUpdateRequestEvent: _updateSearchRequest,
     searchCameraPositionUpdatedEvent: _cameraUpdated,
-    searchSelectPoiEvent: _selectPoi
+    searchSelectPoiEvent: _selectPoi,
+    searchSetFiltersEvent: _setSearchFilters
   );
 
   void search() {
@@ -58,6 +60,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     add(SearchEvent.searchSelectPoiEvent(poi: null));
   }
 
+  void setSearchFilters(SearchFilters searchFilters) {
+    add(SearchEvent.searchSetFiltersEvent(searchFilters: searchFilters));
+    add(SearchEvent.searchSubmitEvent());
+  }
+
   Stream<SearchState> _updateSearchRequest(SearchUpdateRequestEvent event) async* {
 
   }
@@ -79,7 +86,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       if (searchResponse.count > 0) {
         debugPrint(_boundsContainingPois(searchResponse.pois).toString());
         _mapController.animateCamera(CameraUpdate.newLatLngBounds(
-          _boundsContainingPois(searchResponse.pois), 16
+          _boundsContainingPois(searchResponse.pois), 128
         ));
       }
     } on AppException catch (exception) {
@@ -120,6 +127,16 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   Stream<SearchState> _cameraUpdated(SearchCameraPositionUpdatedEvent event) async* {
 
+  }
+
+  Stream<SearchState> _setSearchFilters(SearchSetFiltersEvent event) async* {
+    yield state
+      .withRequest(state.request
+        .withSort(event.searchFilters.sort)
+        .withThemeIds(event.searchFilters.themeIds)
+        .withTitle(event.searchFilters.query)
+        .withSponsored(event.searchFilters.sponsored)
+      );
   }
 
   LatLngBounds _boundsContainingPois(List<Poi> pois) {

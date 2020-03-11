@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-03-02T19:28:35.338320",
+  "@@last_modified": "2020-03-11T13:38:52.152337",
   "appName": "Arava",
   "@appName": {
     "type": "text",
@@ -132,6 +132,21 @@
   },
   "search_Filter": "Refine",
   "@search_Filter": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "search_FilterQueryPlaceholder": "Park, Hotel ...",
+  "@search_FilterQueryPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "search_FilterSponsored": "Things to do",
+  "@search_FilterSponsored": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "search_EmptyResponseDescription": "No results found in the requested area, try to move the map, or edit search filters",
+  "@search_EmptyResponseDescription": {
     "type": "text",
     "placeholders": {}
   },

@@ -12,10 +12,10 @@ part 'api_configuration.g.dart';
 class ApiConfiguration {
   final VersionConfiguration versionConfiguration;
   final List<Archipelago> archipelagos;
-  final List<PoiTheme> poiTypes;
+  final List<PoiTheme> themes;
 
   ApiConfiguration({
-    this.versionConfiguration, this.archipelagos, this.poiTypes
+    this.versionConfiguration, this.archipelagos, this.themes
   });
 
   factory ApiConfiguration.fromJson(Map<String, dynamic> json) => _$ApiConfigurationFromJson(json);

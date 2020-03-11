@@ -12,6 +12,9 @@ abstract class NavigationEvent extends Equatable {
 
   factory NavigationEvent.navigationPopEvent() = NavigationPopEvent;
 
+  factory NavigationEvent.navigationPopWithValueEvent(
+      {@required dynamic value}) = NavigationPopWithValueEvent;
+
   factory NavigationEvent.navigateToHomeEvent({@required int index}) =
       NavigateToHomeEvent;
 
@@ -25,11 +28,15 @@ abstract class NavigationEvent extends Equatable {
       {@required
           FutureOr<R> Function(NavigationPopEvent) navigationPopEvent,
       @required
+          FutureOr<R> Function(NavigationPopWithValueEvent)
+              navigationPopWithValueEvent,
+      @required
           FutureOr<R> Function(NavigateToHomeEvent) navigateToHomeEvent,
       @required
           FutureOr<R> Function(NavigationPushEvent) navigationPushEvent}) {
     assert(() {
       if (navigationPopEvent == null ||
+          navigationPopWithValueEvent == null ||
           navigateToHomeEvent == null ||
           navigationPushEvent == null) {
         throw 'check for all possible cases';
@@ -39,6 +46,8 @@ abstract class NavigationEvent extends Equatable {
     switch (this._type) {
       case _NavigationEvent.NavigationPopEvent:
         return navigationPopEvent(this as NavigationPopEvent);
+      case _NavigationEvent.NavigationPopWithValueEvent:
+        return navigationPopWithValueEvent(this as NavigationPopWithValueEvent);
       case _NavigationEvent.NavigateToHomeEvent:
         return navigateToHomeEvent(this as NavigateToHomeEvent);
       case _NavigationEvent.NavigationPushEvent:
@@ -48,6 +57,8 @@ abstract class NavigationEvent extends Equatable {
 
   R whenOrElse<R>(
       {FutureOr<R> Function(NavigationPopEvent) navigationPopEvent,
+      FutureOr<R> Function(NavigationPopWithValueEvent)
+          navigationPopWithValueEvent,
       FutureOr<R> Function(NavigateToHomeEvent) navigateToHomeEvent,
       FutureOr<R> Function(NavigationPushEvent) navigationPushEvent,
       @required FutureOr<R> Function(NavigationEvent) orElse}) {
@@ -61,6 +72,9 @@ abstract class NavigationEvent extends Equatable {
       case _NavigationEvent.NavigationPopEvent:
         if (navigationPopEvent == null) break;
         return navigationPopEvent(this as NavigationPopEvent);
+      case _NavigationEvent.NavigationPopWithValueEvent:
+        if (navigationPopWithValueEvent == null) break;
+        return navigationPopWithValueEvent(this as NavigationPopWithValueEvent);
       case _NavigationEvent.NavigateToHomeEvent:
         if (navigateToHomeEvent == null) break;
         return navigateToHomeEvent(this as NavigateToHomeEvent);
@@ -73,10 +87,13 @@ abstract class NavigationEvent extends Equatable {
 
   FutureOr<void> whenPartial(
       {FutureOr<void> Function(NavigationPopEvent) navigationPopEvent,
+      FutureOr<void> Function(NavigationPopWithValueEvent)
+          navigationPopWithValueEvent,
       FutureOr<void> Function(NavigateToHomeEvent) navigateToHomeEvent,
       FutureOr<void> Function(NavigationPushEvent) navigationPushEvent}) {
     assert(() {
       if (navigationPopEvent == null &&
+          navigationPopWithValueEvent == null &&
           navigateToHomeEvent == null &&
           navigationPushEvent == null) {
         throw 'provide at least one branch';
@@ -87,6 +104,9 @@ abstract class NavigationEvent extends Equatable {
       case _NavigationEvent.NavigationPopEvent:
         if (navigationPopEvent == null) break;
         return navigationPopEvent(this as NavigationPopEvent);
+      case _NavigationEvent.NavigationPopWithValueEvent:
+        if (navigationPopWithValueEvent == null) break;
+        return navigationPopWithValueEvent(this as NavigationPopWithValueEvent);
       case _NavigationEvent.NavigateToHomeEvent:
         if (navigateToHomeEvent == null) break;
         return navigateToHomeEvent(this as NavigateToHomeEvent);
@@ -110,6 +130,19 @@ class NavigationPopEvent extends NavigationEvent {
   }
 
   static NavigationPopEvent _instance;
+}
+
+@immutable
+class NavigationPopWithValueEvent extends NavigationEvent {
+  const NavigationPopWithValueEvent({@required this.value})
+      : super(_NavigationEvent.NavigationPopWithValueEvent);
+
+  final dynamic value;
+
+  @override
+  String toString() => 'NavigationPopWithValueEvent(value:${this.value})';
+  @override
+  List get props => [value];
 }
 
 @immutable

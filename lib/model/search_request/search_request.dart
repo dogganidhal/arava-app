@@ -13,55 +13,70 @@ class SearchRequest {
   @JsonKey(nullable: true)
   final String island;
   @JsonKey(nullable: true)
-  final String themeId;
+  final List<String> themeIds;
   @JsonKey(nullable: true)
   final Region region;
   @JsonKey(nullable: true)
   final SearchSort sort;
+  final bool sponsored;
 
   const SearchRequest({
-    this.title, this.island,
-    this.themeId, this.region, this.sort
+    this.title, this.island, this.sponsored = false,
+    this.themeIds = const [], this.region, this.sort
   });
 
   SearchRequest withTitle(String title) => SearchRequest(
     title: title,
-    island: this.island,
-    themeId: this.themeId,
-    region: this.region,
-    sort: this.sort,
+    island: island,
+    themeIds: themeIds,
+    region: region,
+    sort: sort,
+    sponsored: sponsored
   );
 
   SearchRequest withIsland(String island) => SearchRequest(
-    title: this.title,
+    title: title,
     island: island,
-    themeId: this.themeId,
-    region: this.region,
-    sort: this.sort,
+    themeIds: themeIds,
+    region: region,
+    sort: sort,
+    sponsored: sponsored
   );
 
-  SearchRequest withThemeId(String themeId) => SearchRequest(
-    title: this.title,
-    island: this.island,
-    themeId: themeId,
-    region: this.region,
-    sort: this.sort,
+  SearchRequest withThemeIds(List<String> themeIds) => SearchRequest(
+    title: title,
+    island: island,
+    themeIds: themeIds,
+    region: region,
+    sort: sort,
+    sponsored: sponsored
   );
 
   SearchRequest withRegion(Region region) => SearchRequest(
-    title: this.title,
-    island: this.island,
-    themeId: this.themeId,
+    title: title,
+    island: island,
+    themeIds: themeIds,
     region: region,
-    sort: this.sort,
+    sort: sort,
+    sponsored: sponsored
   );
 
   SearchRequest withSort(SearchSort sort) => SearchRequest(
-    title: this.title,
-    island: this.island,
-    themeId: this.themeId,
-    region: this.region,
+    title: title,
+    island: island,
+    themeIds: themeIds,
+    region: region,
     sort: sort,
+    sponsored: sponsored
+  );
+
+  SearchRequest withSponsored(bool sponsored) => SearchRequest(
+    title: title,
+    island: island,
+    themeIds: themeIds,
+    region: region,
+    sort: sort,
+    sponsored: sponsored
   );
 
   factory SearchRequest.fromJson(Map<String, dynamic> json) => _$SearchRequestFromJson(json);

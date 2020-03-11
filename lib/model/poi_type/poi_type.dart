@@ -10,9 +10,12 @@ class PoiTheme {
   final String id;
   final String name;
   final Media icon;
+  final List<PoiTheme> subThemes;
+  final PoiTheme parent;
 
   PoiTheme({
-    this.id, this.name, this.icon
+    this.id, this.name, this.icon,
+    this.parent, this.subThemes
   });
 
   factory PoiTheme.fromJson(Map<String, dynamic> json) => _$PoiThemeFromJson(json);

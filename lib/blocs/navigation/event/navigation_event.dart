@@ -7,6 +7,10 @@ enum _NavigationEvent {
   @object
   NavigationPopEvent,
   @Data(fields: [
+    DataField<dynamic>('value')
+  ])
+  NavigationPopWithValueEvent,
+  @Data(fields: [
     DataField<int>('index')
   ])
   NavigateToHomeEvent,

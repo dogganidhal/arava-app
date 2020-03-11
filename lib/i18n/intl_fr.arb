@@ -204,5 +204,20 @@
   "@profile_ProfileUpdateSuccessful": {
     "type": "text",
     "placeholders": {}
+  },
+  "search_FilterQueryPlaceholder": "Parc, Hôtel ...",
+  "@search_FilterQueryPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "search_FilterSponsored": "Choses à faire",
+  "@search_FilterSponsored": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "search_EmptyResponseDescription": "Aucun résultat n'a été trouvé, veuillez modifier vos filtres",
+  "@search_EmptyResponseDescription": {
+    "type": "text",
+    "placeholders": {}
   }
 }

@@ -58,7 +58,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "profile_NewPasswordFieldPlaceholder" : MessageLookupByLibrary.simpleMessage("New password"),
     "profile_ProfileUpdateSuccessful" : MessageLookupByLibrary.simpleMessage("Profile updated successfully"),
     "profile_SubmitProfileUpdate" : MessageLookupByLibrary.simpleMessage("Submit"),
+    "search_EmptyResponseDescription" : MessageLookupByLibrary.simpleMessage("No results found in the requested area, try to move the map, or edit search filters"),
     "search_Filter" : MessageLookupByLibrary.simpleMessage("Refine"),
+    "search_FilterQueryPlaceholder" : MessageLookupByLibrary.simpleMessage("Park, Hotel ..."),
+    "search_FilterSponsored" : MessageLookupByLibrary.simpleMessage("Things to do"),
     "search_SelectIsland" : MessageLookupByLibrary.simpleMessage("Select islands"),
     "settings_Language" : MessageLookupByLibrary.simpleMessage("Language"),
     "settings_Title" : MessageLookupByLibrary.simpleMessage("Settings")

@@ -58,7 +58,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "profile_NewPasswordFieldPlaceholder" : MessageLookupByLibrary.simpleMessage("新密码"),
     "profile_ProfileUpdateSuccessful" : MessageLookupByLibrary.simpleMessage("个人资料更新成功"),
     "profile_SubmitProfileUpdate" : MessageLookupByLibrary.simpleMessage("提交"),
+    "search_EmptyResponseDescription" : MessageLookupByLibrary.simpleMessage("在要求的区域中找不到结果，请尝试移动地图或编辑搜索过滤器"),
     "search_Filter" : MessageLookupByLibrary.simpleMessage("提炼"),
+    "search_FilterQueryPlaceholder" : MessageLookupByLibrary.simpleMessage("公园，酒店..."),
+    "search_FilterSponsored" : MessageLookupByLibrary.simpleMessage("要做的事"),
     "search_SelectIsland" : MessageLookupByLibrary.simpleMessage("选择岛屿"),
     "settings_Language" : MessageLookupByLibrary.simpleMessage("语言"),
     "settings_Title" : MessageLookupByLibrary.simpleMessage("设定")

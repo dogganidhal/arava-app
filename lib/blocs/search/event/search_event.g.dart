@@ -28,6 +28,9 @@ abstract class SearchEvent extends Equatable {
   factory SearchEvent.searchSelectPoiEvent({@required Poi poi}) =
       SearchSelectPoiEvent;
 
+  factory SearchEvent.searchSetFiltersEvent(
+      {@required SearchFilters searchFilters}) = SearchSetFiltersEvent;
+
   final _SearchEvent _type;
 
 //ignore: missing_return
@@ -45,14 +48,17 @@ abstract class SearchEvent extends Equatable {
           FutureOr<R> Function(SearchCameraPositionUpdatedEvent)
               searchCameraPositionUpdatedEvent,
       @required
-          FutureOr<R> Function(SearchSelectPoiEvent) searchSelectPoiEvent}) {
+          FutureOr<R> Function(SearchSelectPoiEvent) searchSelectPoiEvent,
+      @required
+          FutureOr<R> Function(SearchSetFiltersEvent) searchSetFiltersEvent}) {
     assert(() {
       if (searchSubmitEvent == null ||
           searchSelectIslandEvent == null ||
           searchMapLoadedEvent == null ||
           searchUpdateRequestEvent == null ||
           searchCameraPositionUpdatedEvent == null ||
-          searchSelectPoiEvent == null) {
+          searchSelectPoiEvent == null ||
+          searchSetFiltersEvent == null) {
         throw 'check for all possible cases';
       }
       return true;
@@ -71,6 +77,8 @@ abstract class SearchEvent extends Equatable {
             this as SearchCameraPositionUpdatedEvent);
       case _SearchEvent.SearchSelectPoiEvent:
         return searchSelectPoiEvent(this as SearchSelectPoiEvent);
+      case _SearchEvent.SearchSetFiltersEvent:
+        return searchSetFiltersEvent(this as SearchSetFiltersEvent);
     }
   }
 
@@ -82,6 +90,7 @@ abstract class SearchEvent extends Equatable {
       FutureOr<R> Function(SearchCameraPositionUpdatedEvent)
           searchCameraPositionUpdatedEvent,
       FutureOr<R> Function(SearchSelectPoiEvent) searchSelectPoiEvent,
+      FutureOr<R> Function(SearchSetFiltersEvent) searchSetFiltersEvent,
       @required FutureOr<R> Function(SearchEvent) orElse}) {
     assert(() {
       if (orElse == null) {
@@ -109,6 +118,9 @@ abstract class SearchEvent extends Equatable {
       case _SearchEvent.SearchSelectPoiEvent:
         if (searchSelectPoiEvent == null) break;
         return searchSelectPoiEvent(this as SearchSelectPoiEvent);
+      case _SearchEvent.SearchSetFiltersEvent:
+        if (searchSetFiltersEvent == null) break;
+        return searchSetFiltersEvent(this as SearchSetFiltersEvent);
     }
     return orElse(this);
   }
@@ -121,14 +133,16 @@ abstract class SearchEvent extends Equatable {
           searchUpdateRequestEvent,
       FutureOr<void> Function(SearchCameraPositionUpdatedEvent)
           searchCameraPositionUpdatedEvent,
-      FutureOr<void> Function(SearchSelectPoiEvent) searchSelectPoiEvent}) {
+      FutureOr<void> Function(SearchSelectPoiEvent) searchSelectPoiEvent,
+      FutureOr<void> Function(SearchSetFiltersEvent) searchSetFiltersEvent}) {
     assert(() {
       if (searchSubmitEvent == null &&
           searchSelectIslandEvent == null &&
           searchMapLoadedEvent == null &&
           searchUpdateRequestEvent == null &&
           searchCameraPositionUpdatedEvent == null &&
-          searchSelectPoiEvent == null) {
+          searchSelectPoiEvent == null &&
+          searchSetFiltersEvent == null) {
         throw 'provide at least one branch';
       }
       return true;
@@ -153,6 +167,9 @@ abstract class SearchEvent extends Equatable {
       case _SearchEvent.SearchSelectPoiEvent:
         if (searchSelectPoiEvent == null) break;
         return searchSelectPoiEvent(this as SearchSelectPoiEvent);
+      case _SearchEvent.SearchSetFiltersEvent:
+        if (searchSetFiltersEvent == null) break;
+        return searchSetFiltersEvent(this as SearchSetFiltersEvent);
     }
   }
 
@@ -237,4 +254,18 @@ class SearchSelectPoiEvent extends SearchEvent {
   String toString() => 'SearchSelectPoiEvent(poi:${this.poi})';
   @override
   List get props => [poi];
+}
+
+@immutable
+class SearchSetFiltersEvent extends SearchEvent {
+  const SearchSetFiltersEvent({@required this.searchFilters})
+      : super(_SearchEvent.SearchSetFiltersEvent);
+
+  final SearchFilters searchFilters;
+
+  @override
+  String toString() =>
+      'SearchSetFiltersEvent(searchFilters:${this.searchFilters})';
+  @override
+  List get props => [searchFilters];
 }

@@ -204,5 +204,20 @@
   "@profile_ProfileUpdateSuccessful": {
     "type": "text",
     "placeholders": {}
+  },
+  "search_FilterQueryPlaceholder": "公园，酒店...",
+  "@search_FilterQueryPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "search_FilterSponsored": "要做的事",
+  "@search_FilterSponsored": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "search_EmptyResponseDescription": "在要求的区域中找不到结果，请尝试移动地图或编辑搜索过滤器",
+  "@search_EmptyResponseDescription": {
+    "type": "text",
+    "placeholders": {}
   }
 }

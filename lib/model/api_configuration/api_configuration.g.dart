@@ -16,7 +16,7 @@ ApiConfiguration _$ApiConfigurationFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : Archipelago.fromJson(e as Map<String, dynamic>))
         ?.toList(),
-    poiTypes: (json['poiTypes'] as List)
+    themes: (json['themes'] as List)
         ?.map((e) =>
             e == null ? null : PoiTheme.fromJson(e as Map<String, dynamic>))
         ?.toList(),
@@ -27,5 +27,5 @@ Map<String, dynamic> _$ApiConfigurationToJson(ApiConfiguration instance) =>
     <String, dynamic>{
       'versionConfiguration': instance.versionConfiguration,
       'archipelagos': instance.archipelagos,
-      'poiTypes': instance.poiTypes,
+      'themes': instance.themes,
     };

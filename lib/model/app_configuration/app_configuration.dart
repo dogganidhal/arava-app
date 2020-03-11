@@ -10,7 +10,7 @@ class AppConfiguration extends ApiConfiguration {
   @override
   final List<Archipelago> archipelagos;
   @override
-  final List<PoiTheme> poiTypes;
+  final List<PoiTheme> themes;
   @override
   final VersionConfiguration versionConfiguration;
   final String preferredLocale;
@@ -18,7 +18,7 @@ class AppConfiguration extends ApiConfiguration {
   final BitmapDescriptor sponsoredPinBitmapDescriptor;
 
   AppConfiguration({
-    this.archipelagos, this.poiTypes, this.versionConfiguration,
+    this.archipelagos, this.themes, this.versionConfiguration,
     this.preferredLocale, this.pinBitmapDescriptor,
     this.sponsoredPinBitmapDescriptor
   });
@@ -30,7 +30,7 @@ class AppConfiguration extends ApiConfiguration {
     BitmapDescriptor sponsoredPinBitmapDescriptor
   }) => AppConfiguration(
     archipelagos: apiConfiguration.archipelagos,
-    poiTypes: apiConfiguration.poiTypes,
+    themes: apiConfiguration.themes,
     versionConfiguration: apiConfiguration.versionConfiguration,
     preferredLocale: preferredLocale,
     pinBitmapDescriptor: pinBitmapDescriptor,

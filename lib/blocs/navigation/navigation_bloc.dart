@@ -17,12 +17,17 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
   @override
   Stream<NavigationState> mapEventToState(NavigationEvent event) => event.when(
     navigationPopEvent: _pop,
+    navigationPopWithValueEvent: _popWithValue,
     navigateToHomeEvent: _navigateToHome,
     navigationPushEvent: _push
   );
 
-  void pop() {
-    add(NavigationEvent.navigationPopEvent());
+  void pop([dynamic value]) {
+    if (value != null) {
+      add(NavigationEvent.navigationPopWithValueEvent(value: value));
+    } else {
+      add(NavigationEvent.navigationPopEvent());
+    }
   }
 
   void navigateToHome([int index]) {
@@ -39,6 +44,10 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
 
   Stream<NavigationState> _pop(NavigationPopEvent event) async* {
     navigatorState.currentState.pop();
+  }
+
+  Stream<NavigationState> _popWithValue(NavigationPopWithValueEvent event) async* {
+    navigatorState.currentState.pop(event.value);
   }
 
   Stream<NavigationState> _navigateToHome(NavigateToHomeEvent event) async* {

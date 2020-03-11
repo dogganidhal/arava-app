@@ -133,7 +133,7 @@ class _LoginState extends State<Login> with AutomaticKeepAliveClientMixin {
                         ),
                         child: Text(failedState.exception.getLocalizedMessage(context)),
                       )
-                    ) as Widget,
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.all(16),

@@ -204,5 +204,20 @@
   "@profile_ProfileUpdateSuccessful": {
     "type": "text",
     "placeholders": {}
+  },
+  "search_FilterQueryPlaceholder": "Park, Hotel ...",
+  "@search_FilterQueryPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "search_FilterSponsored": "Things to do",
+  "@search_FilterSponsored": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "search_EmptyResponseDescription": "No results found in the requested area, try to move the map, or edit search filters",
+  "@search_EmptyResponseDescription": {
+    "type": "text",
+    "placeholders": {}
   }
 }

@@ -187,6 +187,16 @@ class AppLocalizations {
     name: 'search_Filter'
   );
 
+  String search_FilterQueryPlaceholder() => Intl.message(
+    'Park, Hotel ...',
+    name: 'search_FilterQueryPlaceholder'
+  );
+
+  String search_FilterSponsored() => Intl.message(
+    'Things to do',
+    name: 'search_FilterSponsored'
+  );
+
   String search_EmptyResponseDescription() => Intl.message(
     "No results found in the requested area, try to move the map, or edit search filters",
     name: 'search_EmptyResponseDescription'
