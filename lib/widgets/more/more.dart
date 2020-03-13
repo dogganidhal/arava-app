@@ -28,7 +28,7 @@ class More extends StatelessWidget {
               ),
               onTap: () => Modular.get<NavigationBloc>().push("/profile"),
             )
-          ) as Widget,
+          ),
           ListTile(
             leading: Icon(Icons.settings, color: Theme.of(context).primaryColor),
             title: Text(
@@ -133,7 +133,7 @@ class More extends StatelessWidget {
                 ));
               },
             )
-          ) as Widget
+          )
         ],
       ),
     );

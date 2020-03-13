@@ -1,3 +1,4 @@
+import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/blocs/search/event/search_event.dart';
 import 'package:arava/blocs/search/search_bloc.dart';
 import 'package:arava/i18n/app_localizations.dart';
@@ -26,7 +27,10 @@ class _IslandSelectorState extends State<IslandSelector> {
         final islandCards = archipelago.islands
           .map((island) => IslandCard(
             island: island,
-            onSelected: () => Modular.get<SearchBloc>().selectIsland(island),
+            onSelected: () {
+              Modular.get<SearchBloc>().selectIsland(island);
+              Modular.get<NavigationBloc>().pop();
+            },
           ))
           .toList();
         return Column(

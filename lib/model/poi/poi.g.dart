@@ -11,6 +11,9 @@ Poi _$PoiFromJson(Map<String, dynamic> json) {
     id: json['id'] as String,
     island: json['island'] as String,
     featured: json['featured'] as bool,
+    details: json['details'] == null
+        ? null
+        : PoiDetails.fromJson(json['details'] as Map<String, dynamic>),
     sponsored: json['sponsored'] as bool,
     title: json['title'] as String,
     mainImage: json['mainImage'] == null
@@ -41,6 +44,7 @@ Map<String, dynamic> _$PoiToJson(Poi instance) => <String, dynamic>{
       'id': instance.id,
       'island': instance.island,
       'title': instance.title,
+      'details': instance.details,
       'theme': instance.theme,
       'description': instance.description,
       'featured': instance.featured,

@@ -219,5 +219,25 @@
   "@search_EmptyResponseDescription": {
     "type": "text",
     "placeholders": {}
+  },
+  "searchResult_DetailsTabTitle": "细节",
+  "@searchResult_DetailsTabTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "searchResult_CommentsTabTitle": "注释",
+  "@searchResult_CommentsTabTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "searchResult_NoDescriptionPlaceholder": "没有说明",
+  "@searchResult_NoDescriptionPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "searchResult_NoCommentsPlaceholder": "没意见",
+  "@searchResult_NoCommentsPlaceholder": {
+    "type": "text",
+    "placeholders": {}
   }
 }

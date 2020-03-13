@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-03-11T13:38:52.152337",
+  "@@last_modified": "2020-03-13T12:11:02.731673",
   "appName": "Arava",
   "@appName": {
     "type": "text",
@@ -147,6 +147,26 @@
   },
   "search_EmptyResponseDescription": "No results found in the requested area, try to move the map, or edit search filters",
   "@search_EmptyResponseDescription": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "searchResult_DetailsTabTitle": "Details",
+  "@searchResult_DetailsTabTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "searchResult_CommentsTabTitle": "Comments",
+  "@searchResult_CommentsTabTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "searchResult_NoDescriptionPlaceholder": "No description",
+  "@searchResult_NoDescriptionPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "searchResult_NoCommentsPlaceholder": "No comments",
+  "@searchResult_NoCommentsPlaceholder": {
     "type": "text",
     "placeholders": {}
   },

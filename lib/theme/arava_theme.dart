@@ -29,6 +29,7 @@ class AravaTheme {
     ),
     fontFamily: 'CircularStd',
     scaffoldBackgroundColor: kLightColor,
+    backgroundColor: kLightColor,
     appBarTheme: AppBarTheme(
       elevation: 0,
       color: kLightColor,

@@ -36,4 +36,58 @@ class AppConfiguration extends ApiConfiguration {
     pinBitmapDescriptor: pinBitmapDescriptor,
     sponsoredPinBitmapDescriptor: sponsoredPinBitmapDescriptor
   );
+
+  AppConfiguration withArchipelagos(List<Archipelago> archipelagos) => AppConfiguration(
+    archipelagos: archipelagos,
+    themes: themes,
+    versionConfiguration: versionConfiguration,
+    preferredLocale: preferredLocale,
+    pinBitmapDescriptor: pinBitmapDescriptor,
+    sponsoredPinBitmapDescriptor: sponsoredPinBitmapDescriptor
+  );
+
+  AppConfiguration withThemes(List<PoiTheme> themes) => AppConfiguration(
+    archipelagos: archipelagos,
+    themes: themes,
+    versionConfiguration: versionConfiguration,
+    preferredLocale: preferredLocale,
+    pinBitmapDescriptor: pinBitmapDescriptor,
+    sponsoredPinBitmapDescriptor: sponsoredPinBitmapDescriptor
+  );
+
+  AppConfiguration withVersionConfiguration(VersionConfiguration versionConfiguration) => AppConfiguration(
+    archipelagos: archipelagos,
+    themes: themes,
+    versionConfiguration: versionConfiguration,
+    preferredLocale: preferredLocale,
+    pinBitmapDescriptor: pinBitmapDescriptor,
+    sponsoredPinBitmapDescriptor: sponsoredPinBitmapDescriptor
+  );
+
+  AppConfiguration withPreferredLocale(String preferredLocale) => AppConfiguration(
+    archipelagos: archipelagos,
+    themes: themes,
+    versionConfiguration: versionConfiguration,
+    preferredLocale: preferredLocale,
+    pinBitmapDescriptor: pinBitmapDescriptor,
+    sponsoredPinBitmapDescriptor: sponsoredPinBitmapDescriptor
+  );
+
+  AppConfiguration withPinBitmapDescriptor(BitmapDescriptor pinBitmapDescriptor) => AppConfiguration(
+    archipelagos: archipelagos,
+    themes: themes,
+    versionConfiguration: versionConfiguration,
+    preferredLocale: preferredLocale,
+    pinBitmapDescriptor: pinBitmapDescriptor,
+    sponsoredPinBitmapDescriptor: sponsoredPinBitmapDescriptor
+  );
+
+  AppConfiguration withSponsoredPinBitmapDescriptor(BitmapDescriptor sponsoredPinBitmapDescriptor) => AppConfiguration(
+    archipelagos: archipelagos,
+    themes: themes,
+    versionConfiguration: versionConfiguration,
+    preferredLocale: preferredLocale,
+    pinBitmapDescriptor: pinBitmapDescriptor,
+    sponsoredPinBitmapDescriptor: sponsoredPinBitmapDescriptor
+  );
 }

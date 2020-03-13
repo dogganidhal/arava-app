@@ -26,8 +26,8 @@ class PoiPreview extends StatelessWidget {
               fit: BoxFit.fitWidth,
               height: 192, width: double.infinity,
               image: poi.mainImage != null ?
-              CacheImage(poi.mainImage.url) :
-              AssetImage(AravaAssets.PoiPlaceholder),
+                CacheImage(poi.mainImage.url) :
+                AssetImage(AravaAssets.PoiPlaceholder),
             ),
             Padding(
               padding: EdgeInsets.all(16),

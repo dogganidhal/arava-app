@@ -82,12 +82,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     if (state is AppLoadedState) {
       final oldConfiguration = (state as AppLoadedState).appConfiguration;
       yield AppState.appLoadedState(
-        appConfiguration: AppConfiguration(
-          archipelagos: oldConfiguration.archipelagos,
-          themes: oldConfiguration.themes,
-          versionConfiguration: oldConfiguration.versionConfiguration,
-          preferredLocale: event.locale
-        )
+        appConfiguration: oldConfiguration
+          .withPreferredLocale(event.locale)
       );
     }
     if (state is AppFirstLaunchState) {

@@ -202,6 +202,26 @@ class AppLocalizations {
     name: 'search_EmptyResponseDescription'
   );
 
+  String searchResult_DetailsTabTitle() => Intl.message(
+    "Details",
+    name: 'searchResult_DetailsTabTitle'
+  );
+
+  String searchResult_CommentsTabTitle() => Intl.message(
+    "Comments",
+    name: 'searchResult_CommentsTabTitle'
+  );
+
+  String searchResult_NoDescriptionPlaceholder() => Intl.message(
+    "No description",
+    name: 'searchResult_NoDescriptionPlaceholder'
+  );
+
+  String searchResult_NoCommentsPlaceholder() => Intl.message(
+    "No comments",
+    name: 'searchResult_NoCommentsPlaceholder'
+  );
+
   // endregion
 
   // region Auth

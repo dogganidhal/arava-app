@@ -219,5 +219,25 @@
   "@search_EmptyResponseDescription": {
     "type": "text",
     "placeholders": {}
+  },
+  "searchResult_DetailsTabTitle": "Détails",
+  "@searchResult_DetailsTabTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "searchResult_CommentsTabTitle": "Commentaires",
+  "@searchResult_CommentsTabTitle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "searchResult_NoDescriptionPlaceholder": "Aucune description",
+  "@searchResult_NoDescriptionPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "searchResult_NoCommentsPlaceholder": "Aucun commentaire",
+  "@searchResult_NoCommentsPlaceholder": {
+    "type": "text",
+    "placeholders": {}
   }
 }

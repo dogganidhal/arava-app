@@ -49,7 +49,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   void cameraUpdated(CameraPosition cameraUpdate) {
-
+    add(SearchEvent.searchCameraPositionUpdatedEvent(cameraPosition: cameraUpdate));
   }
 
   void selectPoi(Poi poi) {
@@ -77,14 +77,16 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     yield state
       .withLoading(true)
       .withResponse(null)
+      .withEmptyResult(false)
       .withSelectedPoi(null);
     try {
       final searchResponse = await poiService.search(state.request);
       yield state
         .withLoading(false)
+        .withRegionDidChange(false)
+        .withEmptyResult(searchResponse.count == 0)
         .withResponse(searchResponse);
       if (searchResponse.count > 0) {
-        debugPrint(_boundsContainingPois(searchResponse.pois).toString());
         _mapController.animateCamera(CameraUpdate.newLatLngBounds(
           _boundsContainingPois(searchResponse.pois), 128
         ));
@@ -92,33 +94,24 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     } on AppException catch (exception) {
       yield state
         .withLoading(false)
+        .withRegionDidChange(false)
         .withException(exception);
     }
 
   }
 
   Stream<SearchState> _selectIsland(SearchSelectIslandEvent event) async* {
-    Modular.get<NavigationBloc>().pop();
     yield state
-      .withLoading(true)
       .withIsland(event.island)
-      .withRequest(state.request.withIsland(event.island.id));
-    if (_mapController != null) {
-      _mapController.animateCamera(CameraUpdate.newLatLngZoom(
-        LatLng(event.island.center.latitude, event.island.center.longitude),
-        event.island.zoom
-      ));
-    }
-    try {
-      final searchResponse = await poiService.search(state.request);
-      yield state
-        .withLoading(false)
-        .withResponse(searchResponse);
-    } on AppException catch (exception) {
-      yield state
-        .withLoading(false)
-        .withException(exception);
-    }
+      .withEmptyResult(false)
+      .withRequest(state.request
+        .withIsland(event.island.id)
+      );
+    _mapController.animateCamera(CameraUpdate.newLatLngZoom(
+      LatLng(event.island.center.latitude, event.island.center.longitude),
+      event.island.zoom
+    ));
+    add(SearchEvent.searchSubmitEvent());
   }
 
   Stream<SearchState> _mapLoaded(SearchMapLoadedEvent event) async* {
@@ -126,7 +119,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   Stream<SearchState> _cameraUpdated(SearchCameraPositionUpdatedEvent event) async* {
-
+    yield state
+      .withRegionDidChange(true);
   }
 
   Stream<SearchState> _setSearchFilters(SearchSetFiltersEvent event) async* {

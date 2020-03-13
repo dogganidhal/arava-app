@@ -44,7 +44,8 @@ dev_dependencies:
   provider: ^4.0.2
   intl: any
   intl_translation: ^0.17.9
-
+  carousel_slider: ^1.4.1
+  bubble_tab_indicator: ^0.1.4
 flutter:
 
   uses-material-design: true
@@ -55,6 +56,8 @@ flutter:
     - assets/images/pin-sponsored.png
     - assets/images/pin.png
     - assets/images/poi-placeholder.png
+    - assets/images/facebook.png
+    - assets/images/instagram.png
     - assets/map_styles/dark.json
     - assets/map_styles/light.json
 

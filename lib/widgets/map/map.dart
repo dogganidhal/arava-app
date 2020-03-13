@@ -3,6 +3,7 @@ import 'package:arava/blocs/search/search_bloc.dart';
 import 'package:arava/blocs/search/state/search_state.dart';
 import 'package:arava/i18n/app_localizations.dart';
 import 'package:arava/widgets/app/app_configuration_provider.dart';
+import 'package:arava/widgets/poi/poi_details.dart';
 import 'package:arava/widgets/poi/poi_preview.dart';
 import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,7 @@ class _Map extends State<Map> with AutomaticKeepAliveClientMixin {
       body: BlocListener<SearchBloc, SearchState>(
         bloc: _searchBloc,
         listener: (context, state) {
-          if (!state.loading && state.response != null && state.response.count == 0)
+          if (state.emptyResult)
             FlushbarHelper.createInformation(
               message: AppLocalizations.of(context).search_EmptyResponseDescription()
             )..show(context);
@@ -94,31 +95,38 @@ class _Map extends State<Map> with AutomaticKeepAliveClientMixin {
               if (state.selectedPoi != null)
                 Positioned(
                   bottom: 8, left: 8, right: 8,
-                  child: Dismissible(
-                    key: Key(state.selectedPoi.id),
-                    direction: DismissDirection.down,
-                    onDismissed: (_) => _searchBloc.clearSelectedPoi(),
-                    child: Stack(
-                      children: <Widget>[
-                        PoiPreview(poi: state.selectedPoi),
-                        Positioned(
-                          top: 16, left: 16, right: 16,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                height: 4,
-                                width: 32,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(3),
-                                  color: Theme.of(context).textTheme.title.color
-                                ),
-                              )
-                            ],
-                          )
-                        ),
-                      ],
-                    )
+                  child: GestureDetector(
+                    onTap: () {
+                      Modular.get<NavigationBloc>().pushRoute(MaterialPageRoute(
+                        builder: (BuildContext context) => PoiDetails(poi: state.selectedPoi)
+                      ));
+                    },
+                    child: Dismissible(
+                      key: Key(state.selectedPoi.id),
+                      direction: DismissDirection.down,
+                      onDismissed: (_) => _searchBloc.clearSelectedPoi(),
+                      child: Stack(
+                        children: <Widget>[
+                          PoiPreview(poi: state.selectedPoi),
+                          Positioned(
+                            top: 16, left: 16, right: 16,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                  height: 4,
+                                  width: 32,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(3),
+                                    color: Theme.of(context).textTheme.title.color
+                                  ),
+                                )
+                              ],
+                            )
+                          ),
+                        ],
+                      )
+                    ),
                   ),
                 )
             ],
