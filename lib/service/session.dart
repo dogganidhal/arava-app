@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:arava/model/api_configuration/api_configuration.dart';
 import 'package:arava/model/jwt_auth_credentials/jwt_auth_credentials.dart';
+import 'package:arava/model/poi/poi.dart';
 import 'package:arava/model/user/user.dart';
 import 'package:arava/service/cache_manager.dart';
 import 'package:meta/meta.dart';
@@ -13,11 +14,13 @@ class Session {
   static final String _kFirstAppLaunch = "com.arava.first_app_launch";
   static final String _kPreferredLocale = "com.arava.preferred_locale";
   static final String _kApiConfiguration = "com.arava.api_configuration";
+  static final String _kFavorites = "com.arava.favorites";
 
   final CacheManager cacheManager;
 
   final Map<String, dynamic> _cacheMap = {
-    _kUser: null
+    _kUser: null,
+    _kFavorites: []
   };
 
   Session({@required this.cacheManager});
@@ -65,6 +68,36 @@ class Session {
   }
 
   // endregion
+
+  List<Poi> get cachedFavorites => _cacheMap[_kFavorites];
+
+  Future<List<Poi>> getFavorites() async {
+    final jsonString = await cacheManager.getStringAsync(_kFavorites);
+    if (jsonString == null) {
+      return [];
+    }
+    final favorites = (json.decode(jsonString) as List)
+      .map((jsonMap) => Poi.fromJson(jsonMap))
+      .toList();
+    _cacheMap[_kFavorites] = favorites;
+    return favorites;
+  }
+
+  Future<void> setFavorites(List<Poi> favorites) async {
+    final jsonString = json.encode(favorites
+      .map((favorite) => favorite.toJson())
+      .toList()
+    );
+    _cacheMap[_kFavorites] = favorites;
+    await cacheManager.setStringAsync(_kFavorites, jsonString);
+  }
+
+  Future<void> clearFavorites() async {
+    await cacheManager.removeAsync(_kFavorites);
+  }
+
+  bool hasFavorite(Poi favorite) => (_cacheMap[_kFavorites] as List<Poi>)
+    .any((poi) => favorite.id == poi.id);
 
   Future<void> setFirstAppLaunch(bool firstAppLaunch) async {
     await cacheManager.setBoolAsync(_kFirstAppLaunch, firstAppLaunch);

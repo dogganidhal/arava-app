@@ -19,7 +19,7 @@ abstract class DioService {
   }
 
   @protected
-  Future<Response<T>> post<T>(String uri, {Map<String, dynamic> data}) async {
+  Future<Response<T>> post<T>(String uri, {data}) async {
     try {
       return await _dio.post(uri, data: data);
     } catch (exception) {
@@ -28,7 +28,7 @@ abstract class DioService {
   }
 
   @protected
-  Future<Response<T>> put<T>(String uri, {Map<String, dynamic> data}) async {
+  Future<Response<T>> put<T>(String uri, {data}) async {
     try {
       return await _dio.put(uri, data: data);
     } catch (exception) {

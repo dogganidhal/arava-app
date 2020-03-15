@@ -8,5 +8,6 @@ abstract class AravaAssets {
   static final String PoiPlaceholder = "assets/images/poi-placeholder.png";
   static final String FacebookLogo = "assets/images/facebook.png";
   static final String InstagramLogo = "assets/images/instagram.png";
+  static final String IslandIcon = "assets/images/beach.png";
 
 }

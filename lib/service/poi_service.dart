@@ -13,4 +13,18 @@ class PoiService extends DioService {
     final response = await post('/search', data: request.toJson());
     return SearchResponse.fromJson(response.data);
   }
+  
+  Future<List<Poi>> getFavorites() async {
+    final response = await post('/user/favorite');
+    return (response.data as List)
+      .map((jsonMap) => Poi.fromJson(jsonMap))
+      .toList();
+  }
+
+  Future<void> syncFavorites(List<Poi> favorites) async {
+    await put('/user/favorite', data: favorites
+      .map((poi) => poi.toJson())
+      .toList()
+    );
+  }
 }

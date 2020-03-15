@@ -31,7 +31,9 @@ class PoiPreview extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.all(16),
-              child: Column(
+              child: Wrap(
+                runSpacing: 8,
+                spacing: 0,
                 children: <Widget>[
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -45,6 +47,21 @@ class PoiPreview extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: Text(poi.title),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      Image(
+                        height: 24, width: 24,
+                        fit: BoxFit.contain,
+                        color: Theme.of(context).textTheme.title.color,
+                        image: AssetImage(AravaAssets.IslandIcon),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(poi.island),
                       ),
                     ],
                   ),

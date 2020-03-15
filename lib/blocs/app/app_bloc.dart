@@ -1,12 +1,14 @@
 import 'package:arava/blocs/app/event/app_event.dart';
 import 'package:arava/blocs/app/state/app_state.dart';
 import 'package:arava/blocs/auth/auth_bloc.dart';
+import 'package:arava/blocs/favorites/favorites_bloc.dart';
 import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/exception/app_exception.dart';
 import 'package:arava/i18n/app_localizations.dart';
 import 'package:arava/model/api_configuration/api_configuration.dart';
 import 'package:arava/model/app_configuration/app_configuration.dart';
 import 'package:arava/service/app_service.dart';
+import 'package:arava/service/poi_service.dart';
 import 'package:arava/service/session.dart';
 import 'package:arava/theme/arava_assets.dart';
 import 'package:dio/dio.dart';
@@ -20,12 +22,15 @@ import 'package:meta/meta.dart';
 class AppBloc extends Bloc<AppEvent, AppState> {
   final AuthBloc authBloc;
   final NavigationBloc navigationBloc;
+  final FavoritesBloc favoritesBloc;
   final AppService appService;
+  final PoiService poiService;
   final Session session;
 
   AppBloc({
     @required this.appService, @required this.session,
-    @required this.navigationBloc, @required this.authBloc
+    @required this.navigationBloc, @required this.authBloc,
+    @required this.poiService, @required this.favoritesBloc
   });
 
   @override
@@ -33,26 +38,27 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   @override
   Stream<AppState> mapEventToState(AppEvent event) => event.when(
-    loadAppEvent: _loadApp,
-    changeLocaleEvent: _changeLocale,
-    confirmFirstLaunchEvent: _confirmFirstLaunch
+    appLoadEvent: _loadApp,
+    appChangeLocaleEvent: _changeLocale,
+    appConfirmFirstLaunchEvent: _confirmFirstLaunch
   );
 
   void loadApp() {
-    add(AppEvent.loadAppEvent());
+    add(AppEvent.appLoadEvent());
   }
 
   void confirmFirstLaunch() {
-    add(AppEvent.confirmFirstLaunchEvent());
+    add(AppEvent.appConfirmFirstLaunchEvent());
   }
 
   void changeLocale(String locale) {
-    add(AppEvent.changeLocaleEvent(locale: locale));
+    add(AppEvent.appChangeLocaleEvent(locale: locale));
   }
 
-  Stream<AppState> _loadApp(LoadAppEvent event) async* {
+  Stream<AppState> _loadApp(AppLoadEvent event) async* {
     yield AppState.appLoadingState();
     authBloc.loadAuth();
+    favoritesBloc.loadFavorites();
     final firstLaunch = await session.getFirstAppLaunch();
     if (firstLaunch) {
       yield AppState.appFirstLaunchState(language: Intl.defaultLocale);
@@ -71,12 +77,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
   }
 
-  Stream<AppState> _confirmFirstLaunch(ConfirmFirstLaunchEvent event) async* {
+  Stream<AppState> _confirmFirstLaunch(AppConfirmFirstLaunchEvent event) async* {
     await session.setFirstAppLaunch(false);
     loadApp();
   }
 
-  Stream<AppState> _changeLocale(ChangeLocaleEvent event) async* {
+  Stream<AppState> _changeLocale(AppChangeLocaleEvent event) async* {
     await AppLocalizations.load(Locale(event.locale));
     await session.setPreferredLocale(event.locale);
     if (state is AppLoadedState) {
@@ -120,5 +126,4 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
     return null;
   }
-
 }

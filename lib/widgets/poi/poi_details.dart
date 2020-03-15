@@ -1,12 +1,16 @@
+import 'package:arava/blocs/favorites/favorites_bloc.dart';
+import 'package:arava/blocs/favorites/state/favorites_state.dart';
 import 'package:arava/i18n/app_localizations.dart';
 import 'package:arava/model/poi/poi.dart';
 import 'package:arava/theme/arava_assets.dart';
 import 'package:arava/widgets/poi/poi_photo_carousel.dart';
+import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:cache_image/cache_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 
 class PoiDetails extends StatefulWidget {
@@ -44,8 +48,18 @@ class _PoiDetailsState extends State<PoiDetails> with SingleTickerProviderStateM
             backgroundColor: Theme.of(context).backgroundColor,
             actions: <Widget>[
               IconButton(
-                icon: Icon(Icons.favorite),
-                onPressed: () {},
+                icon: BlocBuilder<FavoritesBloc, FavoritesState>(
+                  bloc: Modular.get<FavoritesBloc>(),
+                  builder: (context, state) => state.whenOrElse(
+                    favoritesReadyState: (readyState) => Icon(
+                      readyState.favoritesIds.contains(widget.poi.id) ?
+                        Icons.favorite :
+                        Icons.favorite_border
+                    ),
+                    orElse: (_) => Container()
+                  ),
+                ),
+                onPressed: () => Modular.get<FavoritesBloc>().toggleFavorite(widget.poi),
               )
             ],
             flexibleSpace: LayoutBuilder(
@@ -179,6 +193,16 @@ class _PoiDetailsState extends State<PoiDetails> with SingleTickerProviderStateM
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8),
                 child: Text("@${widget.poi.details.instagramAccount}"),
+              )
+            ],
+          ),
+        if (widget.poi.details?.openingHours != null)
+          Row(
+            children: <Widget>[
+              Icon(Icons.watch_later),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Text(widget.poi.details.openingHours),
               )
             ],
           )

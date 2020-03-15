@@ -1,7 +1,7 @@
+import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/blocs/search/search_bloc.dart';
 import 'package:arava/blocs/search/state/search_state.dart';
 import 'package:arava/i18n/app_localizations.dart';
-import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/theme/arava_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +23,7 @@ class MapAppBar extends StatelessWidget implements PreferredSizeWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 4),
                   child: Image.asset(
-                    "assets/images/beach.png",
+                    AravaAssets.IslandIcon,
                     color: Theme.of(context).primaryColor,
                     height: 18,
                   ),

@@ -10,46 +10,47 @@ part of 'app_event.dart';
 abstract class AppEvent extends Equatable {
   const AppEvent(this._type);
 
-  factory AppEvent.loadAppEvent() = LoadAppEvent;
+  factory AppEvent.appLoadEvent() = AppLoadEvent;
 
-  factory AppEvent.changeLocaleEvent({@required String locale}) =
-      ChangeLocaleEvent;
+  factory AppEvent.appChangeLocaleEvent({@required String locale}) =
+      AppChangeLocaleEvent;
 
-  factory AppEvent.confirmFirstLaunchEvent() = ConfirmFirstLaunchEvent;
+  factory AppEvent.appConfirmFirstLaunchEvent() = AppConfirmFirstLaunchEvent;
 
   final _AppEvent _type;
 
 //ignore: missing_return
   R when<R>(
       {@required
-          FutureOr<R> Function(LoadAppEvent) loadAppEvent,
+          FutureOr<R> Function(AppLoadEvent) appLoadEvent,
       @required
-          FutureOr<R> Function(ChangeLocaleEvent) changeLocaleEvent,
+          FutureOr<R> Function(AppChangeLocaleEvent) appChangeLocaleEvent,
       @required
-          FutureOr<R> Function(ConfirmFirstLaunchEvent)
-              confirmFirstLaunchEvent}) {
+          FutureOr<R> Function(AppConfirmFirstLaunchEvent)
+              appConfirmFirstLaunchEvent}) {
     assert(() {
-      if (loadAppEvent == null ||
-          changeLocaleEvent == null ||
-          confirmFirstLaunchEvent == null) {
+      if (appLoadEvent == null ||
+          appChangeLocaleEvent == null ||
+          appConfirmFirstLaunchEvent == null) {
         throw 'check for all possible cases';
       }
       return true;
     }());
     switch (this._type) {
-      case _AppEvent.LoadAppEvent:
-        return loadAppEvent(this as LoadAppEvent);
-      case _AppEvent.ChangeLocaleEvent:
-        return changeLocaleEvent(this as ChangeLocaleEvent);
-      case _AppEvent.ConfirmFirstLaunchEvent:
-        return confirmFirstLaunchEvent(this as ConfirmFirstLaunchEvent);
+      case _AppEvent.AppLoadEvent:
+        return appLoadEvent(this as AppLoadEvent);
+      case _AppEvent.AppChangeLocaleEvent:
+        return appChangeLocaleEvent(this as AppChangeLocaleEvent);
+      case _AppEvent.AppConfirmFirstLaunchEvent:
+        return appConfirmFirstLaunchEvent(this as AppConfirmFirstLaunchEvent);
     }
   }
 
   R whenOrElse<R>(
-      {FutureOr<R> Function(LoadAppEvent) loadAppEvent,
-      FutureOr<R> Function(ChangeLocaleEvent) changeLocaleEvent,
-      FutureOr<R> Function(ConfirmFirstLaunchEvent) confirmFirstLaunchEvent,
+      {FutureOr<R> Function(AppLoadEvent) appLoadEvent,
+      FutureOr<R> Function(AppChangeLocaleEvent) appChangeLocaleEvent,
+      FutureOr<R> Function(AppConfirmFirstLaunchEvent)
+          appConfirmFirstLaunchEvent,
       @required FutureOr<R> Function(AppEvent) orElse}) {
     assert(() {
       if (orElse == null) {
@@ -58,42 +59,42 @@ abstract class AppEvent extends Equatable {
       return true;
     }());
     switch (this._type) {
-      case _AppEvent.LoadAppEvent:
-        if (loadAppEvent == null) break;
-        return loadAppEvent(this as LoadAppEvent);
-      case _AppEvent.ChangeLocaleEvent:
-        if (changeLocaleEvent == null) break;
-        return changeLocaleEvent(this as ChangeLocaleEvent);
-      case _AppEvent.ConfirmFirstLaunchEvent:
-        if (confirmFirstLaunchEvent == null) break;
-        return confirmFirstLaunchEvent(this as ConfirmFirstLaunchEvent);
+      case _AppEvent.AppLoadEvent:
+        if (appLoadEvent == null) break;
+        return appLoadEvent(this as AppLoadEvent);
+      case _AppEvent.AppChangeLocaleEvent:
+        if (appChangeLocaleEvent == null) break;
+        return appChangeLocaleEvent(this as AppChangeLocaleEvent);
+      case _AppEvent.AppConfirmFirstLaunchEvent:
+        if (appConfirmFirstLaunchEvent == null) break;
+        return appConfirmFirstLaunchEvent(this as AppConfirmFirstLaunchEvent);
     }
     return orElse(this);
   }
 
   FutureOr<void> whenPartial(
-      {FutureOr<void> Function(LoadAppEvent) loadAppEvent,
-      FutureOr<void> Function(ChangeLocaleEvent) changeLocaleEvent,
-      FutureOr<void> Function(ConfirmFirstLaunchEvent)
-          confirmFirstLaunchEvent}) {
+      {FutureOr<void> Function(AppLoadEvent) appLoadEvent,
+      FutureOr<void> Function(AppChangeLocaleEvent) appChangeLocaleEvent,
+      FutureOr<void> Function(AppConfirmFirstLaunchEvent)
+          appConfirmFirstLaunchEvent}) {
     assert(() {
-      if (loadAppEvent == null &&
-          changeLocaleEvent == null &&
-          confirmFirstLaunchEvent == null) {
+      if (appLoadEvent == null &&
+          appChangeLocaleEvent == null &&
+          appConfirmFirstLaunchEvent == null) {
         throw 'provide at least one branch';
       }
       return true;
     }());
     switch (this._type) {
-      case _AppEvent.LoadAppEvent:
-        if (loadAppEvent == null) break;
-        return loadAppEvent(this as LoadAppEvent);
-      case _AppEvent.ChangeLocaleEvent:
-        if (changeLocaleEvent == null) break;
-        return changeLocaleEvent(this as ChangeLocaleEvent);
-      case _AppEvent.ConfirmFirstLaunchEvent:
-        if (confirmFirstLaunchEvent == null) break;
-        return confirmFirstLaunchEvent(this as ConfirmFirstLaunchEvent);
+      case _AppEvent.AppLoadEvent:
+        if (appLoadEvent == null) break;
+        return appLoadEvent(this as AppLoadEvent);
+      case _AppEvent.AppChangeLocaleEvent:
+        if (appChangeLocaleEvent == null) break;
+        return appChangeLocaleEvent(this as AppChangeLocaleEvent);
+      case _AppEvent.AppConfirmFirstLaunchEvent:
+        if (appConfirmFirstLaunchEvent == null) break;
+        return appConfirmFirstLaunchEvent(this as AppConfirmFirstLaunchEvent);
     }
   }
 
@@ -102,38 +103,39 @@ abstract class AppEvent extends Equatable {
 }
 
 @immutable
-class LoadAppEvent extends AppEvent {
-  const LoadAppEvent._() : super(_AppEvent.LoadAppEvent);
+class AppLoadEvent extends AppEvent {
+  const AppLoadEvent._() : super(_AppEvent.AppLoadEvent);
 
-  factory LoadAppEvent() {
-    _instance ??= LoadAppEvent._();
+  factory AppLoadEvent() {
+    _instance ??= AppLoadEvent._();
     return _instance;
   }
 
-  static LoadAppEvent _instance;
+  static AppLoadEvent _instance;
 }
 
 @immutable
-class ChangeLocaleEvent extends AppEvent {
-  const ChangeLocaleEvent({@required this.locale})
-      : super(_AppEvent.ChangeLocaleEvent);
+class AppChangeLocaleEvent extends AppEvent {
+  const AppChangeLocaleEvent({@required this.locale})
+      : super(_AppEvent.AppChangeLocaleEvent);
 
   final String locale;
 
   @override
-  String toString() => 'ChangeLocaleEvent(locale:${this.locale})';
+  String toString() => 'AppChangeLocaleEvent(locale:${this.locale})';
   @override
   List get props => [locale];
 }
 
 @immutable
-class ConfirmFirstLaunchEvent extends AppEvent {
-  const ConfirmFirstLaunchEvent._() : super(_AppEvent.ConfirmFirstLaunchEvent);
+class AppConfirmFirstLaunchEvent extends AppEvent {
+  const AppConfirmFirstLaunchEvent._()
+      : super(_AppEvent.AppConfirmFirstLaunchEvent);
 
-  factory ConfirmFirstLaunchEvent() {
-    _instance ??= ConfirmFirstLaunchEvent._();
+  factory AppConfirmFirstLaunchEvent() {
+    _instance ??= AppConfirmFirstLaunchEvent._();
     return _instance;
   }
 
-  static ConfirmFirstLaunchEvent _instance;
+  static AppConfirmFirstLaunchEvent _instance;
 }
