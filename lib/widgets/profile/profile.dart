@@ -1,10 +1,10 @@
-import 'package:arava/model/user/user.dart';
-import 'package:arava/service/session.dart';
-import 'package:flushbar/flushbar_helper.dart';
 import 'package:arava/blocs/profile/profile_bloc.dart';
 import 'package:arava/blocs/profile/state/profile_state.dart';
 import 'package:arava/i18n/app_localizations.dart';
 import 'package:arava/model/update_profile_request/update_profile_request.dart';
+import 'package:arava/model/user/user.dart';
+import 'package:arava/service/session.dart';
+import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -210,8 +210,8 @@ class _ProfileState extends State<Profile> {
                             padding: EdgeInsets.zero,
                             icon: Icon(
                               _isNewPasswordTextObscure ?
-                              Icons.visibility :
-                              Icons.visibility_off
+                                Icons.visibility :
+                                Icons.visibility_off
                             ),
                             onPressed: _toggleNewPasswordObscureText,
                           )

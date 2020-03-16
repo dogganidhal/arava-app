@@ -1,22 +1,24 @@
-import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/blocs/search/event/search_event.dart';
 import 'package:arava/blocs/search/state/search_state.dart';
 import 'package:arava/exception/app_exception.dart';
 import 'package:arava/model/island/island.dart';
+import 'package:arava/model/lat_lng/lat_lng.dart' as model;
 import 'package:arava/model/poi/poi.dart';
+import 'package:arava/model/region/region.dart';
 import 'package:arava/model/search_filters/search_filters.dart';
 import 'package:arava/service/poi_service.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:meta/meta.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:meta/meta.dart';
 
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final PoiService poiService;
 
   GoogleMapController _mapController;
+  LatLngBounds _lastVisibleRegion;
+  bool _ignoreNextCameraUpdate = true;
 
   SearchBloc({@required this.poiService});
 
@@ -48,10 +50,6 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     add(SearchEvent.searchSelectIslandEvent(island: island));
   }
 
-  void cameraUpdated(CameraPosition cameraUpdate) {
-    add(SearchEvent.searchCameraPositionUpdatedEvent(cameraPosition: cameraUpdate));
-  }
-
   void selectPoi(Poi poi) {
     add(SearchEvent.searchSelectPoiEvent(poi: poi));
   }
@@ -65,6 +63,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     add(SearchEvent.searchSubmitEvent());
   }
 
+  void cameraIdle() async {
+    final cameraPosition = await _mapController.getVisibleRegion();
+    add(SearchEvent.searchCameraPositionUpdatedEvent(cameraPosition: cameraPosition));
+  }
+
   Stream<SearchState> _updateSearchRequest(SearchUpdateRequestEvent event) async* {
 
   }
@@ -74,7 +77,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   Stream<SearchState> _submit(SearchSubmitEvent event) async* {
+    _ignoreNextCameraUpdate = true;
     yield state
+      .withRegionDidChange(false)
       .withLoading(true)
       .withResponse(null)
       .withEmptyResult(false)
@@ -97,7 +102,6 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         .withRegionDidChange(false)
         .withException(exception);
     }
-
   }
 
   Stream<SearchState> _selectIsland(SearchSelectIslandEvent event) async* {
@@ -119,8 +123,24 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   Stream<SearchState> _cameraUpdated(SearchCameraPositionUpdatedEvent event) async* {
-    yield state
-      .withRegionDidChange(true);
+    if (!_ignoreNextCameraUpdate) {
+      yield state
+        .withRegionDidChange(_lastVisibleRegion != event.cameraPosition)
+        .withRequest(state.request
+          .withRegion(Region(
+            southWest: model.LatLng(
+              latitude: event.cameraPosition.southwest.latitude,
+              longitude: event.cameraPosition.southwest.longitude
+            ),
+            northEast: model.LatLng(
+              latitude: event.cameraPosition.northeast.latitude,
+              longitude: event.cameraPosition.northeast.longitude
+            )
+          ))
+        );
+      _lastVisibleRegion = event.cameraPosition;
+    }
+    _ignoreNextCameraUpdate = false;
   }
 
   Stream<SearchState> _setSearchFilters(SearchSetFiltersEvent event) async* {

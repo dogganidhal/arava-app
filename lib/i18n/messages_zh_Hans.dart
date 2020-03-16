@@ -32,6 +32,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth_PasswordMinimumLengthErrorMessage" : MessageLookupByLibrary.simpleMessage("密码必须至少包含6个字符"),
     "auth_SignUpSubtitle" : MessageLookupByLibrary.simpleMessage("请注册以继续"),
     "auth_SignUpTitle" : MessageLookupByLibrary.simpleMessage("报名"),
+    "favorites_EmptyFavorites" : MessageLookupByLibrary.simpleMessage("没有收藏"),
     "general_Cancel" : MessageLookupByLibrary.simpleMessage("取消"),
     "general_Island" : MessageLookupByLibrary.simpleMessage("岛"),
     "general_Loading" : MessageLookupByLibrary.simpleMessage("载入中 ..."),
@@ -66,6 +67,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "search_Filter" : MessageLookupByLibrary.simpleMessage("提炼"),
     "search_FilterQueryPlaceholder" : MessageLookupByLibrary.simpleMessage("公园，酒店..."),
     "search_FilterSponsored" : MessageLookupByLibrary.simpleMessage("要做的事"),
+    "search_SearchThisArea" : MessageLookupByLibrary.simpleMessage("搜索此区域"),
     "search_SelectIsland" : MessageLookupByLibrary.simpleMessage("选择岛屿"),
     "settings_Language" : MessageLookupByLibrary.simpleMessage("语言"),
     "settings_Title" : MessageLookupByLibrary.simpleMessage("设定")

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 
 class MoreAppBar extends StatelessWidget implements PreferredSizeWidget {
-
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -14,5 +13,4 @@ class MoreAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
-
 }

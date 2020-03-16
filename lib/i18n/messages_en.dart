@@ -32,6 +32,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth_PasswordMinimumLengthErrorMessage" : MessageLookupByLibrary.simpleMessage("Password must have at least 6 characters"),
     "auth_SignUpSubtitle" : MessageLookupByLibrary.simpleMessage("Please sign up to continue"),
     "auth_SignUpTitle" : MessageLookupByLibrary.simpleMessage("Sign up"),
+    "favorites_EmptyFavorites" : MessageLookupByLibrary.simpleMessage("No Favorites"),
     "general_Cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
     "general_Island" : MessageLookupByLibrary.simpleMessage("Island"),
     "general_Loading" : MessageLookupByLibrary.simpleMessage("Loading ..."),
@@ -66,6 +67,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "search_Filter" : MessageLookupByLibrary.simpleMessage("Refine"),
     "search_FilterQueryPlaceholder" : MessageLookupByLibrary.simpleMessage("Park, Hotel ..."),
     "search_FilterSponsored" : MessageLookupByLibrary.simpleMessage("Things to do"),
+    "search_SearchThisArea" : MessageLookupByLibrary.simpleMessage("Search this area"),
     "search_SelectIsland" : MessageLookupByLibrary.simpleMessage("Select islands"),
     "settings_Language" : MessageLookupByLibrary.simpleMessage("Language"),
     "settings_Title" : MessageLookupByLibrary.simpleMessage("Settings")

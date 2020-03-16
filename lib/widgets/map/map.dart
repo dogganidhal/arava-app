@@ -63,7 +63,7 @@ class _Map extends State<Map> with AutomaticKeepAliveClientMixin {
                   rootBundle.loadString("assets/map_styles/$brightness.json")
                     .then((string) => controller.setMapStyle(string));
                 },
-                onCameraMove: (cameraPosition) => _searchBloc.cameraUpdated(cameraPosition),
+                onCameraIdle: () => _searchBloc.cameraIdle(),
                 myLocationEnabled: true,
                 markers: state.response?.pois
                   ?.map((poi) => Marker(
@@ -92,6 +92,25 @@ class _Map extends State<Map> with AutomaticKeepAliveClientMixin {
                   icon: Icon(Icons.filter_list),
                 ),
               ),
+              if (state.regionDidChange)
+                Positioned(
+                  top: 8, left: 8, right: 8,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      FlatButton.icon(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4)
+                        ),
+                        onPressed: () => _searchBloc.search(),
+                        color: Theme.of(context)
+                          .primaryColor,
+                        label: Text(AppLocalizations.of(context).search_SearchThisArea()),
+                        icon: Icon(Icons.refresh),
+                      ),
+                    ],
+                  ),
+                ),
               if (state.selectedPoi != null)
                 Positioned(
                   bottom: 8, left: 8, right: 8,

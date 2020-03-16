@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-03-13T12:11:02.731673",
+  "@@last_modified": "2020-03-16T16:36:28.706577",
   "appName": "Arava",
   "@appName": {
     "type": "text",
@@ -150,6 +150,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "search_SearchThisArea": "Search this area",
+  "@search_SearchThisArea": {
+    "type": "text",
+    "placeholders": {}
+  },
   "searchResult_DetailsTabTitle": "Details",
   "@searchResult_DetailsTabTitle": {
     "type": "text",
@@ -237,6 +242,11 @@
   },
   "profile_ProfileUpdateSuccessful": "Profile updated successfully",
   "@profile_ProfileUpdateSuccessful": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "favorites_EmptyFavorites": "No Favorites",
+  "@favorites_EmptyFavorites": {
     "type": "text",
     "placeholders": {}
   }

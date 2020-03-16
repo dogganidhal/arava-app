@@ -22,7 +22,7 @@ abstract class SearchEvent extends Equatable {
       {@required SearchRequest request}) = SearchUpdateRequestEvent;
 
   factory SearchEvent.searchCameraPositionUpdatedEvent(
-          {@required CameraPosition cameraPosition}) =
+          {@required LatLngBounds cameraPosition}) =
       SearchCameraPositionUpdatedEvent;
 
   factory SearchEvent.searchSelectPoiEvent({@required Poi poi}) =
@@ -234,7 +234,7 @@ class SearchCameraPositionUpdatedEvent extends SearchEvent {
   const SearchCameraPositionUpdatedEvent({@required this.cameraPosition})
       : super(_SearchEvent.SearchCameraPositionUpdatedEvent);
 
-  final CameraPosition cameraPosition;
+  final LatLngBounds cameraPosition;
 
   @override
   String toString() =>

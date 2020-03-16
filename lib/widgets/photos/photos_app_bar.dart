@@ -1,11 +1,16 @@
+import 'package:arava/i18n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 
-class PhotosAppBar extends AppBar {
+class PhotosAppBar extends StatelessWidget implements PreferredSizeWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text(AppLocalizations.of(context).home_Photos()),
+      centerTitle: true
+    );
+  }
 
-  PhotosAppBar() : super(
-    title: Text("Photos"),
-    centerTitle: true
-  );
-
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }

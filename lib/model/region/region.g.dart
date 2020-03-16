@@ -8,14 +8,16 @@ part of 'region.dart';
 
 Region _$RegionFromJson(Map<String, dynamic> json) {
   return Region(
-    center: json['center'] == null
+    northEast: json['northEast'] == null
         ? null
-        : LatLng.fromJson(json['center'] as Map<String, dynamic>),
-    distance: (json['distance'] as num)?.toDouble(),
+        : LatLng.fromJson(json['northEast'] as Map<String, dynamic>),
+    southWest: json['southWest'] == null
+        ? null
+        : LatLng.fromJson(json['southWest'] as Map<String, dynamic>),
   );
 }
 
 Map<String, dynamic> _$RegionToJson(Region instance) => <String, dynamic>{
-      'center': instance.center,
-      'distance': instance.distance,
+      'southWest': instance.southWest,
+      'northEast': instance.northEast,
     };

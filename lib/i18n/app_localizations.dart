@@ -202,6 +202,11 @@ class AppLocalizations {
     name: 'search_EmptyResponseDescription'
   );
 
+  String search_SearchThisArea() => Intl.message(
+    'Search this area',
+    name: 'search_SearchThisArea'
+  );
+
   String searchResult_DetailsTabTitle() => Intl.message(
     "Details",
     name: 'searchResult_DetailsTabTitle'
@@ -298,6 +303,15 @@ class AppLocalizations {
   String profile_ProfileUpdateSuccessful() => Intl.message(
     'Profile updated successfully',
     name: 'profile_ProfileUpdateSuccessful'
+  );
+
+  // endregion
+
+  // region Favorites
+
+  String favorites_EmptyFavorites() => Intl.message(
+    'No Favorites',
+    name: 'favorites_EmptyFavorites'
   );
 
   // endregion

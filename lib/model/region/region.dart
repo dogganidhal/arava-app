@@ -7,10 +7,10 @@ part 'region.g.dart';
 @JsonSerializable()
 @immutable
 class Region {
-  final LatLng center;
-  final double distance;
+  final LatLng southWest;
+  final LatLng northEast;
 
-  Region({this.center, this.distance});
+  Region({this.northEast, this.southWest});
 
   factory Region.fromJson(Map<String, dynamic> json) => _$RegionFromJson(json);
   Map<String, dynamic> toJson() => _$RegionToJson(this);

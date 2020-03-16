@@ -1,10 +1,10 @@
 import 'package:arava/exception/app_exception.dart';
+import 'package:arava/model/island/island.dart';
 import 'package:arava/model/poi/poi.dart';
 import 'package:arava/model/search_request/search_request.dart';
 import 'package:arava/model/search_response/search_response.dart';
-import 'package:arava/model/island/island.dart';
-import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 
 @immutable
 class SearchState extends Equatable  {
@@ -29,7 +29,11 @@ class SearchState extends Equatable  {
   });
 
   @override
-  List<dynamic> get props => [loading, response, request, selectedPoi, island, exception];
+  List<dynamic> get props => [
+    loading, response, request,
+    selectedPoi, island, exception,
+    regionDidChange, emptyResult
+  ];
 
   SearchState withLoading(bool loading) => SearchState(
     loading: loading,

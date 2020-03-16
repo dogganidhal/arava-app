@@ -239,5 +239,15 @@
   "@searchResult_NoCommentsPlaceholder": {
     "type": "text",
     "placeholders": {}
+  },
+  "favorites_EmptyFavorites": "No Favorites",
+  "@favorites_EmptyFavorites": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "search_SearchThisArea": "Search this area",
+  "@search_SearchThisArea": {
+    "type": "text",
+    "placeholders": {}
   }
 }
