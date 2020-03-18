@@ -38,8 +38,8 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     add(NavigationEvent.navigationPushEvent(route: route));
   }
 
-  void pushRoute<T>(Route<T> route) {
-    navigatorState.currentState.push(route);
+  Future<T> pushRoute<T>(Route<T> route) {
+    return navigatorState.currentState.push(route);
   }
 
   Stream<NavigationState> _pop(NavigationPopEvent event) async* {

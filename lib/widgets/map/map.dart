@@ -42,10 +42,16 @@ class _Map extends State<Map> with AutomaticKeepAliveClientMixin {
       body: BlocListener<SearchBloc, SearchState>(
         bloc: _searchBloc,
         listener: (context, state) {
-          if (state.emptyResult)
+          if (state.emptyResult) {
             FlushbarHelper.createInformation(
               message: AppLocalizations.of(context).search_EmptyResponseDescription()
             )..show(context);
+          }
+          if (state.exception != null) {
+            FlushbarHelper.createError(
+              message: state.exception.getLocalizedMessage(context)
+            )..show(context);
+          }
         },
         child: BlocBuilder<SearchBloc, SearchState>(
           bloc: _searchBloc,

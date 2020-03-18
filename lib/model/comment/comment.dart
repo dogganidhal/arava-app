@@ -1,4 +1,4 @@
-import 'package:arava/model/user/user.dart';
+import 'package:arava/model/comment_author/comment_author.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
@@ -9,7 +9,7 @@ part 'comment.g.dart';
 class Comment {
   final String id;
   final String content;
-  final User author;
+  final CommentAuthor author;
   final DateTime date;
 
   Comment({

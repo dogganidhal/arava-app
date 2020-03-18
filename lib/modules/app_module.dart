@@ -1,5 +1,6 @@
 import 'package:arava/blocs/app/app_bloc.dart';
 import 'package:arava/blocs/auth/auth_bloc.dart';
+import 'package:arava/blocs/comment/comment_bloc.dart';
 import 'package:arava/blocs/favorites/favorites_bloc.dart';
 import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/blocs/profile/profile_bloc.dart';
@@ -89,7 +90,12 @@ class AppModule extends MainModule {
     Bind((inject) => FavoritesBloc(
       session: inject.get(),
       poiService: inject.get()
-    ))
+    )),
+    Bind((inject) => CommentBloc(
+      poiService: inject.get(),
+      navigationBloc: inject.get(),
+      session: inject.get()
+    ), singleton: false)
   ];
 
   @override

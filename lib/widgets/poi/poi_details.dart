@@ -1,16 +1,25 @@
+import 'package:arava/blocs/auth/auth_bloc.dart';
+import 'package:arava/blocs/auth/state/auth_state.dart';
 import 'package:arava/blocs/favorites/favorites_bloc.dart';
 import 'package:arava/blocs/favorites/state/favorites_state.dart';
+import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/i18n/app_localizations.dart';
+import 'package:arava/model/comment/comment.dart';
 import 'package:arava/model/poi/poi.dart';
 import 'package:arava/theme/arava_assets.dart';
+import 'package:arava/widgets/auth/auth_required.dart';
+import 'package:arava/widgets/poi/poi_comment.dart';
 import 'package:arava/widgets/poi/poi_photo_carousel.dart';
+import 'package:arava/widgets/poi/poi_rate_comment.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:cache_image/cache_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 
 class PoiDetails extends StatefulWidget {
@@ -24,19 +33,19 @@ class PoiDetails extends StatefulWidget {
 
 class _PoiDetailsState extends State<PoiDetails> with SingleTickerProviderStateMixin {
   TabController _tabController;
-  ScrollController _scrollController = ScrollController();
+  List<Comment> _comments;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
+    _comments = widget.poi.comments;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
-        controller: _scrollController,
         headerSliverBuilder: (context, value) => [
           SliverAppBar(
             iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
@@ -97,35 +106,72 @@ class _PoiDetailsState extends State<PoiDetails> with SingleTickerProviderStateM
         body: TabBarView(
           controller: _tabController,
           children: <Widget>[
-            _details,
-            _comments
+            _detailsSection,
+            _commentsSection
           ]
         ),
       ),
     );
   }
 
-  Widget get _details => Padding(
+  Widget get _detailsSection => Padding(
     padding: EdgeInsets.symmetric(horizontal: 16),
     child: Wrap(
       runSpacing: 8,
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(top: 16),
+          padding: EdgeInsets.only(top: 8),
           child: Row(
             children: <Widget>[
-              ImageIcon(CacheImage(widget.poi.theme.icon.url)),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  widget.poi.title,
-                  style: Theme.of(context)
-                    .textTheme
-                    .subhead,
+              Text(
+                widget.poi.title,
+                style: Theme.of(context)
+                  .textTheme
+                  .subhead,
+              ),
+              Expanded(child: Container()),
+              RatingBar(
+                initialRating: widget.poi.ratings.averageScore,
+                ignoreGestures: true,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemSize: 24,
+                ratingWidget: RatingWidget(
+                  full: Icon(Icons.star, color: Theme.of(context).primaryColor),
+                  half: Icon(Icons.star_half, color: Theme.of(context).primaryColor),
+                  empty: Icon(Icons.star_border, color: Theme.of(context).primaryColor)
                 ),
-              )
+                onRatingUpdate: (r) => debugPrint("New Rating : $r"),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: Text(
+                  "${widget.poi.ratings.count}",
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor
+                  ),
+                ),
+              ),
             ],
           ),
+        ),
+        Row(
+          children: <Widget>[
+            ImageIcon(
+              CacheImage(widget.poi.theme.icon.url),
+              color: Theme.of(context).unselectedWidgetColor,
+              size: 18,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                widget.poi.theme.name,
+                style: Theme.of(context)
+                  .textTheme
+                  .caption,
+              ),
+            )
+          ],
         ),
         Text(
           widget.poi.description ?? AppLocalizations.of(context).searchResult_NoDescriptionPlaceholder(),
@@ -210,14 +256,54 @@ class _PoiDetailsState extends State<PoiDetails> with SingleTickerProviderStateM
     ),
   );
 
-  Widget get _comments => Column(
-    crossAxisAlignment: CrossAxisAlignment.stretch,
-    children: <Widget>[
-      if (widget.poi.comments == null || widget.poi.comments.isEmpty)
-        Padding(
-          padding: EdgeInsets.all(16),
-          child: Text(AppLocalizations.of(context).searchResult_NoCommentsPlaceholder()),
-        )
-    ],
+  Widget get _commentsSection => Padding(
+    padding: EdgeInsets.all(0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        BlocBuilder<AuthBloc, AuthState>(
+          bloc: Modular.get<AuthBloc>(),
+          builder: (context, state) => Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ButtonTheme(
+              height: 48,
+              child: FlatButton.icon(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4)
+                ),
+                textColor: Theme.of(context).primaryColor,
+                onPressed: () async {
+                  final Comment comment = await Modular.get<NavigationBloc>().pushRoute(MaterialPageRoute(
+                    builder: (context) => AuthRequired(
+                      anonymousDescription: "Please sign in / sign up to comment or rate",
+                      authenticatedBuilder: (context, _) => PoiRateComment(
+                        poi: widget.poi,
+                      ),
+                    )
+                  ));
+                  if (comment != null) {
+                    setState(() {
+                      _comments = [..._comments, comment];
+                    });
+                  }
+                },
+                label: Text('Noter / Écrire un commentaire'),
+                icon: Icon(Icons.edit),
+              ),
+            ),
+          ),
+        ),
+        if (_comments == null || _comments.isEmpty)
+          Text(AppLocalizations.of(context).searchResult_NoCommentsPlaceholder())
+        else
+          Column(
+            children: _comments
+              .map((comment) => PoiComment(
+                comment: comment
+              ))
+              .toList(),
+          ),
+      ],
+    ),
   );
 }

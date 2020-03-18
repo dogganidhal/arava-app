@@ -12,7 +12,7 @@ Comment _$CommentFromJson(Map<String, dynamic> json) {
     content: json['content'] as String,
     author: json['author'] == null
         ? null
-        : User.fromJson(json['author'] as Map<String, dynamic>),
+        : CommentAuthor.fromJson(json['author'] as Map<String, dynamic>),
     date: json['date'] == null ? null : DateTime.parse(json['date'] as String),
   );
 }

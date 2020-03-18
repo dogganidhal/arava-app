@@ -1,4 +1,5 @@
 import 'package:arava/model/poi/poi.dart';
+import 'package:arava/model/rate_comment_request/rate_comment_request.dart';
 import 'package:arava/model/search_request/search_request.dart';
 import 'package:arava/model/search_response/search_response.dart';
 import 'package:arava/service/dio_service.dart';
@@ -15,7 +16,7 @@ class PoiService extends DioService {
   }
   
   Future<List<Poi>> getFavorites() async {
-    final response = await post('/user/favorite');
+    final response = await get('/user/favorite');
     return (response.data as List)
       .map((jsonMap) => Poi.fromJson(jsonMap))
       .toList();
@@ -26,5 +27,9 @@ class PoiService extends DioService {
       .map((poi) => poi.toJson())
       .toList()
     );
+  }
+
+  Future<void> submitComment(Poi poi, RateCommentRequest request) async {
+    await post("/poi/${poi.id}/comment", data: request.toJson());
   }
 }

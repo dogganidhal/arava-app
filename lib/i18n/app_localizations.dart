@@ -227,6 +227,12 @@ class AppLocalizations {
     name: 'searchResult_NoCommentsPlaceholder'
   );
 
+  String searchResult_CommentBefore24Hours(int hours) => Intl.message(
+    "$hours hours ago",
+    args: [hours],
+    name: 'searchResult_CommentBefore24Hours'
+  );
+
   // endregion
 
   // region Auth

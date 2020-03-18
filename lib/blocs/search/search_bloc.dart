@@ -64,8 +64,10 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   void cameraIdle() async {
-    final cameraPosition = await _mapController.getVisibleRegion();
-    add(SearchEvent.searchCameraPositionUpdatedEvent(cameraPosition: cameraPosition));
+    if (_mapController != null) {
+      final cameraPosition = await _mapController.getVisibleRegion();
+      add(SearchEvent.searchCameraPositionUpdatedEvent(cameraPosition: cameraPosition));
+    }
   }
 
   Stream<SearchState> _updateSearchRequest(SearchUpdateRequestEvent event) async* {
