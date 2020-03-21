@@ -53,7 +53,6 @@ class _PoiDetailsState extends State<PoiDetails> with SingleTickerProviderStateM
               iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
               elevation: 0,
               expandedHeight: 200,
-              stretch: true,
               backgroundColor: Theme.of(context).backgroundColor,
               actions: <Widget>[
                 IconButton(
@@ -102,9 +101,8 @@ class _PoiDetailsState extends State<PoiDetails> with SingleTickerProviderStateM
                 ],
               ),
             ),
-          )
+          ),
         ],
-
         body: TabBarView(
           controller: _tabController,
           children: <Widget>[
@@ -309,7 +307,7 @@ class _PoiDetailsState extends State<PoiDetails> with SingleTickerProviderStateM
                 onPressed: () async {
                   final Comment comment = await Modular.get<NavigationBloc>().pushRoute(MaterialPageRoute(
                     builder: (context) => AuthRequired(
-                      anonymousDescription: "Please sign in / sign up to comment or rate",
+                      anonymousDescription: AppLocalizations.of(context).searchResult_SignUpToComment(),
                       authenticatedBuilder: (context, _) => PoiRateComment(
                         poi: widget.poi,
                       ),
@@ -321,7 +319,7 @@ class _PoiDetailsState extends State<PoiDetails> with SingleTickerProviderStateM
                     });
                   }
                 },
-                label: Text('Noter / Écrire un commentaire'),
+                label: Text(AppLocalizations.of(context).searchResult_RateComment()),
                 icon: Icon(Icons.edit),
               ),
             ),

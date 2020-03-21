@@ -80,6 +80,10 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
         favoritesIds: favoritesIds,
         favorites: favorites
       );
+      final user = await session.getUser();
+      if (user != null) {
+        await poiService.syncFavorites(favorites);
+      }
     }
   }
 

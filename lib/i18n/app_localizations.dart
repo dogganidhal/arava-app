@@ -227,6 +227,16 @@ class AppLocalizations {
     name: 'searchResult_NoCommentsPlaceholder'
   );
 
+  String searchResult_SignUpToComment() => Intl.message(
+    "Please sign in / sign up to comment or rate",
+    name: 'searchResult_SignUpToComment'
+  );
+
+  String searchResult_RateComment() => Intl.message(
+    "Noter / Écrire un commentaire",
+    name: 'searchResult_RateComment'
+  );
+
   String searchResult_CommentBefore24Hours(int hours) => Intl.message(
     "$hours hours ago",
     args: [hours],
