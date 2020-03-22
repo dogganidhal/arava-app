@@ -28,6 +28,12 @@ class _Map extends State<Map> with AutomaticKeepAliveClientMixin {
   final GlobalContextBloc _globalContextBloc = Modular.get();
 
   @override
+  void initState() {
+    super.initState();
+    _searchBloc.search();
+  }
+
+  @override
   Widget build(BuildContext context) {
     super.build(context);
     return new Scaffold(

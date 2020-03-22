@@ -44,7 +44,10 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     List<Poi> favorites = [];
     List<String> favoritesIds = [];
     if (user != null) {
-      favorites = await poiService.getFavorites();
+      final favoriteList = await poiService.getFavorites();
+      favorites = favoriteList
+        .map((favorite) => favorite.poi)
+        .toList();
     } else {
       favorites = await session.getFavorites();
     }

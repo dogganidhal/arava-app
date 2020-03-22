@@ -9,9 +9,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 
-class Favorites extends StatelessWidget {
-
+class Favorites extends StatefulWidget {
   Favorites({Key key}) : super(key: key);
+
+  @override
+  _FavoritesState createState() => _FavoritesState();
+}
+
+class _FavoritesState extends State<Favorites> {
+  final FavoritesBloc _favoritesBloc = Modular.get<FavoritesBloc>();
+
+  @override
+  void initState() {
+    super.initState();
+    _favoritesBloc.loadFavorites();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,5 +58,4 @@ class Favorites extends StatelessWidget {
       )
     );
   }
-
 }

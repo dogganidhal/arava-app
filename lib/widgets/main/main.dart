@@ -27,6 +27,12 @@ class Main extends StatelessWidget {
     MoreAppBar()
   ];
 
+  Widget get _map => Map();
+  Widget get _featured => Featured();
+  Widget get _favorites => Favorites();
+  Widget get _photos => Photos();
+  Widget get _more => More();
+
   Main({Key key, this.configuration}) : super(key: key);
 
   @override
@@ -39,11 +45,11 @@ class Main extends StatelessWidget {
           body: IndexedStack(
             index: state.homeIndex,
             children: <Widget>[
-              Map(),
-              Featured(),
-              Favorites(),
-              Photos(),
-              More()
+              _map,
+              _featured,
+              _favorites,
+              _photos,
+              _more
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(

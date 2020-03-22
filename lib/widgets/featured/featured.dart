@@ -27,13 +27,17 @@ class _FeaturedState extends State<Featured> {
   final GlobalContextBloc _globalContextBloc = Modular.get<GlobalContextBloc>();
 
   @override
+  void initState() {
+    super.initState();
+    _featuredBloc.loadFeatured(_globalContextBloc.state.selectedIsland);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocListener<GlobalContextBloc, GlobalContextState>(
       bloc: _globalContextBloc,
       condition: (previous, current) => previous.selectedIsland.id != current.selectedIsland.id,
-      listener: (context, state) {
-        _featuredBloc.loadFeatured(state.selectedIsland);
-      },
+      listener: (context, state) => _featuredBloc.loadFeatured(state.selectedIsland),
       child: BlocBuilder<GlobalContextBloc, GlobalContextState>(
         bloc: _globalContextBloc,
         builder: (context, state) {
@@ -94,8 +98,8 @@ class _FeaturedState extends State<Featured> {
                               child: Image(
                                 fit: BoxFit.cover,
                                 image: poi.mainImage != null ?
-                                CacheImage(poi.mainImage.url) :
-                                AssetImage(AravaAssets.PoiPlaceholder)
+                                  CacheImage(poi.mainImage.url) :
+                                  AssetImage(AravaAssets.PoiPlaceholder)
                               ),
                             ),
                           ))
