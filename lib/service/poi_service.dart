@@ -1,3 +1,4 @@
+import 'package:arava/model/island/island.dart';
 import 'package:arava/model/poi/poi.dart';
 import 'package:arava/model/rate_comment_request/rate_comment_request.dart';
 import 'package:arava/model/search_request/search_request.dart';
@@ -22,9 +23,16 @@ class PoiService extends DioService {
       .toList();
   }
 
+  Future<List<Poi>> getSponsored(Island island) async {
+    final response = await get("/island/${island.id}/sponsored");
+    return (response.data as List)
+      .map((jsonMap) => Poi.fromJson(jsonMap))
+      .toList();
+  }
+
   Future<void> syncFavorites(List<Poi> favorites) async {
     await put('/user/favorite', data: favorites
-      .map((poi) => poi.toJson())
+      .map((poi) => poi.id)
       .toList()
     );
   }

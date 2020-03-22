@@ -3,12 +3,12 @@ import 'package:arava/blocs/search/search_bloc.dart';
 import 'package:arava/blocs/search/state/search_state.dart';
 import 'package:arava/i18n/app_localizations.dart';
 import 'package:arava/model/poi_type/poi_type.dart';
+import 'package:arava/model/search_filters/search_filters.dart' as model show SearchFilters;
 import 'package:arava/widgets/app/app_configuration_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:arava/model/search_filters/search_filters.dart' as model show SearchFilters;
 
 
 class SearchFilters extends StatelessWidget {
@@ -62,10 +62,12 @@ class SearchFilters extends StatelessWidget {
                   )
                 ),
                 ...(
-                  _themeListColumn(AppConfigurationProvider.of(context)
-                    .themes
-                    .where((theme) => theme.parent == null)
-                    .toList(),
+                  _themeListColumn(
+                    context,
+                    AppConfigurationProvider.of(context)
+                      .themes
+                      .where((theme) => theme.parent == null)
+                      .toList(),
                     state
                   )
                 )
@@ -77,7 +79,10 @@ class SearchFilters extends StatelessWidget {
     );
   }
 
-  List<Widget> _themeListColumn(List<PoiTheme> themes, SearchState state, [double padding = 0]) => themes
+  List<Widget> _themeListColumn(
+    BuildContext context, List<PoiTheme> themes, SearchState state,
+    [double padding = 0, int alpha = 255]
+  ) => themes
     .map((theme) => Column(
       children: <Widget>[
         FormBuilderCheckbox(
@@ -87,13 +92,29 @@ class SearchFilters extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(left: 16 + padding, right: 16),
-                child: ImageIcon(NetworkImage(theme.icon.url)),
+                child: ImageIcon(
+                  NetworkImage(theme.icon.url),
+                  color: Theme.of(context)
+                    .textTheme
+                    .body1
+                    .color
+                    .withAlpha(alpha),
+                ),
               ),
-              Text(theme.name)
+              Text(
+                theme.name,
+                style: TextStyle(
+                  color: Theme.of(context)
+                    .textTheme
+                    .body1
+                    .color
+                    .withAlpha(alpha)
+                ),
+              )
             ],
           )
         ),
-        ..._themeListColumn(theme.subThemes ?? [], state, padding + 32)
+        ..._themeListColumn(context, theme.subThemes ?? [], state, padding + 32, (alpha * 0.75).toInt())
       ],
     ))
     .toList();

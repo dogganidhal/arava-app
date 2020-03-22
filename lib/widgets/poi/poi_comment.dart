@@ -15,7 +15,7 @@ class PoiComment extends StatelessWidget {
       color: Theme.of(context).backgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4),
-        side: BorderSide(width: 0.5, color: Theme.of(context).cardColor)
+        side: BorderSide(width: 0.5, color: Theme.of(context).dividerColor)
       ),
       child: Padding(
         padding: EdgeInsets.all(8),

@@ -1,3 +1,5 @@
+import 'package:arava/blocs/global_context/global_context_bloc.dart';
+import 'package:arava/blocs/global_context/state/global_context_state.dart';
 import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/blocs/search/search_bloc.dart';
 import 'package:arava/blocs/search/state/search_state.dart';
@@ -23,141 +25,155 @@ class Map extends StatefulWidget {
 
 class _Map extends State<Map> with AutomaticKeepAliveClientMixin {
   final SearchBloc _searchBloc = Modular.get();
-
-  static final CameraPosition _kTahitiPosition = CameraPosition(
-    target: LatLng(-17.677506137218447, -149.3711729720235),
-    zoom: 10,
-  );
-
-  @override
-  void initState() {
-    super.initState();
-    _searchBloc.search();
-  }
+  final GlobalContextBloc _globalContextBloc = Modular.get();
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return new Scaffold(
-      body: BlocListener<SearchBloc, SearchState>(
-        bloc: _searchBloc,
-        listener: (context, state) {
-          if (state.emptyResult) {
-            FlushbarHelper.createInformation(
-              message: AppLocalizations.of(context).search_EmptyResponseDescription()
-            )..show(context);
-          }
-          if (state.exception != null) {
-            FlushbarHelper.createError(
-              message: state.exception.getLocalizedMessage(context)
-            )..show(context);
-          }
+      body: BlocListener<GlobalContextBloc, GlobalContextState>(
+        bloc: _globalContextBloc,
+        condition: (previous, current) {
+          return previous.selectedIsland.id != current.selectedIsland.id;
         },
-        child: BlocBuilder<SearchBloc, SearchState>(
-          bloc: _searchBloc,
-          builder: (context, state) => Stack(
-            children: <Widget>[
-              GoogleMap(
-                mapType: MapType.normal,
-                mapToolbarEnabled: false,
-                initialCameraPosition: _kTahitiPosition,
-                onMapCreated: (GoogleMapController controller) {
-                  _searchBloc.mapLoaded(controller);
-                  String brightness = MediaQuery.of(context).platformBrightness == Brightness.dark ?
-                  "dark" :
-                  "light";
-                  rootBundle.loadString("assets/map_styles/$brightness.json")
-                    .then((string) => controller.setMapStyle(string));
-                },
-                onCameraIdle: () => _searchBloc.cameraIdle(),
-                myLocationEnabled: true,
-                markers: state.response?.pois
-                  ?.map((poi) => Marker(
-                    markerId: MarkerId(poi.id),
-                    position: LatLng(
-                      poi.coordinate.latitude,
-                      poi.coordinate.longitude
-                    ),
-                    onTap: () => _searchBloc.selectPoi(poi),
-                    icon: poi.sponsored ?
-                      AppConfigurationProvider.of(context).sponsoredPinBitmapDescriptor :
-                      AppConfigurationProvider.of(context).pinBitmapDescriptor
-                  ))
-                  ?.toSet(),
-              ),
-              if (state.loading)
-                Positioned(
-                  top: 0, right: 0, left: 0, height: 4,
-                  child: LinearProgressIndicator()
-                ),
-              Positioned(
-                bottom: 16, right: 16,
-                child: FloatingActionButton.extended(
-                  onPressed: () => Modular.get<NavigationBloc>().push("/search/filters"),
-                  label: Text(AppLocalizations.of(context).search_Filter()),
-                  icon: Icon(Icons.filter_list),
-                ),
-              ),
-              if (state.regionDidChange)
-                Positioned(
-                  top: 8, left: 8, right: 8,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      FlatButton.icon(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4)
+        listener: (context, state) {
+          final selectedIsland = state.selectedIsland;
+          _searchBloc.selectIsland(selectedIsland);
+        },
+        child: BlocBuilder<GlobalContextBloc, GlobalContextState>(
+          bloc: _globalContextBloc,
+          builder: (context, state) {
+            final selectedIsland = state.selectedIsland;
+            return BlocListener<SearchBloc, SearchState>(
+              bloc: _searchBloc,
+              listener: (context, state) {
+                if (state.exception != null) {
+                  FlushbarHelper.createError(
+                    message: state.exception.getLocalizedMessage(context)
+                  )..show(context);
+                }
+              },
+              child: BlocBuilder<SearchBloc, SearchState>(
+                bloc: _searchBloc,
+                builder: (context, state) => Stack(
+                  children: <Widget>[
+                    GoogleMap(
+                      mapType: MapType.normal,
+                      mapToolbarEnabled: false,
+                      myLocationButtonEnabled: false,
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(
+                          selectedIsland.center.latitude,
+                          selectedIsland.center.longitude
                         ),
-                        onPressed: () => _searchBloc.search(),
-                        color: Theme.of(context)
-                          .primaryColor,
-                        label: Text(AppLocalizations.of(context).search_SearchThisArea()),
-                        icon: Icon(Icons.refresh),
+                        zoom: selectedIsland.zoom
                       ),
-                    ],
-                  ),
-                ),
-              if (state.selectedPoi != null)
-                Positioned(
-                  bottom: 8, left: 8, right: 8,
-                  child: GestureDetector(
-                    onTap: () {
-                      Modular.get<NavigationBloc>().pushRoute(MaterialPageRoute(
-                        builder: (BuildContext context) => PoiDetails(poi: state.selectedPoi)
-                      ));
-                    },
-                    child: Dismissible(
-                      key: Key(state.selectedPoi.id),
-                      direction: DismissDirection.down,
-                      onDismissed: (_) => _searchBloc.clearSelectedPoi(),
-                      child: Stack(
-                        children: <Widget>[
-                          PoiPreview(poi: state.selectedPoi),
-                          Positioned(
-                            top: 16, left: 16, right: 16,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                      onMapCreated: (GoogleMapController controller) {
+                        _searchBloc.mapLoaded(controller);
+                        String brightness = MediaQuery.of(context).platformBrightness == Brightness.dark ?
+                        "dark" :
+                        "light";
+                        rootBundle.loadString("assets/map_styles/$brightness.json")
+                          .then((string) => controller.setMapStyle(string));
+                      },
+                      onCameraIdle: () => _searchBloc.cameraIdle(),
+                      myLocationEnabled: true,
+                      markers: state.response?.pois
+                        ?.map((poi) => Marker(
+                        markerId: MarkerId(poi.id),
+                        position: LatLng(
+                          poi.coordinate.latitude,
+                          poi.coordinate.longitude
+                        ),
+                        onTap: () => _searchBloc.selectPoi(poi),
+                        icon: poi.sponsored ?
+                        AppConfigurationProvider.of(context).sponsoredPinBitmapDescriptor :
+                        AppConfigurationProvider.of(context).pinBitmapDescriptor
+                      ))
+                        ?.toSet(),
+                    ),
+                    if (state.loading)
+                      Positioned(
+                        top: 0, right: 0, left: 0, height: 4,
+                        child: LinearProgressIndicator()
+                      ),
+                    Positioned(
+                      bottom: 16, right: 16,
+                      child: FloatingActionButton.extended(
+                        onPressed: () => Modular.get<NavigationBloc>().push("/search/filters"),
+                        label: Text(AppLocalizations.of(context).search_Filter()),
+                        icon: Icon(Icons.filter_list),
+                      ),
+                    ),
+                    if (state.regionDidChange)
+                      Positioned(
+                        top: 8, left: 8, right: 8,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            FlatButton.icon(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4)
+                              ),
+                              onPressed: () => _searchBloc.search(),
+                              color: Theme.of(context)
+                                .primaryColor,
+                              label: Text(AppLocalizations.of(context).search_SearchThisArea()),
+                              icon: Icon(Icons.refresh),
+                            ),
+                          ],
+                        ),
+                      ),
+                    if (state.selectedPoi != null)
+                      Positioned(
+                        bottom: 8, left: 8, right: 8,
+                        child: GestureDetector(
+                          onTap: () {
+                            Modular.get<NavigationBloc>().pushRoute(MaterialPageRoute(
+                              builder: (BuildContext context) => PoiDetails(poi: state.selectedPoi)
+                            ));
+                          },
+                          child: Dismissible(
+                            key: Key(state.selectedPoi.id),
+                            direction: DismissDirection.down,
+                            onDismissed: (_) => _searchBloc.clearSelectedPoi(),
+                            child: Stack(
                               children: <Widget>[
-                                Container(
-                                  height: 4,
-                                  width: 32,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(3),
-                                    color: Theme.of(context).textTheme.title.color
-                                  ),
-                                )
+                                PoiPreview(poi: state.selectedPoi),
+                                Positioned(
+                                  top: 16, left: 16, right: 16,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Container(
+                                        height: 4,
+                                        width: 32,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(3),
+                                          color: Theme.of(context).textTheme.title.color
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                ),
                               ],
                             )
                           ),
-                        ],
+                        ),
+                      ),
+                    if (state.emptyResult)
+                      SnackBar(
+                        content: FlushbarHelper.createInformation(
+                          message: AppLocalizations.of(context).search_EmptyResponseDescription(),
+                        )
                       )
-                    ),
-                  ),
-                )
-            ],
-          ),
+                  ],
+                ),
+              ),
+            );
+          }
         ),
-      ),
+      )
     );
   }
 

@@ -18,9 +18,6 @@ abstract class SearchEvent extends Equatable {
   factory SearchEvent.searchMapLoadedEvent(
       {@required GoogleMapController mapController}) = SearchMapLoadedEvent;
 
-  factory SearchEvent.searchUpdateRequestEvent(
-      {@required SearchRequest request}) = SearchUpdateRequestEvent;
-
   factory SearchEvent.searchCameraPositionUpdatedEvent(
           {@required LatLngBounds cameraPosition}) =
       SearchCameraPositionUpdatedEvent;
@@ -42,9 +39,6 @@ abstract class SearchEvent extends Equatable {
       @required
           FutureOr<R> Function(SearchMapLoadedEvent) searchMapLoadedEvent,
       @required
-          FutureOr<R> Function(SearchUpdateRequestEvent)
-              searchUpdateRequestEvent,
-      @required
           FutureOr<R> Function(SearchCameraPositionUpdatedEvent)
               searchCameraPositionUpdatedEvent,
       @required
@@ -55,7 +49,6 @@ abstract class SearchEvent extends Equatable {
       if (searchSubmitEvent == null ||
           searchSelectIslandEvent == null ||
           searchMapLoadedEvent == null ||
-          searchUpdateRequestEvent == null ||
           searchCameraPositionUpdatedEvent == null ||
           searchSelectPoiEvent == null ||
           searchSetFiltersEvent == null) {
@@ -70,8 +63,6 @@ abstract class SearchEvent extends Equatable {
         return searchSelectIslandEvent(this as SearchSelectIslandEvent);
       case _SearchEvent.SearchMapLoadedEvent:
         return searchMapLoadedEvent(this as SearchMapLoadedEvent);
-      case _SearchEvent.SearchUpdateRequestEvent:
-        return searchUpdateRequestEvent(this as SearchUpdateRequestEvent);
       case _SearchEvent.SearchCameraPositionUpdatedEvent:
         return searchCameraPositionUpdatedEvent(
             this as SearchCameraPositionUpdatedEvent);
@@ -86,7 +77,6 @@ abstract class SearchEvent extends Equatable {
       {FutureOr<R> Function(SearchSubmitEvent) searchSubmitEvent,
       FutureOr<R> Function(SearchSelectIslandEvent) searchSelectIslandEvent,
       FutureOr<R> Function(SearchMapLoadedEvent) searchMapLoadedEvent,
-      FutureOr<R> Function(SearchUpdateRequestEvent) searchUpdateRequestEvent,
       FutureOr<R> Function(SearchCameraPositionUpdatedEvent)
           searchCameraPositionUpdatedEvent,
       FutureOr<R> Function(SearchSelectPoiEvent) searchSelectPoiEvent,
@@ -108,9 +98,6 @@ abstract class SearchEvent extends Equatable {
       case _SearchEvent.SearchMapLoadedEvent:
         if (searchMapLoadedEvent == null) break;
         return searchMapLoadedEvent(this as SearchMapLoadedEvent);
-      case _SearchEvent.SearchUpdateRequestEvent:
-        if (searchUpdateRequestEvent == null) break;
-        return searchUpdateRequestEvent(this as SearchUpdateRequestEvent);
       case _SearchEvent.SearchCameraPositionUpdatedEvent:
         if (searchCameraPositionUpdatedEvent == null) break;
         return searchCameraPositionUpdatedEvent(
@@ -129,8 +116,6 @@ abstract class SearchEvent extends Equatable {
       {FutureOr<void> Function(SearchSubmitEvent) searchSubmitEvent,
       FutureOr<void> Function(SearchSelectIslandEvent) searchSelectIslandEvent,
       FutureOr<void> Function(SearchMapLoadedEvent) searchMapLoadedEvent,
-      FutureOr<void> Function(SearchUpdateRequestEvent)
-          searchUpdateRequestEvent,
       FutureOr<void> Function(SearchCameraPositionUpdatedEvent)
           searchCameraPositionUpdatedEvent,
       FutureOr<void> Function(SearchSelectPoiEvent) searchSelectPoiEvent,
@@ -139,7 +124,6 @@ abstract class SearchEvent extends Equatable {
       if (searchSubmitEvent == null &&
           searchSelectIslandEvent == null &&
           searchMapLoadedEvent == null &&
-          searchUpdateRequestEvent == null &&
           searchCameraPositionUpdatedEvent == null &&
           searchSelectPoiEvent == null &&
           searchSetFiltersEvent == null) {
@@ -157,9 +141,6 @@ abstract class SearchEvent extends Equatable {
       case _SearchEvent.SearchMapLoadedEvent:
         if (searchMapLoadedEvent == null) break;
         return searchMapLoadedEvent(this as SearchMapLoadedEvent);
-      case _SearchEvent.SearchUpdateRequestEvent:
-        if (searchUpdateRequestEvent == null) break;
-        return searchUpdateRequestEvent(this as SearchUpdateRequestEvent);
       case _SearchEvent.SearchCameraPositionUpdatedEvent:
         if (searchCameraPositionUpdatedEvent == null) break;
         return searchCameraPositionUpdatedEvent(
@@ -214,19 +195,6 @@ class SearchMapLoadedEvent extends SearchEvent {
       'SearchMapLoadedEvent(mapController:${this.mapController})';
   @override
   List get props => [mapController];
-}
-
-@immutable
-class SearchUpdateRequestEvent extends SearchEvent {
-  const SearchUpdateRequestEvent({@required this.request})
-      : super(_SearchEvent.SearchUpdateRequestEvent);
-
-  final SearchRequest request;
-
-  @override
-  String toString() => 'SearchUpdateRequestEvent(request:${this.request})';
-  @override
-  List get props => [request];
 }
 
 @immutable

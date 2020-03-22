@@ -1,3 +1,5 @@
+import 'package:arava/blocs/app/app_bloc.dart';
+import 'package:arava/blocs/global_context/global_context_bloc.dart';
 import 'package:arava/blocs/search/event/search_event.dart';
 import 'package:arava/blocs/search/state/search_state.dart';
 import 'package:arava/exception/app_exception.dart';
@@ -6,6 +8,7 @@ import 'package:arava/model/lat_lng/lat_lng.dart' as model;
 import 'package:arava/model/poi/poi.dart';
 import 'package:arava/model/region/region.dart';
 import 'package:arava/model/search_filters/search_filters.dart';
+import 'package:arava/model/search_request/search_request.dart';
 import 'package:arava/service/poi_service.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,23 +17,28 @@ import 'package:meta/meta.dart';
 
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
+  final AppBloc appBloc;
+  final GlobalContextBloc globalContextBloc;
   final PoiService poiService;
 
   GoogleMapController _mapController;
   LatLngBounds _lastVisibleRegion;
   bool _ignoreNextCameraUpdate = true;
 
-  SearchBloc({@required this.poiService});
+  SearchBloc({@required this.appBloc, @required this.poiService, @required this.globalContextBloc});
 
   @override
-  SearchState get initialState => SearchState();
+  SearchState get initialState => SearchState(
+    request: SearchRequest(
+      sponsored: true
+    )
+  );
 
   @override
   Stream<SearchState> mapEventToState(SearchEvent event) => event.when(
     searchSubmitEvent: _submit,
     searchSelectIslandEvent: _selectIsland,
     searchMapLoadedEvent: _mapLoaded,
-    searchUpdateRequestEvent: _updateSearchRequest,
     searchCameraPositionUpdatedEvent: _cameraUpdated,
     searchSelectPoiEvent: _selectPoi,
     searchSetFiltersEvent: _setSearchFilters
@@ -70,10 +78,6 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     }
   }
 
-  Stream<SearchState> _updateSearchRequest(SearchUpdateRequestEvent event) async* {
-
-  }
-
   Stream<SearchState> _selectPoi(SearchSelectPoiEvent event) async* {
     yield state.withSelectedPoi(event.poi);
   }
@@ -107,6 +111,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   Stream<SearchState> _selectIsland(SearchSelectIslandEvent event) async* {
+    globalContextBloc.updateSelectedIsland(event.island);
     yield state
       .withIsland(event.island)
       .withEmptyResult(false)

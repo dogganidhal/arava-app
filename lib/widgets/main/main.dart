@@ -1,17 +1,16 @@
 import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/blocs/navigation/state/navigation_state.dart';
 import 'package:arava/i18n/app_localizations.dart';
+import 'package:arava/model/app_configuration/app_configuration.dart';
 import 'package:arava/widgets/favorites/favorites.dart';
 import 'package:arava/widgets/favorites/favorites_app_bar.dart';
 import 'package:arava/widgets/featured/featured.dart';
-import 'package:arava/widgets/featured/featured_app_bar.dart';
 import 'package:arava/widgets/map/map.dart';
 import 'package:arava/widgets/map/map_app_bar.dart';
 import 'package:arava/widgets/more/more.dart';
 import 'package:arava/widgets/more/more_app_bar.dart';
 import 'package:arava/widgets/photos/photos.dart';
 import 'package:arava/widgets/photos/photos_app_bar.dart';
-import 'package:arava/model/app_configuration/app_configuration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -22,7 +21,7 @@ class Main extends StatelessWidget {
 
   final List<PreferredSizeWidget> _appBars = [
     MapAppBar(),
-    FeaturedAppBar(),
+    MapAppBar(),
     FavoritesAppBar(),
     PhotosAppBar(),
     MoreAppBar()

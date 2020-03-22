@@ -1,6 +1,5 @@
+import 'package:arava/blocs/global_context/global_context_bloc.dart';
 import 'package:arava/blocs/navigation/navigation_bloc.dart';
-import 'package:arava/blocs/search/event/search_event.dart';
-import 'package:arava/blocs/search/search_bloc.dart';
 import 'package:arava/i18n/app_localizations.dart';
 import 'package:arava/widgets/app/app_configuration_provider.dart';
 import 'package:arava/widgets/map/island_card.dart';
@@ -28,7 +27,7 @@ class _IslandSelectorState extends State<IslandSelector> {
           .map((island) => IslandCard(
             island: island,
             onSelected: () {
-              Modular.get<SearchBloc>().selectIsland(island);
+              Modular.get<GlobalContextBloc>().updateSelectedIsland(island);
               Modular.get<NavigationBloc>().pop();
             },
           ))

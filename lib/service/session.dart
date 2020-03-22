@@ -15,6 +15,7 @@ class Session {
   static final String _kPreferredLocale = "com.arava.preferred_locale";
   static final String _kApiConfiguration = "com.arava.api_configuration";
   static final String _kFavorites = "com.arava.favorites";
+  static final String _kSelectedIsland = "com.arava.selected_island";
 
   final CacheManager cacheManager;
 
@@ -127,6 +128,4 @@ class Session {
   Future<void> setApiConfiguration(ApiConfiguration configuration) async {
     return await cacheManager.setStringAsync(_kApiConfiguration, json.encode(configuration.toJson()));
   }
-
-
 }

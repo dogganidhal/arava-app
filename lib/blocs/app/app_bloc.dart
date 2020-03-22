@@ -1,12 +1,17 @@
+import 'dart:async';
+
 import 'package:arava/blocs/app/event/app_event.dart';
 import 'package:arava/blocs/app/state/app_state.dart';
 import 'package:arava/blocs/auth/auth_bloc.dart';
 import 'package:arava/blocs/favorites/favorites_bloc.dart';
+import 'package:arava/blocs/global_context/global_context_bloc.dart';
 import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/exception/app_exception.dart';
 import 'package:arava/i18n/app_localizations.dart';
 import 'package:arava/model/api_configuration/api_configuration.dart';
 import 'package:arava/model/app_configuration/app_configuration.dart';
+import 'package:arava/model/archipelago/archipelago.dart';
+import 'package:arava/model/island/island.dart';
 import 'package:arava/service/app_service.dart';
 import 'package:arava/service/poi_service.dart';
 import 'package:arava/service/session.dart';
@@ -14,8 +19,10 @@ import 'package:arava/theme/arava_assets.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart' show BitmapDescriptor;
 import 'package:intl/intl.dart';
+import 'package:latlong/latlong.dart';
+import 'package:location/location.dart';
 import 'package:meta/meta.dart';
 
 
@@ -23,6 +30,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   final AuthBloc authBloc;
   final NavigationBloc navigationBloc;
   final FavoritesBloc favoritesBloc;
+  final GlobalContextBloc globalContextBloc;
   final AppService appService;
   final PoiService poiService;
   final Session session;
@@ -30,7 +38,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc({
     @required this.appService, @required this.session,
     @required this.navigationBloc, @required this.authBloc,
-    @required this.poiService, @required this.favoritesBloc
+    @required this.poiService, @required this.favoritesBloc,
+    @required this.globalContextBloc
   });
 
   @override
@@ -110,6 +119,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         ImageConfiguration.empty,
         AravaAssets.SponsoredPin
       );
+      final island = await _getUserIsland(apiConfiguration.archipelagos);
+      globalContextBloc.updateSelectedIsland(island);
       return AppConfiguration.fromApiConfiguration(
         apiConfiguration: apiConfiguration,
         preferredLocale: preferredLocale,
@@ -126,4 +137,50 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
     return null;
   }
+
+  Future<Island> _getUserIsland(List<Archipelago> archipelagos) async {
+    final islands = _extractIslands(archipelagos);
+    final locationData = await _getUserLocation();
+    if (locationData != null) {
+      final distance = Distance();
+      islands.sort((lhs, rhs) => distance.distance(
+          LatLng(lhs.center.latitude, lhs.center.longitude),
+          LatLng(locationData.latitude, locationData.longitude)
+        ) > distance.distance(
+          LatLng(rhs.center.latitude, rhs.center.longitude),
+          LatLng(locationData.latitude, locationData.longitude)
+        ) ? 1 : -1);
+      final nearestIsland = islands.first;
+      final distanceToNearestIsland = distance.as(LengthUnit.Kilometer,
+        LatLng(nearestIsland.center.latitude, nearestIsland.center.longitude),
+        LatLng(locationData.latitude, locationData.longitude)
+      );
+      if (distanceToNearestIsland < 500) {
+        return nearestIsland;
+      }
+    }
+    return islands.firstWhere((island) => island.name.toLowerCase() == "tahiti");
+  }
+
+  Future<LocationData> _getUserLocation() async {
+    final location = Location();
+    final serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      if (await location.requestService()) {
+        return null;
+      }
+    }
+    final permissionGranted = await location.hasPermission();
+    if (permissionGranted == PermissionStatus.DENIED) {
+      if (await location.requestPermission() != PermissionStatus.GRANTED) {
+        return null;
+      }
+    }
+    return await location.getLocation();
+  }
+
+  List<Island> _extractIslands(List<Archipelago> archipelagos) => archipelagos
+    .fold(<Island>[], (islands, archipelago) => [...islands, ...archipelago.islands])
+    .cast<Island>()
+    .toList();
 }

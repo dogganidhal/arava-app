@@ -47,39 +47,37 @@ class _PoiDetailsState extends State<PoiDetails> with SingleTickerProviderStateM
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (context, value) => [
-          SliverOverlapAbsorber(
-            handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-            child: SliverAppBar(
-              iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
-              elevation: 0,
-              expandedHeight: 200,
-              backgroundColor: Theme.of(context).backgroundColor,
-              actions: <Widget>[
-                IconButton(
-                  icon: BlocBuilder<FavoritesBloc, FavoritesState>(
-                    bloc: Modular.get<FavoritesBloc>(),
-                    builder: (context, state) => state.whenOrElse(
-                      favoritesReadyState: (readyState) => Icon(
-                        readyState.favoritesIds.contains(widget.poi.id) ?
-                          Icons.favorite :
-                          Icons.favorite_border
-                      ),
-                      orElse: (_) => Container()
+          SliverAppBar(
+            iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+            elevation: 0,
+            expandedHeight: 200,
+            pinned: true,
+            backgroundColor: Theme.of(context).backgroundColor,
+            actions: <Widget>[
+              IconButton(
+                icon: BlocBuilder<FavoritesBloc, FavoritesState>(
+                  bloc: Modular.get<FavoritesBloc>(),
+                  builder: (context, state) => state.whenOrElse(
+                    favoritesReadyState: (readyState) => Icon(
+                      readyState.favoritesIds.contains(widget.poi.id) ?
+                        Icons.favorite :
+                        Icons.favorite_border
                     ),
+                    orElse: (_) => Container()
                   ),
-                  onPressed: () => Modular.get<FavoritesBloc>().toggleFavorite(widget.poi),
-                )
-              ],
-              flexibleSpace: LayoutBuilder(
-                builder: (context, constraints) => FlexibleSpaceBar(
-                  title: AnimatedOpacity(
-                    opacity: constraints.biggest.height > (80 + MediaQuery.of(context).padding.top) ? 0 : 1,
-                    duration: Duration(milliseconds: 200),
-                    child: Text(widget.poi.title, style: TextStyle(color: Theme.of(context).primaryColor)),
-                  ),
-                  background: PoiPhotoCarousel(poi: widget.poi),
-                  centerTitle: true,
                 ),
+                onPressed: () => Modular.get<FavoritesBloc>().toggleFavorite(widget.poi),
+              )
+            ],
+            flexibleSpace: LayoutBuilder(
+              builder: (context, constraints) => FlexibleSpaceBar(
+                title: AnimatedOpacity(
+                  opacity: constraints.biggest.height > (80 + MediaQuery.of(context).padding.top) ? 0 : 1,
+                  duration: Duration(milliseconds: 200),
+                  child: Text(widget.poi.title, style: TextStyle(color: Theme.of(context).primaryColor)),
+                ),
+                background: PoiPhotoCarousel(poi: widget.poi),
+                centerTitle: true,
               ),
             ),
           ),
@@ -111,9 +109,6 @@ class _PoiDetailsState extends State<PoiDetails> with SingleTickerProviderStateM
               child: Builder(
                 builder: (context) => CustomScrollView(
                   slivers: <Widget>[
-                    SliverOverlapInjector(
-                      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context)
-                    ),
                     SliverFillRemaining(
                       child: _detailsSection,
                     )
@@ -126,9 +121,6 @@ class _PoiDetailsState extends State<PoiDetails> with SingleTickerProviderStateM
               child: Builder(
                 builder: (context) => CustomScrollView(
                   slivers: <Widget>[
-                    SliverOverlapInjector(
-                      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context)
-                    ),
                     SliverPadding(
                       padding: EdgeInsets.only(bottom: 8),
                       sliver: SliverFillRemaining(

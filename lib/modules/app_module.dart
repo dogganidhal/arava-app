@@ -2,6 +2,8 @@ import 'package:arava/blocs/app/app_bloc.dart';
 import 'package:arava/blocs/auth/auth_bloc.dart';
 import 'package:arava/blocs/comment/comment_bloc.dart';
 import 'package:arava/blocs/favorites/favorites_bloc.dart';
+import 'package:arava/blocs/featured/featured_bloc.dart';
+import 'package:arava/blocs/global_context/global_context_bloc.dart';
 import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/blocs/profile/profile_bloc.dart';
 import 'package:arava/blocs/search/search_bloc.dart';
@@ -72,12 +74,15 @@ class AppModule extends MainModule {
       favoritesBloc: inject.get(),
       authBloc: inject.get(),
       poiService: inject.get(),
+      globalContextBloc: inject.get()
     )),
     Bind((inject) => NavigationBloc(
       navigatorState: inject.get()
     )),
     Bind((inject) => SearchBloc(
-      poiService: inject.get()
+      appBloc: inject.get(),
+      poiService: inject.get(),
+      globalContextBloc: inject.get()
     )),
     Bind((inject) => AuthBloc(
       session: inject.get(),
@@ -95,7 +100,12 @@ class AppModule extends MainModule {
       poiService: inject.get(),
       navigationBloc: inject.get(),
       session: inject.get()
-    ), singleton: false)
+    ), singleton: false),
+    Bind((inject) => FeaturedBloc(
+      session: inject.get(),
+      poiService: inject.get(),
+    ), singleton: false),
+    Bind((inject) => GlobalContextBloc())
   ];
 
   @override

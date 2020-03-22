@@ -1,6 +1,6 @@
+import 'package:arava/blocs/global_context/global_context_bloc.dart';
+import 'package:arava/blocs/global_context/state/global_context_state.dart';
 import 'package:arava/blocs/navigation/navigation_bloc.dart';
-import 'package:arava/blocs/search/search_bloc.dart';
-import 'package:arava/blocs/search/state/search_state.dart';
 import 'package:arava/i18n/app_localizations.dart';
 import 'package:arava/theme/arava_assets.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +11,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 class MapAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SearchBloc, SearchState>(
-      bloc: Modular.get(),
+    return BlocBuilder<GlobalContextBloc, GlobalContextState>(
+      bloc: Modular.get<GlobalContextBloc>(),
       builder: (context, state) => AppBar(
         actions: <Widget>[
           FlatButton(
@@ -29,9 +29,7 @@ class MapAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
                 Text(
-                  state.island != null ?
-                    state.island.name :
-                    AppLocalizations.of(context).general_Island(),
+                  state.selectedIsland.name,
                   style: TextStyle(
                     color: Theme.of(context).primaryColor)
                 ),
