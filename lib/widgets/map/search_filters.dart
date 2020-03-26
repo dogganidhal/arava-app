@@ -66,8 +66,8 @@ class SearchFilters extends StatelessWidget {
                     context,
                     AppConfigurationProvider.of(context)
                       .themes
-                      .where((theme) => theme.parent == null)
-                      .toList(),
+                      /*.where((theme) => theme.parent == null)
+                      .toList()*/,
                     state
                   )
                 )

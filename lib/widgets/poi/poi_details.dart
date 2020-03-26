@@ -165,7 +165,7 @@ class _PoiDetailsState extends State<PoiDetails> with SingleTickerProviderStateM
                   half: Icon(Icons.star_half, color: Theme.of(context).primaryColor),
                   empty: Icon(Icons.star_border, color: Theme.of(context).primaryColor)
                 ),
-                onRatingUpdate: (r) => debugPrint("New Rating : $r"),
+                onRatingUpdate: null,
               ),
               Padding(
                 padding: EdgeInsets.only(left: 8.0),

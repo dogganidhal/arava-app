@@ -2,6 +2,7 @@ import 'package:arava/model/poi/poi.dart';
 import 'package:arava/theme/arava_assets.dart';
 import 'package:cache_image/cache_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 
 class PoiPreview extends StatelessWidget {
@@ -36,7 +37,7 @@ class PoiPreview extends StatelessWidget {
                 spacing: 0,
                 children: <Widget>[
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Image(
                         height: 24, width: 24,
@@ -47,6 +48,31 @@ class PoiPreview extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: Text(poi.title),
+                      ),
+                      Expanded(
+                        child: Container(),
+                      ),
+                      RatingBar(
+                        initialRating: poi.ratings.averageScore,
+                        ignoreGestures: true,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemSize: 24,
+                        ratingWidget: RatingWidget(
+                          full: Icon(Icons.star, color: Theme.of(context).primaryColor),
+                          half: Icon(Icons.star_half, color: Theme.of(context).primaryColor),
+                          empty: Icon(Icons.star_border, color: Theme.of(context).primaryColor)
+                        ),
+                        onRatingUpdate: null,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 8.0),
+                        child: Text(
+                          "${poi.ratings.count}",
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -73,5 +99,4 @@ class PoiPreview extends StatelessWidget {
       ),
     );
   }
-  
 }

@@ -40,6 +40,7 @@ class ServiceConfiguration {
     }
   );
   Interceptor get logInterceptor => LogInterceptor()
+    ..requestBody = true
     ..responseBody = true;
 
   factory ServiceConfiguration.dev({@required Session session, AuthService authService}) => ServiceConfiguration(

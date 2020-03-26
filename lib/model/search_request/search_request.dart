@@ -8,16 +8,17 @@ part 'search_request.g.dart';
 @JsonSerializable()
 @immutable
 class SearchRequest {
-  @JsonKey(nullable: true)
+  @JsonKey(nullable: true, includeIfNull: false)
   final String title;
-  @JsonKey(nullable: true)
+  @JsonKey(nullable: true, includeIfNull: false)
   final String island;
-  @JsonKey(nullable: true)
+  @JsonKey(nullable: true, includeIfNull: false)
   final List<String> themeIds;
-  @JsonKey(nullable: true)
+  @JsonKey(nullable: true, includeIfNull: false)
   final Region region;
-  @JsonKey(nullable: true)
+  @JsonKey(nullable: true, includeIfNull: false)
   final SearchSort sort;
+  @JsonKey(defaultValue: true)
   final bool sponsored;
 
   const SearchRequest({

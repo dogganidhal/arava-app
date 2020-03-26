@@ -5,7 +5,6 @@ import 'package:arava/blocs/global_context/state/global_context_state.dart';
 import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/model/poi/poi.dart';
 import 'package:arava/theme/arava_assets.dart';
-import 'package:arava/widgets/app/app_configuration_provider.dart';
 import 'package:arava/widgets/poi/poi_details.dart';
 import 'package:cache_image/cache_image.dart';
 import 'package:collection/collection.dart';
@@ -40,7 +39,7 @@ class _FeaturedState extends State<Featured> {
       listener: (context, state) => _featuredBloc.loadFeatured(state.selectedIsland),
       child: BlocBuilder<GlobalContextBloc, GlobalContextState>(
         bloc: _globalContextBloc,
-        builder: (context, state) {
+        builder: (context, globalContext) {
           return BlocBuilder<FeaturedBloc, FeaturedState>(
             bloc: _featuredBloc,
             builder: (context, state) => state.when(
@@ -56,57 +55,60 @@ class _FeaturedState extends State<Featured> {
                   slivers: <Widget>[
                     ...groupedPois.keys
                       .map((themeId) {
-                      final theme = AppConfigurationProvider.of(context).themes
-                        .singleWhere((t) => t.id == themeId);
-                      return SliverStickyHeader(
-                        header: Container(
-                          color: Theme.of(context).backgroundColor,
-                          padding: EdgeInsets.all(16),
-                          child: Wrap(
-                            direction: Axis.horizontal,
-                            spacing: 16,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: <Widget>[
-                              ImageIcon(
-                                CacheImage(theme.icon.url),
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              Text(
-                                theme.name.toUpperCase(),
-                                style: Theme.of(context)
-                                  .textTheme
-                                  .subhead
-                                  .copyWith(color: Theme.of(context).primaryColor),
-                              )
-                            ],
-                          ),
-                        ),
-                        sliver: SliverGrid.count(
-                          crossAxisCount: 2,
-                          children: groupedPois[themeId]
-                            .map((poi) => GestureDetector(
-                            onTap: () => Modular.get<NavigationBloc>().pushRoute(MaterialPageRoute(
-                              builder: (BuildContext context) => PoiDetails(poi: poi)
-                            )),
-                            child: Card(
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(color: Theme.of(context).dividerColor, width: 0.5),
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: Image(
-                                fit: BoxFit.cover,
-                                image: poi.mainImage != null ?
-                                  CacheImage(poi.mainImage.url) :
-                                  AssetImage(AravaAssets.PoiPlaceholder)
-                              ),
+                        final theme = globalContext.configuration.themes
+                          .firstWhere((t) {
+                            return t.id == themeId;
+                          });
+                        return SliverStickyHeader(
+                          header: Container(
+                            color: Theme.of(context).backgroundColor,
+                            padding: EdgeInsets.all(16),
+                            child: Wrap(
+                              direction: Axis.horizontal,
+                              spacing: 16,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: <Widget>[
+                                ImageIcon(
+                                  CacheImage(theme.icon.url),
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                Text(
+                                  theme.name.toUpperCase(),
+                                  style: Theme.of(context)
+                                    .textTheme
+                                    .subhead
+                                    .copyWith(color: Theme.of(context).primaryColor),
+                                )
+                              ],
                             ),
-                          ))
-                            .toList(),
-                        ),
-                      );
-                    })
+                          ),
+                          sliver: SliverGrid.count(
+                            crossAxisCount: 2,
+                            children: groupedPois[themeId]
+                              .map((poi) => GestureDetector(
+                              onTap: () => Modular.get<NavigationBloc>().pushRoute(MaterialPageRoute(
+                                builder: (BuildContext context) => PoiDetails(poi: poi)
+                              )),
+                              child: Card(
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(color: Theme.of(context).dividerColor, width: 0.5),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Image(
+                                  fit: BoxFit.cover,
+                                  image: poi.mainImage != null ?
+                                    CacheImage(poi.mainImage.url) :
+                                    AssetImage(AravaAssets.PoiPlaceholder)
+                                ),
+                              ),
+                            ))
+                              .toList(),
+                          ),
+                        );
+                      }
+                    )
                   ],
                 );
               }

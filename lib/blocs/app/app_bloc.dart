@@ -75,6 +75,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       try {
         final appConfiguration = await _loadAppConfiguration();
         session.setApiConfiguration(appConfiguration);
+        globalContextBloc.updateConfiguration(appConfiguration);
         Locale locale = appConfiguration.preferredLocale != null ?
           Locale(appConfiguration.preferredLocale) :
           Locale(Intl.defaultLocale);
