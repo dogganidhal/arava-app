@@ -63,7 +63,9 @@ class _PoiPhotoCarouselState extends State<PoiPhotoCarousel> with AutomaticKeepA
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Theme.of(context)
-                    .backgroundColor
+                    .textTheme
+                    .body1
+                    .color
                     .withOpacity(_current == index ? 0.9 : 0.4)
                 ),
               ))

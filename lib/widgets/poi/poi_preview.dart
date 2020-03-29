@@ -1,5 +1,6 @@
 import 'package:arava/model/poi/poi.dart';
 import 'package:arava/theme/arava_assets.dart';
+import 'package:arava/widgets/poi/poi_photo_carousel.dart';
 import 'package:cache_image/cache_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -23,13 +24,7 @@ class PoiPreview extends StatelessWidget {
         ),
         child: Column(
           children: <Widget>[
-            Image(
-              fit: BoxFit.fitWidth,
-              height: 192, width: double.infinity,
-              image: poi.mainImage != null ?
-                CacheImage(poi.mainImage.url) :
-                AssetImage(AravaAssets.PoiPlaceholder),
-            ),
+            PoiPhotoCarousel(poi: poi),
             Padding(
               padding: EdgeInsets.all(16),
               child: Wrap(
