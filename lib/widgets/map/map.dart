@@ -23,9 +23,10 @@ class Map extends StatefulWidget {
 }
 
 
-class _Map extends State<Map> with AutomaticKeepAliveClientMixin {
+class _Map extends State<Map> {
   final SearchBloc _searchBloc = Modular.get();
   final GlobalContextBloc _globalContextBloc = Modular.get();
+  final Key _selectedPoiDismissibleKey = GlobalKey();
 
   @override
   void initState() {
@@ -35,7 +36,6 @@ class _Map extends State<Map> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return new Scaffold(
       body: BlocListener<GlobalContextBloc, GlobalContextState>(
         bloc: _globalContextBloc,
@@ -140,7 +140,7 @@ class _Map extends State<Map> with AutomaticKeepAliveClientMixin {
                             ));
                           },
                           child: Dismissible(
-                            key: Key(state.selectedPoi.id),
+                            key: _selectedPoiDismissibleKey,
                             direction: DismissDirection.down,
                             onDismissed: (_) => _searchBloc.clearSelectedPoi(),
                             child: Stack(
@@ -167,12 +167,6 @@ class _Map extends State<Map> with AutomaticKeepAliveClientMixin {
                           ),
                         ),
                       ),
-                    if (state.emptyResult)
-                      SnackBar(
-                        content: FlushbarHelper.createInformation(
-                          message: AppLocalizations.of(context).search_EmptyResponseDescription(),
-                        )
-                      )
                   ],
                 ),
               ),
@@ -182,8 +176,4 @@ class _Map extends State<Map> with AutomaticKeepAliveClientMixin {
       )
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
-
 }

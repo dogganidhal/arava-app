@@ -97,7 +97,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         .withRegionDidChange(false)
         .withEmptyResult(searchResponse.count == 0)
         .withResponse(searchResponse);
-      if (searchResponse.count > 0) {
+      if (searchResponse.count > 0 && _mapController != null) {
         _mapController.animateCamera(CameraUpdate.newLatLngBounds(
           _boundsContainingPois(searchResponse.pois), 128
         ));
