@@ -48,4 +48,11 @@ class PoiService extends DioService {
   Future<void> submitComment(Poi poi, RateCommentRequest request) async {
     await post("/poi/${poi.id}/comment", data: request.toJson());
   }
+
+  Future<List<int>> downloadBytes(String url) async {
+    final response = await dio.get(url, options: Options(
+      responseType: ResponseType.bytes
+    ));
+    return response.data;
+  }
 }

@@ -4,6 +4,7 @@ import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/blocs/search/search_bloc.dart';
 import 'package:arava/blocs/search/state/search_state.dart';
 import 'package:arava/i18n/app_localizations.dart';
+import 'package:arava/model/poi/poi.dart';
 import 'package:arava/widgets/app/app_configuration_provider.dart';
 import 'package:arava/widgets/poi/poi_details.dart';
 import 'package:arava/widgets/poi/poi_preview.dart';
@@ -48,8 +49,8 @@ class _Map extends State<Map> {
         },
         child: BlocBuilder<GlobalContextBloc, GlobalContextState>(
           bloc: _globalContextBloc,
-          builder: (context, state) {
-            final selectedIsland = state.selectedIsland;
+          builder: (context, globalContext) {
+            final selectedIsland = globalContext.selectedIsland;
             return BlocListener<SearchBloc, SearchState>(
               bloc: _searchBloc,
               listener: (context, state) {
@@ -92,9 +93,7 @@ class _Map extends State<Map> {
                           poi.coordinate.longitude
                         ),
                         onTap: () => _searchBloc.selectPoi(poi),
-                        icon: poi.featured ?
-                        AppConfigurationProvider.of(context).sponsoredPinBitmapDescriptor :
-                        AppConfigurationProvider.of(context).pinBitmapDescriptor
+                        icon: _iconForPoi(globalContext, poi)
                       ))
                         ?.toSet(),
                     ),
@@ -175,5 +174,18 @@ class _Map extends State<Map> {
         ),
       )
     );
+  }
+
+  BitmapDescriptor _iconForPoi(GlobalContextState globalContext, Poi poi) {
+    final pinsMap = globalContext.configuration.pinsMap;
+    final sponsoredPinsMap = globalContext.configuration.sponsoredPinsMap;
+    if (poi.sponsored) {
+      return sponsoredPinsMap.containsKey(poi.theme.id) ?
+        sponsoredPinsMap[poi.theme.id] :
+        AppConfigurationProvider.of(context).defaultSponsoredPinBitmapDescriptor;
+    }
+    return pinsMap.containsKey(poi.theme.id) ?
+      pinsMap[poi.theme.id] :
+      AppConfigurationProvider.of(context).defaultPinBitmapDescriptor;
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:arava/blocs/app/event/app_event.dart';
 import 'package:arava/blocs/app/state/app_state.dart';
@@ -12,6 +13,7 @@ import 'package:arava/model/api_configuration/api_configuration.dart';
 import 'package:arava/model/app_configuration/app_configuration.dart';
 import 'package:arava/model/archipelago/archipelago.dart';
 import 'package:arava/model/island/island.dart';
+import 'package:arava/model/poi_type/poi_type.dart';
 import 'package:arava/service/app_service.dart';
 import 'package:arava/service/poi_service.dart';
 import 'package:arava/service/session.dart';
@@ -112,11 +114,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     try {
       apiConfiguration = await appService.loadApiConfiguration();
       final preferredLocale = await session.getPreferredLocale();
-      final pinDescriptor = await BitmapDescriptor.fromAssetImage(
+      final defaultPinBitmapDescriptor = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration.empty,
         AravaAssets.Pin
       );
-      final sponsoredPinDescriptor = await BitmapDescriptor.fromAssetImage(
+      final defaultSponsoredPinBitmapDescriptor = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration.empty,
         AravaAssets.SponsoredPin
       );
@@ -125,8 +127,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       return AppConfiguration.fromApiConfiguration(
         apiConfiguration: apiConfiguration,
         preferredLocale: preferredLocale,
-        pinBitmapDescriptor: pinDescriptor,
-        sponsoredPinBitmapDescriptor: sponsoredPinDescriptor
+        defaultPinBitmapDescriptor: defaultPinBitmapDescriptor,
+        defaultSponsoredPinBitmapDescriptor: defaultSponsoredPinBitmapDescriptor,
+        pinsMap: await _downloadPinsDescriptors(apiConfiguration.themes),
+        sponsoredPinsMap: await _downloadSponsoredPinsDescriptors(apiConfiguration.themes)
       );
     } on DioError {
       apiConfiguration = await session.getApiConfiguration();
@@ -161,6 +165,34 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       }
     }
     return islands.firstWhere((island) => island.name.toLowerCase() == "tahiti");
+  }
+
+  Future<Map<String, BitmapDescriptor>> _downloadPinsDescriptors(List<PoiTheme> themes) async {
+    Map<String, BitmapDescriptor> map = Map<String, BitmapDescriptor>();
+    final futures = themes
+      .where((theme) => theme.marker != null)
+      .map((theme) => MapEntry(theme.id, poiService.downloadBytes(theme.marker.url)));
+    await Future
+      .forEach(futures, (MapEntry<String, Future<List<int>>> future) async {
+        final bytes = await future.value;
+        final bitmapDescriptor = BitmapDescriptor.fromBytes(Uint8List.fromList(bytes));
+        map[future.key] = bitmapDescriptor;
+      });
+    return map;
+  }
+
+  Future<Map<String, BitmapDescriptor>> _downloadSponsoredPinsDescriptors(List<PoiTheme> themes) async {
+    Map<String, BitmapDescriptor> map = Map<String, BitmapDescriptor>();
+    final futures = themes
+      .where((theme) => theme.sponsoredMarker != null)
+      .map((theme) => MapEntry(theme.id, poiService.downloadBytes(theme.sponsoredMarker.url)));
+    await Future
+      .forEach(futures, (MapEntry<String, Future<List<int>>> future) async {
+        final bytes = await future.value;
+        final bitmapDescriptor = BitmapDescriptor.fromBytes(Uint8List.fromList(bytes));
+        map[future.key] = bitmapDescriptor;
+      });
+    return map;
   }
 
   Future<LocationData> _getUserLocation() async {

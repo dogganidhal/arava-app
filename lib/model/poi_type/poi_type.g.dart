@@ -20,6 +20,12 @@ PoiTheme _$PoiThemeFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : PoiTheme.fromJson(e as Map<String, dynamic>))
         ?.toList(),
+    marker: json['marker'] == null
+        ? null
+        : Media.fromJson(json['marker'] as Map<String, dynamic>),
+    sponsoredMarker: json['sponsoredMarker'] == null
+        ? null
+        : Media.fromJson(json['sponsoredMarker'] as Map<String, dynamic>),
   );
 }
 
@@ -27,6 +33,8 @@ Map<String, dynamic> _$PoiThemeToJson(PoiTheme instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'icon': instance.icon,
+      'marker': instance.marker,
+      'sponsoredMarker': instance.sponsoredMarker,
       'subThemes': instance.subThemes,
       'parent': instance.parent,
     };
