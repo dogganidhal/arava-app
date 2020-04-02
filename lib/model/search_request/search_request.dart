@@ -19,10 +19,10 @@ class SearchRequest {
   @JsonKey(nullable: true, includeIfNull: false)
   final SearchSort sort;
   @JsonKey(defaultValue: true)
-  final bool sponsored;
+  final bool featured;
 
   const SearchRequest({
-    this.title, this.island, this.sponsored = false,
+    this.title, this.island, this.featured = false,
     this.themeIds = const [], this.region, this.sort
   });
 
@@ -32,7 +32,7 @@ class SearchRequest {
     themeIds: themeIds,
     region: region,
     sort: sort,
-    sponsored: sponsored
+    featured: featured
   );
 
   SearchRequest withIsland(String island) => SearchRequest(
@@ -41,7 +41,7 @@ class SearchRequest {
     themeIds: themeIds,
     region: region,
     sort: sort,
-    sponsored: sponsored
+    featured: featured
   );
 
   SearchRequest withThemeIds(List<String> themeIds) => SearchRequest(
@@ -50,7 +50,7 @@ class SearchRequest {
     themeIds: themeIds,
     region: region,
     sort: sort,
-    sponsored: sponsored
+    featured: featured
   );
 
   SearchRequest withRegion(Region region) => SearchRequest(
@@ -59,7 +59,7 @@ class SearchRequest {
     themeIds: themeIds,
     region: region,
     sort: sort,
-    sponsored: sponsored
+    featured: featured
   );
 
   SearchRequest withSort(SearchSort sort) => SearchRequest(
@@ -68,7 +68,7 @@ class SearchRequest {
     themeIds: themeIds,
     region: region,
     sort: sort,
-    sponsored: sponsored
+    featured: featured
   );
 
   SearchRequest withSponsored(bool sponsored) => SearchRequest(
@@ -77,7 +77,7 @@ class SearchRequest {
     themeIds: themeIds,
     region: region,
     sort: sort,
-    sponsored: sponsored
+    featured: sponsored
   );
 
   factory SearchRequest.fromJson(Map<String, dynamic> json) => _$SearchRequestFromJson(json);

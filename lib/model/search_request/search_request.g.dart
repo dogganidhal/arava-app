@@ -10,7 +10,7 @@ SearchRequest _$SearchRequestFromJson(Map<String, dynamic> json) {
   return SearchRequest(
     title: json['title'] as String,
     island: json['island'] as String,
-    sponsored: json['sponsored'] as bool ?? true,
+    featured: json['featured'] as bool ?? true,
     themeIds: (json['themeIds'] as List)?.map((e) => e as String)?.toList(),
     region: json['region'] == null
         ? null
@@ -35,6 +35,6 @@ Map<String, dynamic> _$SearchRequestToJson(SearchRequest instance) {
   writeNotNull('themeIds', instance.themeIds);
   writeNotNull('region', instance.region);
   writeNotNull('sort', instance.sort);
-  val['sponsored'] = instance.sponsored;
+  val['featured'] = instance.featured;
   return val;
 }

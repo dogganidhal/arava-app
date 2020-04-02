@@ -8,5 +8,9 @@ enum _FeaturedEvent {
   @Data(fields: [
     DataField<Island>('island')
   ])
-  FeaturedLoadEvent
+  FeaturedLoadSponsoredEvent,
+  @Data(fields: [
+    DataField<Island>('island')
+  ])
+  FeaturedLoadActivitiesEvent
 }

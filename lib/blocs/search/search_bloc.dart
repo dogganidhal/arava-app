@@ -30,7 +30,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   @override
   SearchState get initialState => SearchState(
     request: SearchRequest(
-      sponsored: true
+      featured: true
     )
   );
 

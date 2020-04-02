@@ -3,6 +3,7 @@ import 'package:arava/blocs/featured/state/featured_state.dart';
 import 'package:arava/blocs/global_context/global_context_bloc.dart';
 import 'package:arava/blocs/global_context/state/global_context_state.dart';
 import 'package:arava/blocs/navigation/navigation_bloc.dart';
+import 'package:arava/i18n/app_localizations.dart';
 import 'package:arava/model/poi/poi.dart';
 import 'package:arava/theme/arava_assets.dart';
 import 'package:arava/widgets/poi/poi_details.dart';
@@ -13,9 +14,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 
+enum FeaturedPoiType {
+  SPONSORED,
+  ACTIVITY
+}
 
 class Featured extends StatefulWidget {
-  Featured({Key key}) : super(key: key);
+  final FeaturedPoiType type;
+
+  Featured({Key key, @required this.type}) : super(key: key);
 
   @override
   _FeaturedState createState() => _FeaturedState();
@@ -28,7 +35,14 @@ class _FeaturedState extends State<Featured> {
   @override
   void initState() {
     super.initState();
-    _featuredBloc.loadFeatured(_globalContextBloc.state.selectedIsland);
+    switch (widget.type) {
+      case FeaturedPoiType.SPONSORED:
+        _featuredBloc.loadFeatured(_globalContextBloc.state.selectedIsland);
+        break;
+      case FeaturedPoiType.ACTIVITY:
+        _featuredBloc.loadActivities(_globalContextBloc.state.selectedIsland);
+        break;
+    }
   }
 
   @override
@@ -50,6 +64,11 @@ class _FeaturedState extends State<Featured> {
                 child: Text(failingState.exception.getLocalizedMessage(context)),
               ),
               featuredReadyState: (readyState) {
+                if (readyState.pois.isEmpty) {
+                  return Center(
+                    child: Text(AppLocalizations.of(context).general_NoItems()),
+                  );
+                }
                 final groupedPois = _groupPois(readyState.pois);
                 return CustomScrollView(
                   slivers: <Widget>[

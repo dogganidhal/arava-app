@@ -35,8 +35,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "home_Photos": "相片",
-  "@home_Photos": {
+  "home_Activities": "活动",
+  "@home_Activities": {
     "type": "text",
     "placeholders": {}
   },
@@ -247,6 +247,11 @@
   },
   "search_SearchThisArea": "搜索此区域",
   "@search_SearchThisArea": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "general_NoItems": "没有项目",
+  "@general_NoItems": {
     "type": "text",
     "placeholders": {}
   }

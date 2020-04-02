@@ -13,7 +13,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class SearchFilters extends StatelessWidget {
   static final String _kQueryFieldAttribute = "query";
-  static final String _kSponsoredAttribute = "sponsored";
+  static final String _kFeaturedAttribute = "featured";
 
   final GlobalKey<FormBuilderState> _formKey = GlobalKey();
 
@@ -49,8 +49,8 @@ class SearchFilters extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 FormBuilderCheckbox(
-                  attribute: _kSponsoredAttribute,
-                  initialValue: state.request.sponsored ?? false,
+                  attribute: _kFeaturedAttribute,
+                  initialValue: state.request.featured ?? false,
                   label: Row(
                     children: <Widget>[
                       Padding(
@@ -66,8 +66,8 @@ class SearchFilters extends StatelessWidget {
                     context,
                     AppConfigurationProvider.of(context)
                       .themes
-                      /*.where((theme) => theme.parent == null)
-                      .toList()*/,
+                      .where((theme) => theme.parent == null)
+                      .toList(),
                     state
                   )
                 )
@@ -124,9 +124,9 @@ class SearchFilters extends StatelessWidget {
 
     final values = _formKey.currentState.value;
     final query = values[_kQueryFieldAttribute];
-    final sponsored = values[_kSponsoredAttribute];
+    final sponsored = values[_kFeaturedAttribute];
     final themeIds = values.keys
-      .where((key) => key != _kSponsoredAttribute && key != _kQueryFieldAttribute)
+      .where((key) => key != _kFeaturedAttribute && key != _kQueryFieldAttribute)
       .where((key) => values[key] == true)
       .toList();
 

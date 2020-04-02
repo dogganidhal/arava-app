@@ -71,9 +71,9 @@ class AppLocalizations {
     name: 'home_Favorites'
   );
 
-  String home_Photos() => Intl.message(
-    'Photos',
-    name: 'home_Photos'
+  String home_Activities() => Intl.message(
+    'Activites',
+    name: 'home_Activities'
   );
 
   String home_More() => Intl.message(
@@ -171,6 +171,11 @@ class AppLocalizations {
   String general_Loading() => Intl.message(
     'Loading ...',
     name: 'general_Loading'
+  );
+
+  String general_NoItems() => Intl.message(
+    'No items',
+    name: 'general_NoItems'
   );
 
   // endregion

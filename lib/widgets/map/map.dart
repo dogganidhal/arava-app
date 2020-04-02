@@ -92,7 +92,7 @@ class _Map extends State<Map> {
                           poi.coordinate.longitude
                         ),
                         onTap: () => _searchBloc.selectPoi(poi),
-                        icon: poi.sponsored ?
+                        icon: poi.featured ?
                         AppConfigurationProvider.of(context).sponsoredPinBitmapDescriptor :
                         AppConfigurationProvider.of(context).pinBitmapDescriptor
                       ))

@@ -6,7 +6,7 @@ class PhotosAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(AppLocalizations.of(context).home_Photos()),
+      title: Text(AppLocalizations.of(context).home_Activities()),
       centerTitle: true
     );
   }

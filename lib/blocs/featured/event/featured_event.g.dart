@@ -10,28 +10,42 @@ part of 'featured_event.dart';
 abstract class FeaturedEvent extends Equatable {
   const FeaturedEvent(this._type);
 
-  factory FeaturedEvent.featuredLoadEvent({@required Island island}) =
-      FeaturedLoadEvent;
+  factory FeaturedEvent.featuredLoadSponsoredEvent({@required Island island}) =
+      FeaturedLoadSponsoredEvent;
+
+  factory FeaturedEvent.featuredLoadActivitiesEvent({@required Island island}) =
+      FeaturedLoadActivitiesEvent;
 
   final _FeaturedEvent _type;
 
 //ignore: missing_return
   R when<R>(
-      {@required FutureOr<R> Function(FeaturedLoadEvent) featuredLoadEvent}) {
+      {@required
+          FutureOr<R> Function(FeaturedLoadSponsoredEvent)
+              featuredLoadSponsoredEvent,
+      @required
+          FutureOr<R> Function(FeaturedLoadActivitiesEvent)
+              featuredLoadActivitiesEvent}) {
     assert(() {
-      if (featuredLoadEvent == null) {
+      if (featuredLoadSponsoredEvent == null ||
+          featuredLoadActivitiesEvent == null) {
         throw 'check for all possible cases';
       }
       return true;
     }());
     switch (this._type) {
-      case _FeaturedEvent.FeaturedLoadEvent:
-        return featuredLoadEvent(this as FeaturedLoadEvent);
+      case _FeaturedEvent.FeaturedLoadSponsoredEvent:
+        return featuredLoadSponsoredEvent(this as FeaturedLoadSponsoredEvent);
+      case _FeaturedEvent.FeaturedLoadActivitiesEvent:
+        return featuredLoadActivitiesEvent(this as FeaturedLoadActivitiesEvent);
     }
   }
 
   R whenOrElse<R>(
-      {FutureOr<R> Function(FeaturedLoadEvent) featuredLoadEvent,
+      {FutureOr<R> Function(FeaturedLoadSponsoredEvent)
+          featuredLoadSponsoredEvent,
+      FutureOr<R> Function(FeaturedLoadActivitiesEvent)
+          featuredLoadActivitiesEvent,
       @required FutureOr<R> Function(FeaturedEvent) orElse}) {
     assert(() {
       if (orElse == null) {
@@ -40,25 +54,35 @@ abstract class FeaturedEvent extends Equatable {
       return true;
     }());
     switch (this._type) {
-      case _FeaturedEvent.FeaturedLoadEvent:
-        if (featuredLoadEvent == null) break;
-        return featuredLoadEvent(this as FeaturedLoadEvent);
+      case _FeaturedEvent.FeaturedLoadSponsoredEvent:
+        if (featuredLoadSponsoredEvent == null) break;
+        return featuredLoadSponsoredEvent(this as FeaturedLoadSponsoredEvent);
+      case _FeaturedEvent.FeaturedLoadActivitiesEvent:
+        if (featuredLoadActivitiesEvent == null) break;
+        return featuredLoadActivitiesEvent(this as FeaturedLoadActivitiesEvent);
     }
     return orElse(this);
   }
 
   FutureOr<void> whenPartial(
-      {FutureOr<void> Function(FeaturedLoadEvent) featuredLoadEvent}) {
+      {FutureOr<void> Function(FeaturedLoadSponsoredEvent)
+          featuredLoadSponsoredEvent,
+      FutureOr<void> Function(FeaturedLoadActivitiesEvent)
+          featuredLoadActivitiesEvent}) {
     assert(() {
-      if (featuredLoadEvent == null) {
+      if (featuredLoadSponsoredEvent == null &&
+          featuredLoadActivitiesEvent == null) {
         throw 'provide at least one branch';
       }
       return true;
     }());
     switch (this._type) {
-      case _FeaturedEvent.FeaturedLoadEvent:
-        if (featuredLoadEvent == null) break;
-        return featuredLoadEvent(this as FeaturedLoadEvent);
+      case _FeaturedEvent.FeaturedLoadSponsoredEvent:
+        if (featuredLoadSponsoredEvent == null) break;
+        return featuredLoadSponsoredEvent(this as FeaturedLoadSponsoredEvent);
+      case _FeaturedEvent.FeaturedLoadActivitiesEvent:
+        if (featuredLoadActivitiesEvent == null) break;
+        return featuredLoadActivitiesEvent(this as FeaturedLoadActivitiesEvent);
     }
   }
 
@@ -67,14 +91,27 @@ abstract class FeaturedEvent extends Equatable {
 }
 
 @immutable
-class FeaturedLoadEvent extends FeaturedEvent {
-  const FeaturedLoadEvent({@required this.island})
-      : super(_FeaturedEvent.FeaturedLoadEvent);
+class FeaturedLoadSponsoredEvent extends FeaturedEvent {
+  const FeaturedLoadSponsoredEvent({@required this.island})
+      : super(_FeaturedEvent.FeaturedLoadSponsoredEvent);
 
   final Island island;
 
   @override
-  String toString() => 'FeaturedLoadEvent(island:${this.island})';
+  String toString() => 'FeaturedLoadSponsoredEvent(island:${this.island})';
+  @override
+  List get props => [island];
+}
+
+@immutable
+class FeaturedLoadActivitiesEvent extends FeaturedEvent {
+  const FeaturedLoadActivitiesEvent({@required this.island})
+      : super(_FeaturedEvent.FeaturedLoadActivitiesEvent);
+
+  final Island island;
+
+  @override
+  String toString() => 'FeaturedLoadActivitiesEvent(island:${this.island})';
   @override
   List get props => [island];
 }

@@ -23,14 +23,14 @@ class Main extends StatelessWidget {
     MapAppBar(),
     MapAppBar(),
     FavoritesAppBar(),
-    PhotosAppBar(),
+    MapAppBar(),
     MoreAppBar()
   ];
 
   Widget get _map => Map();
-  Widget get _featured => Featured();
+  Widget get _featured => Featured(type: FeaturedPoiType.SPONSORED);
   Widget get _favorites => Favorites();
-  Widget get _photos => Photos();
+  Widget get _activities => Featured(type: FeaturedPoiType.ACTIVITY);
   Widget get _more => More();
 
   Main({Key key, this.configuration}) : super(key: key);
@@ -48,7 +48,7 @@ class Main extends StatelessWidget {
               _map,
               _featured,
               _favorites,
-              _photos,
+              _activities,
               _more
             ],
           ),
@@ -78,8 +78,8 @@ class Main extends StatelessWidget {
       title: Text(AppLocalizations.of(context).home_Favorites())
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.photo_camera),
-      title: Text(AppLocalizations.of(context).home_Photos())
+      icon: Icon(Icons.rowing),
+      title: Text(AppLocalizations.of(context).home_Activities())
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.more_horiz),

@@ -35,8 +35,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "home_Photos": "Photos",
-  "@home_Photos": {
+  "home_Activities": "Activités",
+  "@home_Activities": {
     "type": "text",
     "placeholders": {}
   },
@@ -247,6 +247,11 @@
   },
   "search_SearchThisArea": "Rechercher ici",
   "@search_SearchThisArea": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "general_NoItems": "Aucun élement",
+  "@general_NoItems": {
     "type": "text",
     "placeholders": {}
   }

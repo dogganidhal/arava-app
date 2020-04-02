@@ -31,6 +31,13 @@ class PoiService extends DioService {
       .toList();
   }
 
+  Future<List<Poi>> getActivities(Island island) async {
+    final response = await get("/island/${island.id}/activities");
+    return (response.data as List)
+      .map((jsonMap) => Poi.fromJson(jsonMap))
+      .toList();
+  }
+
   Future<void> syncFavorites(List<Poi> favorites) async {
     await put('/user/favorite', data: favorites
       .map((poi) => poi.id)
