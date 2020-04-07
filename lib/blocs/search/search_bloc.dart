@@ -156,7 +156,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         .withSort(event.searchFilters.sort)
         .withThemeIds(event.searchFilters.themeIds)
         .withTitle(event.searchFilters.query)
-        .withSponsored(event.searchFilters.sponsored)
+        .withSponsored(event.searchFilters.featured)
       );
   }
 

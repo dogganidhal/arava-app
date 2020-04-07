@@ -2,9 +2,9 @@ import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/blocs/search/search_bloc.dart';
 import 'package:arava/blocs/search/state/search_state.dart';
 import 'package:arava/i18n/app_localizations.dart';
-import 'package:arava/model/poi_type/poi_type.dart';
 import 'package:arava/model/search_filters/search_filters.dart' as model show SearchFilters;
 import 'package:arava/widgets/app/app_configuration_provider.dart';
+import 'package:arava/widgets/map/search_filters_theme_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -16,6 +16,7 @@ class SearchFilters extends StatelessWidget {
   static final String _kFeaturedAttribute = "featured";
 
   final GlobalKey<FormBuilderState> _formKey = GlobalKey();
+  final GlobalKey<SearchFiltersThemeListState> _themeListFormKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +52,7 @@ class SearchFilters extends StatelessWidget {
                 FormBuilderCheckbox(
                   attribute: _kFeaturedAttribute,
                   initialValue: state.request.featured ?? false,
+                  decoration: InputDecoration.collapsed(hintText: null),
                   label: Row(
                     children: <Widget>[
                       Padding(
@@ -61,16 +63,13 @@ class SearchFilters extends StatelessWidget {
                     ],
                   )
                 ),
-                ...(
-                  _themeListColumn(
-                    context,
-                    AppConfigurationProvider.of(context)
-                      .themes
-                      .where((theme) => theme.parent == null)
-                      .toList(),
-                    state
-                  )
-                )
+                SearchFiltersThemeList(
+                  key: _themeListFormKey,
+                  themes: AppConfigurationProvider.of(context).themes
+                    .where((theme) => theme.parent == null)
+                    .toList(),
+                  selectedThemes: state.request.themeIds,
+                ),
               ],
             ),
           ),
@@ -79,60 +78,17 @@ class SearchFilters extends StatelessWidget {
     );
   }
 
-  List<Widget> _themeListColumn(
-    BuildContext context, List<PoiTheme> themes, SearchState state,
-    [double padding = 0, int alpha = 255]
-  ) => themes
-    .map((theme) => Column(
-      children: <Widget>[
-        FormBuilderCheckbox(
-          attribute: theme.id,
-          initialValue: state.request.themeIds.contains(theme.id),
-          label: Row(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 16 + padding, right: 16),
-                child: ImageIcon(
-                  NetworkImage(theme.icon.url),
-                  color: Theme.of(context)
-                    .textTheme
-                    .body1
-                    .color
-                    .withAlpha(alpha),
-                ),
-              ),
-              Text(
-                theme.name,
-                style: TextStyle(
-                  color: Theme.of(context)
-                    .textTheme
-                    .body1
-                    .color
-                    .withAlpha(alpha)
-                ),
-              )
-            ],
-          )
-        ),
-        ..._themeListColumn(context, theme.subThemes ?? [], state, padding + 32, (alpha * 0.75).toInt())
-      ],
-    ))
-    .toList();
-
   model.SearchFilters _buildFilters() {
     _formKey.currentState.saveAndValidate();
 
     final values = _formKey.currentState.value;
     final query = values[_kQueryFieldAttribute];
-    final sponsored = values[_kFeaturedAttribute];
-    final themeIds = values.keys
-      .where((key) => key != _kFeaturedAttribute && key != _kQueryFieldAttribute)
-      .where((key) => values[key] == true)
-      .toList();
+    final featured = values[_kFeaturedAttribute];
+    final themeIds = _themeListFormKey.currentState.value;
 
     return model.SearchFilters(
       query: query,
-      sponsored: sponsored,
+      featured: featured,
       themeIds: themeIds
     );
   }

@@ -42,7 +42,13 @@ class PoiPreview extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16),
-                        child: Text(poi.title),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width / 3,
+                          child: Text(
+                            poi.title,
+                            maxLines: 1,
+                          )
+                        ),
                       ),
                       Expanded(
                         child: Container(),
