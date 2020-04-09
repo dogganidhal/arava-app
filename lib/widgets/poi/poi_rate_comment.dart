@@ -25,7 +25,7 @@ class _PoiRateCommentState extends State<PoiRateComment> {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey();
 
   CommentBloc _commentBloc;
-  double _rating = 3;
+  double _rating;
 
   @override
   void didChangeDependencies() {
@@ -40,9 +40,10 @@ class _PoiRateCommentState extends State<PoiRateComment> {
       builder: (context, state) => Scaffold(
         appBar: AppBar(
           title: RatingBar(
-            initialRating: 3,
+            initialRating: 0,
             itemCount: 5,
             itemSize: 24,
+            minRating: 1,
             allowHalfRating: true,
             ratingWidget: RatingWidget(
               full: Icon(Icons.star, color: Theme.of(context).primaryColor),
@@ -79,9 +80,12 @@ class _PoiRateCommentState extends State<PoiRateComment> {
                   hintText: 'Write something'
                 ),
                 validators: [
-                  FormBuilderValidators.required(
-                    errorText: AppLocalizations.of(context).general_RequiredField()
-                  )
+                  (value) {
+                    if (_rating == null && value == null) {
+                      return AppLocalizations.of(context).general_RequiredField();
+                    }
+                    return null;
+                  }
                 ],
               ),
             ),

@@ -1,6 +1,7 @@
 import 'package:arava/model/comment/comment.dart';
 import 'package:arava/service/date_formatter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 
 class PoiComment extends StatelessWidget {
@@ -50,19 +51,39 @@ class PoiComment extends StatelessWidget {
                 Text("${DateFormatter.formatCommentDate(context,  comment.date)}"),
               ],
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 8),
-              child: Text(
-                comment.author.fullName,
-                style: Theme.of(context)
-                  .textTheme
-                  .caption,
-              ),
+            Row(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: 8),
+                  child: Text(
+                    comment.author.fullName,
+                    style: Theme.of(context)
+                      .textTheme
+                      .caption,
+                  ),
+                ),
+                Expanded(child: Container()),
+                if (comment.score != null)
+                  RatingBar(
+                    initialRating: comment.score,
+                    ignoreGestures: true,
+                    allowHalfRating: true,
+                    itemCount: 5,
+                    itemSize: 24,
+                    ratingWidget: RatingWidget(
+                      full: Icon(Icons.star, color: Theme.of(context).primaryColor),
+                      half: Icon(Icons.star_half, color: Theme.of(context).primaryColor),
+                      empty: Icon(Icons.star_border, color: Theme.of(context).primaryColor)
+                    ),
+                    onRatingUpdate: null,
+                  )
+              ],
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 8),
-              child: Text(comment.content),
-            )
+            if (comment.content != null)
+              Padding(
+                padding: EdgeInsets.only(top: 8),
+                child: Text(comment.content),
+              )
           ],
         ),
       ),

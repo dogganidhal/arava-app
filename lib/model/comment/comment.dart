@@ -9,11 +9,12 @@ part 'comment.g.dart';
 class Comment {
   final String id;
   final String content;
+  final double score;
   final CommentAuthor author;
   final DateTime date;
 
   Comment({
-    this.id, this.content, this.author, this.date
+    this.id, this.content, this.author, this.date, this.score
   });
 
   factory Comment.fromJson(Map<String, dynamic> json) => _$CommentFromJson(json);

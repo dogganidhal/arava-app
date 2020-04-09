@@ -14,12 +14,14 @@ Comment _$CommentFromJson(Map<String, dynamic> json) {
         ? null
         : CommentAuthor.fromJson(json['author'] as Map<String, dynamic>),
     date: json['date'] == null ? null : DateTime.parse(json['date'] as String),
+    score: (json['score'] as num)?.toDouble(),
   );
 }
 
 Map<String, dynamic> _$CommentToJson(Comment instance) => <String, dynamic>{
       'id': instance.id,
       'content': instance.content,
+      'score': instance.score,
       'author': instance.author,
       'date': instance.date?.toIso8601String(),
     };

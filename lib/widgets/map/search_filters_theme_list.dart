@@ -8,12 +8,10 @@ class SearchFiltersThemeList extends StatefulWidget {
   final List<PoiTheme> themes;
   final List<String> selectedThemes;
   final double leftPadding;
-  final int alpha;
 
   const SearchFiltersThemeList({
     Key key,
-    @required this.themes, @required this.selectedThemes,
-    this.leftPadding = 0, this.alpha = 255
+    @required this.themes, @required this.selectedThemes, this.leftPadding = 0
   }) : super(key: key);
 
   @override
@@ -50,15 +48,13 @@ class SearchFiltersThemeListState extends State<SearchFiltersThemeList> {
       child: _recursiveThemeList(
         themes: widget.themes,
         selectedThemes: widget.selectedThemes,
-        alpha: widget.alpha,
         leftPadding: widget.leftPadding
       ),
     );
   }
 
   Widget _recursiveThemeList({
-    List<PoiTheme> themes, List<String> selectedThemes,
-    int alpha, double leftPadding
+    List<PoiTheme> themes, List<String> selectedThemes, double leftPadding
   }) => ListView.separated(
     shrinkWrap: true,
     physics: NeverScrollableScrollPhysics(),
@@ -69,28 +65,26 @@ class SearchFiltersThemeListState extends State<SearchFiltersThemeList> {
       if (theme.subThemes.isNotEmpty) {
         return ExpandablePanel(
           controller: _controllerMap[theme.id],
-          collapsed: _expansionButton(theme: theme, alpha: alpha, leftPadding: leftPadding),
+          collapsed: _expansionButton(theme: theme, leftPadding: leftPadding),
           expanded: Column(
             children: <Widget>[
-              _expansionButton(theme: theme, alpha: alpha, leftPadding: leftPadding),
+              _expansionButton(theme: theme, leftPadding: leftPadding),
               _recursiveThemeList(
                 themes: theme.subThemes,
                 selectedThemes: selectedThemes,
-                leftPadding: leftPadding + 16,
-                alpha: (alpha * 0.75).toInt(),
+                leftPadding: leftPadding + 32
               )
             ],
           ),
         );
       }
-      return _checkboxField(theme: theme, alpha: alpha, leftPadding: leftPadding);
+      return _checkboxField(theme: theme, leftPadding: leftPadding);
     }
   );
 
   Widget _header({
     PoiTheme theme,
-    double leftPadding,
-    int alpha
+    double leftPadding
   }) => Row(
     children: <Widget>[
       Padding(
@@ -101,7 +95,6 @@ class SearchFiltersThemeListState extends State<SearchFiltersThemeList> {
             .textTheme
             .body1
             .color
-            .withAlpha(alpha),
         ),
       ),
       Text(
@@ -111,7 +104,6 @@ class SearchFiltersThemeListState extends State<SearchFiltersThemeList> {
             .textTheme
             .body1
             .color
-            .withAlpha(alpha)
         ),
       )
     ],
@@ -127,7 +119,7 @@ class SearchFiltersThemeListState extends State<SearchFiltersThemeList> {
       padding: EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: <Widget>[
-          _header(theme: theme, alpha: alpha, leftPadding: leftPadding),
+          _header(theme: theme, leftPadding: leftPadding),
           Expanded(
             child: Container()
           ),
@@ -154,7 +146,7 @@ class SearchFiltersThemeListState extends State<SearchFiltersThemeList> {
       decoration: InputDecoration.collapsed(hintText: null),
       materialTapTargetSize: MaterialTapTargetSize.padded,
       initialValue: widget.selectedThemes.contains(theme.id),
-      label: _header(theme: theme, alpha: alpha, leftPadding: leftPadding),
+      label: _header(theme: theme, leftPadding: leftPadding),
       onChanged: (checked) {
         if (checked && !_value.contains(theme.id)) {
           _value.add(theme.id);
