@@ -12,6 +12,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 
 enum FeaturedPoiType {
@@ -75,9 +76,7 @@ class _FeaturedState extends State<Featured> {
                     ...groupedPois.keys
                       .map((themeId) {
                         final theme = globalContext.configuration.themes
-                          .firstWhere((t) {
-                            return t.id == themeId;
-                          });
+                          .firstWhere((t) => t.id == themeId);
                         return SliverStickyHeader(
                           header: Container(
                             color: Theme.of(context).backgroundColor,
@@ -101,29 +100,45 @@ class _FeaturedState extends State<Featured> {
                               ],
                             ),
                           ),
-                          sliver: SliverGrid.count(
+                          sliver: SliverStaggeredGrid.countBuilder(
                             crossAxisCount: 2,
-                            children: groupedPois[themeId]
-                              .map((poi) => GestureDetector(
-                              onTap: () => Modular.get<NavigationBloc>().pushRoute(MaterialPageRoute(
-                                builder: (BuildContext context) => PoiDetails(poi: poi)
-                              )),
-                              child: Card(
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(color: Theme.of(context).dividerColor, width: 0.5),
-                                  borderRadius: BorderRadius.circular(4),
+                            itemCount: groupedPois[themeId].length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final poi = groupedPois[themeId][index];
+                              return GestureDetector(
+                                onTap: () => Modular.get<NavigationBloc>().pushRoute(MaterialPageRoute(
+                                  builder: (BuildContext context) => PoiDetails(poi: poi)
+                                )),
+                                child: Card(
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(color: Theme.of(context).dividerColor, width: 0.5),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    children: <Widget>[
+                                      Image(
+                                        fit: BoxFit.cover,
+                                        image: poi.mainImage != null ?
+                                        CacheImage(poi.mainImage.url) :
+                                        AssetImage(AravaAssets.PoiPlaceholder)
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.all(8),
+                                        child: Center(
+                                          child: Text(poi.title)
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                child: Image(
-                                  fit: BoxFit.cover,
-                                  image: poi.mainImage != null ?
-                                    CacheImage(poi.mainImage.url) :
-                                    AssetImage(AravaAssets.PoiPlaceholder)
-                                ),
-                              ),
-                            ))
-                              .toList(),
+                              );
+                            },
+                            staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+                            mainAxisSpacing: 4.0,
+                            crossAxisSpacing: 4.0,
                           ),
                         );
                       }

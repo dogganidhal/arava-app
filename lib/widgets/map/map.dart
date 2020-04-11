@@ -5,9 +5,11 @@ import 'package:arava/blocs/search/search_bloc.dart';
 import 'package:arava/blocs/search/state/search_state.dart';
 import 'package:arava/i18n/app_localizations.dart';
 import 'package:arava/model/poi/poi.dart';
+import 'package:arava/model/search_response/search_response.dart';
 import 'package:arava/widgets/app/app_configuration_provider.dart';
 import 'package:arava/widgets/poi/poi_details.dart';
 import 'package:arava/widgets/poi/poi_preview.dart';
+import 'package:cache_image/cache_image.dart';
 import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -166,6 +168,8 @@ class _Map extends State<Map> {
                           ),
                         ),
                       ),
+                    if ((state.response?.premiumCount ?? 0) > 0)
+                      _premiumTabs(state)
                   ],
                 ),
               ),
@@ -175,6 +179,53 @@ class _Map extends State<Map> {
       )
     );
   }
+
+  Widget _premiumTabs(SearchState state) => Positioned(
+    top: 16,
+    right: 0,
+    child: Wrap(
+      direction: Axis.vertical,
+      crossAxisAlignment: WrapCrossAlignment.end,
+      spacing: 16,
+      children: state.response.premiumPois
+        .map((poi) => AnimatedSwitcher(
+          duration: kTabScrollDuration,
+          child: ButtonTheme(
+            height: 48,
+            minWidth: 4,
+            child: FlatButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(32),
+                  bottomLeft: Radius.circular(32)
+                )
+              ),
+              color: Theme.of(context).primaryColor,
+              onPressed: () => _searchBloc.selectPoi(poi),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Row(
+                  children: <Widget>[
+                    Image.network(
+                      poi.theme.icon.url,
+                      height: 24, width: 24,
+                    ),
+                    AnimatedContainer(
+                      width: state.selectedPoi?.id == poi.id ?
+                        _textSize(poi.title, Theme.of(context).textTheme.body1).width + 48 :
+                        0,
+                      duration: kTabScrollDuration,
+                      child: Text(poi.title, overflow: TextOverflow.clip, softWrap: false, textAlign: TextAlign.center,),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ))
+        .toList(),
+    )
+  );
 
   BitmapDescriptor _iconForPoi(GlobalContextState globalContext, Poi poi) {
     final pinsMap = globalContext.configuration.pinsMap;
@@ -187,5 +238,12 @@ class _Map extends State<Map> {
     return pinsMap.containsKey(poi.theme.id) ?
       pinsMap[poi.theme.id] :
       AppConfigurationProvider.of(context).defaultPinBitmapDescriptor;
+  }
+
+  Size _textSize(String text, TextStyle style) {
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(text: text, style: style), maxLines: 1, textDirection: TextDirection.ltr)
+      ..layout(minWidth: 0, maxWidth: double.infinity);
+    return textPainter.size;
   }
 }
