@@ -2,8 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-class AravaTheme {
-
+abstract class AravaTheme {
   static final kLightPrimaryColor = Color(0xFF087E8B);
   static final kLightAccentColor = Color(0xFF087E8B);
   static final kDarkPrimaryColor = Color(0xFF03DAC6);
@@ -87,4 +86,14 @@ class AravaTheme {
     ),
   );
 
+  static final kPremiumPoiColorList = [
+    Color(0xFF6666FF),
+    Color(0xFFCC66FF),
+    Color(0xFFFF6699),
+    Color(0xFFFF9966),
+    Color(0xFF99FF66),
+    Color(0xFF66FFCC),
+    Color(0xFF66CCFF),
+    Color(0xFF6699FF)
+  ];
 }

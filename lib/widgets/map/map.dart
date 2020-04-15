@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:arava/blocs/global_context/global_context_bloc.dart';
 import 'package:arava/blocs/global_context/state/global_context_state.dart';
 import 'package:arava/blocs/navigation/navigation_bloc.dart';
@@ -6,6 +8,7 @@ import 'package:arava/blocs/search/state/search_state.dart';
 import 'package:arava/i18n/app_localizations.dart';
 import 'package:arava/model/poi/poi.dart';
 import 'package:arava/model/search_response/search_response.dart';
+import 'package:arava/theme/arava_theme.dart';
 import 'package:arava/widgets/app/app_configuration_provider.dart';
 import 'package:arava/widgets/poi/poi_details.dart';
 import 'package:arava/widgets/poi/poi_preview.dart';
@@ -30,6 +33,8 @@ class _Map extends State<Map> {
   final SearchBloc _searchBloc = Modular.get();
   final GlobalContextBloc _globalContextBloc = Modular.get();
   final Key _selectedPoiDismissibleKey = GlobalKey();
+  final List<Color> _colorList = [...AravaTheme.kPremiumPoiColorList]
+    ..shuffle();
 
   @override
   void initState() {
@@ -188,41 +193,54 @@ class _Map extends State<Map> {
       crossAxisAlignment: WrapCrossAlignment.end,
       spacing: 16,
       children: state.response.premiumPois
-        .map((poi) => AnimatedSwitcher(
-          duration: kTabScrollDuration,
-          child: ButtonTheme(
-            height: 48,
-            minWidth: 4,
-            child: FlatButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(32),
-                  bottomLeft: Radius.circular(32)
-                )
-              ),
-              color: Theme.of(context).primaryColor,
-              onPressed: () => _searchBloc.selectPoi(poi),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                child: Row(
-                  children: <Widget>[
-                    Image.network(
-                      poi.theme.icon.url,
-                      height: 24, width: 24,
-                    ),
-                    AnimatedContainer(
-                      width: state.selectedPoi?.id == poi.id ?
-                        _textSize(poi.title, Theme.of(context).textTheme.body1).width + 48 :
-                        0,
-                      duration: kTabScrollDuration,
-                      child: Text(poi.title, overflow: TextOverflow.clip, softWrap: false, textAlign: TextAlign.center,),
-                    )
-                  ],
+        .map((poi) {
+          final color = _colorList[state.response.premiumPois.indexOf(poi) % _colorList.length];
+          final luminance = color.computeLuminance();
+          return AnimatedSwitcher(
+            duration: kTabScrollDuration,
+            child: ButtonTheme(
+              height: 48,
+              minWidth: 0,
+              colorScheme: luminance > 0.4 ? ColorScheme.light() : ColorScheme.dark(),
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    bottomLeft: Radius.circular(24)
+                  )
+                ),
+                color: color,
+                onPressed: () => _searchBloc.selectPoi(poi),
+                child: Padding(
+                  padding: EdgeInsets.only(left: 4),
+                  child: Row(
+                    children: <Widget>[
+                      Image.network(
+                        poi.theme.icon.url,
+                        height: 24, width: 24,
+                        color: luminance > 0.4 ?
+                          AravaTheme.kLightTheme.textTheme.body1.color :
+                          AravaTheme.kDarkTheme.textTheme.body1.color,
+                      ),
+                      AnimatedContainer(
+                        width: state.selectedPoi?.id == poi.id ?
+                          _textSize(poi.title, Theme.of(context).textTheme.body1).width + 32 :
+                          0,
+                        duration: kTabScrollDuration,
+                        child: Text(
+                          poi.title,
+                          overflow: TextOverflow.clip,
+                          softWrap: false,
+                          textAlign: TextAlign.center
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ))
+          );
+      })
         .toList(),
     )
   );

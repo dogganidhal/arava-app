@@ -91,7 +91,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       .withEmptyResult(false)
       .withSelectedPoi(null);
     try {
-      final searchResponse = await poiService.search(state.request);
+      SearchRequest request = state.request;
+      if (request.island == null) {
+        request = request.withIsland(globalContextBloc.state.selectedIsland.id);
+      }
+      final searchResponse = await poiService.search(request);
       yield state
         .withLoading(false)
         .withRegionDidChange(false)
