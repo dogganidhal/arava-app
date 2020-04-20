@@ -92,17 +92,17 @@ class _Map extends State<Map> {
                       },
                       onCameraIdle: () => _searchBloc.cameraIdle(),
                       myLocationEnabled: true,
-                      markers: state.response?.pois
-                        ?.map((poi) => Marker(
-                        markerId: MarkerId(poi.id),
-                        position: LatLng(
-                          poi.coordinate.latitude,
-                          poi.coordinate.longitude
-                        ),
-                        onTap: () => _searchBloc.selectPoi(poi),
-                        icon: _iconForPoi(globalContext, poi)
-                      ))
-                        ?.toSet(),
+                      markers: _gatherMarkerPois(state.response)
+                        .map((poi) => Marker(
+                          markerId: MarkerId(poi.id),
+                          position: LatLng(
+                            poi.coordinate.latitude,
+                            poi.coordinate.longitude
+                          ),
+                          onTap: () => _searchBloc.selectPoi(poi),
+                          icon: _iconForPoi(globalContext, poi)
+                        ))
+                        .toSet(),
                     ),
                     if (state.loading)
                       Positioned(
@@ -244,6 +244,16 @@ class _Map extends State<Map> {
         .toList(),
     )
   );
+
+  List<Poi> _gatherMarkerPois(SearchResponse response) {
+    if (response ==  null) {
+      return [];
+    }
+    final pois = <Poi>[]
+      ..addAll(response.pois)
+      ..addAll(response.premiumPois);
+    return pois;
+  }
 
   BitmapDescriptor _iconForPoi(GlobalContextState globalContext, Poi poi) {
     final pinsMap = globalContext.configuration.pinsMap;

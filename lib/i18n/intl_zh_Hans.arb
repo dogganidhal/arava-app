@@ -254,5 +254,10 @@
   "@general_NoItems": {
     "type": "text",
     "placeholders": {}
+  },
+  "searchResult_LaunchMap": "在地图上查看",
+  "@searchResult_LaunchMap": {
+    "type": "text",
+    "placeholders": {}
   }
 }

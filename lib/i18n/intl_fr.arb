@@ -254,5 +254,10 @@
   "@general_NoItems": {
     "type": "text",
     "placeholders": {}
+  },
+  "searchResult_LaunchMap": "Voir sur la carte",
+  "@searchResult_LaunchMap": {
+    "type": "text",
+    "placeholders": {}
   }
 }

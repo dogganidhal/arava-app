@@ -254,5 +254,10 @@
   "@general_NoItems": {
     "type": "text",
     "placeholders": {}
+  },
+  "searchResult_LaunchMap": "View on map",
+  "@searchResult_LaunchMap": {
+    "type": "text",
+    "placeholders": {}
   }
 }

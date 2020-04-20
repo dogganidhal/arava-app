@@ -227,6 +227,11 @@ class AppLocalizations {
     name: 'searchResult_NoDescriptionPlaceholder'
   );
 
+  String searchResult_LaunchMap() => Intl.message(
+    "View on map",
+    name: 'searchResult_LaunchMap'
+  );
+
   String searchResult_NoCommentsPlaceholder() => Intl.message(
     "No comments",
     name: 'searchResult_NoCommentsPlaceholder'

@@ -20,6 +20,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 
 
 class PoiDetails extends StatefulWidget {
@@ -180,6 +181,7 @@ class _PoiDetailsState extends State<PoiDetails> with SingleTickerProviderStateM
           ),
         ),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             ImageIcon(
               CacheImage(widget.poi.theme.icon.url),
@@ -194,6 +196,19 @@ class _PoiDetailsState extends State<PoiDetails> with SingleTickerProviderStateM
                   .textTheme
                   .caption,
               ),
+            ),
+            Expanded(child: Container()),
+            FlatButton.icon(
+              padding: EdgeInsets.zero,
+              textColor: Theme.of(context).primaryColor,
+              onPressed: () => MapsLauncher.launchCoordinates(
+                widget.poi.coordinate.latitude,
+                widget.poi.coordinate.longitude
+              ),
+              icon: Icon(Icons.directions),
+              label: Text(AppLocalizations.of(context)
+                .searchResult_LaunchMap()
+              )
             )
           ],
         ),

@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-04-02T15:34:06.975972",
+  "@@last_modified": "2020-04-20T10:12:03.102043",
   "appName": "Arava",
   "@appName": {
     "type": "text",
@@ -172,6 +172,11 @@
   },
   "searchResult_NoDescriptionPlaceholder": "No description",
   "@searchResult_NoDescriptionPlaceholder": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "searchResult_LaunchMap": "View on map",
+  "@searchResult_LaunchMap": {
     "type": "text",
     "placeholders": {}
   },

@@ -50,6 +50,7 @@ abstract class AravaTheme {
   static final kDarkTheme = ThemeData(
     brightness: Brightness.dark,
     primaryColor: kDarkAccentColor,
+    accentColor: kDarkAccentColor,
     errorColor: kErrorColor,
     colorScheme: ColorScheme.dark(
       primary: kDarkPrimaryColor,
