@@ -10,7 +10,7 @@ import 'package:arava/model/poi/poi.dart';
 import 'package:arava/model/search_response/search_response.dart';
 import 'package:arava/theme/arava_theme.dart';
 import 'package:arava/widgets/app/app_configuration_provider.dart';
-import 'package:arava/widgets/poi/poi_details.dart';
+import 'package:arava/widgets/poi/poi_showcase.dart';
 import 'package:arava/widgets/poi/poi_preview.dart';
 import 'package:cache_image/cache_image.dart';
 import 'package:flushbar/flushbar_helper.dart';
@@ -85,8 +85,8 @@ class _Map extends State<Map> {
                       onMapCreated: (GoogleMapController controller) {
                         _searchBloc.mapLoaded(controller);
                         String brightness = MediaQuery.of(context).platformBrightness == Brightness.dark ?
-                        "dark" :
-                        "light";
+                          "dark" :
+                          "light";
                         rootBundle.loadString("assets/map_styles/$brightness.json")
                           .then((string) => controller.setMapStyle(string));
                       },
@@ -142,7 +142,7 @@ class _Map extends State<Map> {
                         child: GestureDetector(
                           onTap: () {
                             Modular.get<NavigationBloc>().pushRoute(MaterialPageRoute(
-                              builder: (BuildContext context) => PoiDetails(poi: state.selectedPoi)
+                              builder: (BuildContext context) => PoiShowcase(poi: state.selectedPoi)
                             ));
                           },
                           child: Dismissible(
@@ -194,14 +194,11 @@ class _Map extends State<Map> {
       spacing: 16,
       children: state.response.premiumPois
         .map((poi) {
-          final color = _colorList[state.response.premiumPois.indexOf(poi) % _colorList.length];
-          final luminance = color.computeLuminance();
           return AnimatedSwitcher(
             duration: kTabScrollDuration,
             child: ButtonTheme(
               height: 48,
               minWidth: 0,
-              colorScheme: luminance > 0.4 ? ColorScheme.light() : ColorScheme.dark(),
               child: FlatButton(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
@@ -209,7 +206,7 @@ class _Map extends State<Map> {
                     bottomLeft: Radius.circular(24)
                   )
                 ),
-                color: color,
+                color: poi.featured ? AravaTheme.kFeaturedColor : AravaTheme.kLightPrimaryColor,
                 onPressed: () => _searchBloc.selectPoi(poi),
                 child: Padding(
                   padding: EdgeInsets.only(left: 4),
@@ -218,9 +215,7 @@ class _Map extends State<Map> {
                       Image.network(
                         poi.theme.icon.url,
                         height: 24, width: 24,
-                        color: luminance > 0.4 ?
-                          AravaTheme.kLightTheme.textTheme.body1.color :
-                          AravaTheme.kDarkTheme.textTheme.body1.color,
+                        color: AravaTheme.kDarkTheme.textTheme.body1.color,
                       ),
                       AnimatedContainer(
                         width: state.selectedPoi?.id == poi.id ?
@@ -231,7 +226,10 @@ class _Map extends State<Map> {
                           poi.title,
                           overflow: TextOverflow.clip,
                           softWrap: false,
-                          textAlign: TextAlign.center
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: AravaTheme.kDarkTheme.textTheme.body1.color,
+                          ),
                         ),
                       )
                     ],

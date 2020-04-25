@@ -6,7 +6,7 @@ import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/i18n/app_localizations.dart';
 import 'package:arava/model/poi/poi.dart';
 import 'package:arava/theme/arava_assets.dart';
-import 'package:arava/widgets/poi/poi_details.dart';
+import 'package:arava/widgets/poi/poi_showcase.dart';
 import 'package:cache_image/cache_image.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -107,7 +107,7 @@ class _FeaturedState extends State<Featured> {
                               final poi = groupedPois[themeId][index];
                               return GestureDetector(
                                 onTap: () => Modular.get<NavigationBloc>().pushRoute(MaterialPageRoute(
-                                  builder: (BuildContext context) => PoiDetails(poi: poi)
+                                  builder: (BuildContext context) => PoiShowcase(poi: poi)
                                 )),
                                 child: Card(
                                   clipBehavior: Clip.antiAliasWithSaveLayer,

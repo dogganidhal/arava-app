@@ -10,6 +10,7 @@ abstract class AravaTheme {
   static final kDarkColor = Color(0xFF171717);
   static final kLightColor = Color(0xFFFDFDFD);
   static final kErrorColor = Color(0xFFFF3C38);
+  static final kFeaturedColor = Color(0xFFFB2B3A);
 
   static final kLightTheme = ThemeData(
     brightness: Brightness.light,
