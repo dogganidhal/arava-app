@@ -194,6 +194,13 @@ class _Map extends State<Map> {
       spacing: 16,
       children: state.response.premiumPois
         .map((poi) {
+          final tabColor = poi.sponsored ?
+            AravaTheme.kFeaturedColor :
+            Theme.of(context).primaryColor;
+          final luminance = tabColor.computeLuminance();
+          final textColor = luminance > 0.4 ?
+            AravaTheme.kLightTheme.textTheme.body1.color :
+            AravaTheme.kDarkTheme.textTheme.body1.color;
           return AnimatedSwitcher(
             duration: kTabScrollDuration,
             child: ButtonTheme(
@@ -206,7 +213,7 @@ class _Map extends State<Map> {
                     bottomLeft: Radius.circular(24)
                   )
                 ),
-                color: poi.featured ? AravaTheme.kFeaturedColor : AravaTheme.kLightPrimaryColor,
+                color: tabColor,
                 onPressed: () => _searchBloc.selectPoi(poi),
                 child: Padding(
                   padding: EdgeInsets.only(left: 4),
@@ -215,7 +222,7 @@ class _Map extends State<Map> {
                       Image.network(
                         poi.theme.icon.url,
                         height: 24, width: 24,
-                        color: AravaTheme.kDarkTheme.textTheme.body1.color,
+                        color: textColor,
                       ),
                       AnimatedContainer(
                         width: state.selectedPoi?.id == poi.id ?
@@ -228,7 +235,7 @@ class _Map extends State<Map> {
                           softWrap: false,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: AravaTheme.kDarkTheme.textTheme.body1.color,
+                            color: textColor,
                           ),
                         ),
                       )
