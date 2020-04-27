@@ -62,6 +62,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "profile_SubmitProfileUpdate" : MessageLookupByLibrary.simpleMessage("提交"),
     "searchResult_CommentsTabTitle" : MessageLookupByLibrary.simpleMessage("注释"),
     "searchResult_DetailsTabTitle" : MessageLookupByLibrary.simpleMessage("细节"),
+    "searchResult_LaunchMap" : MessageLookupByLibrary.simpleMessage("在地图上查看"),
+    "searchResult_MapTabTitle" : MessageLookupByLibrary.simpleMessage("地图"),
     "searchResult_NoCommentsPlaceholder" : MessageLookupByLibrary.simpleMessage("没意见"),
     "searchResult_NoDescriptionPlaceholder" : MessageLookupByLibrary.simpleMessage("没有说明"),
     "search_EmptyResponseDescription" : MessageLookupByLibrary.simpleMessage("在要求的区域中找不到结果，请尝试移动地图或编辑搜索过滤器"),

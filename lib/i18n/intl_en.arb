@@ -259,5 +259,10 @@
   "@searchResult_LaunchMap": {
     "type": "text",
     "placeholders": {}
+  },
+  "searchResult_MapTabTitle": "Map",
+  "@searchResult_MapTabTitle": {
+    "type": "text",
+    "placeholders": {}
   }
 }

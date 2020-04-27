@@ -217,6 +217,11 @@ class AppLocalizations {
     name: 'searchResult_DetailsTabTitle'
   );
 
+  String searchResult_MapTabTitle() => Intl.message(
+    "Map",
+    name: 'searchResult_MapTabTitle'
+  );
+
   String searchResult_CommentsTabTitle() => Intl.message(
     "Comments",
     name: 'searchResult_CommentsTabTitle'

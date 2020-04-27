@@ -62,6 +62,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "profile_SubmitProfileUpdate" : MessageLookupByLibrary.simpleMessage("Sauvegarder"),
     "searchResult_CommentsTabTitle" : MessageLookupByLibrary.simpleMessage("Commentaires"),
     "searchResult_DetailsTabTitle" : MessageLookupByLibrary.simpleMessage("Détails"),
+    "searchResult_LaunchMap" : MessageLookupByLibrary.simpleMessage("Voir sur la carte"),
+    "searchResult_MapTabTitle" : MessageLookupByLibrary.simpleMessage("Carte"),
     "searchResult_NoCommentsPlaceholder" : MessageLookupByLibrary.simpleMessage("Aucun commentaire"),
     "searchResult_NoDescriptionPlaceholder" : MessageLookupByLibrary.simpleMessage("Aucune description"),
     "search_EmptyResponseDescription" : MessageLookupByLibrary.simpleMessage("Aucun résultat n\'a été trouvé, veuillez modifier vos filtres"),

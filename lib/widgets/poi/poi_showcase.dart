@@ -1,17 +1,11 @@
-import 'package:arava/blocs/auth/auth_bloc.dart';
-import 'package:arava/blocs/auth/state/auth_state.dart';
 import 'package:arava/blocs/favorites/favorites_bloc.dart';
 import 'package:arava/blocs/favorites/state/favorites_state.dart';
-import 'package:arava/blocs/navigation/navigation_bloc.dart';
 import 'package:arava/i18n/app_localizations.dart';
-import 'package:arava/model/comment/comment.dart';
 import 'package:arava/model/poi/poi.dart';
-import 'package:arava/widgets/auth/auth_required.dart';
-import 'package:arava/widgets/poi/poi_comment.dart';
 import 'package:arava/widgets/poi/poi_comment_list.dart';
 import 'package:arava/widgets/poi/poi_details.dart';
+import 'package:arava/widgets/poi/poi_map_position.dart';
 import 'package:arava/widgets/poi/poi_photo_carousel.dart';
-import 'package:arava/widgets/poi/poi_rate_comment.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -35,7 +29,7 @@ class _PoiShowcaseState extends State<PoiShowcase> with SingleTickerProviderStat
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
+    _tabController = TabController(length: 3, initialIndex: 0, vsync: this);
   }
 
   @override
@@ -91,6 +85,7 @@ class _PoiShowcaseState extends State<PoiShowcase> with SingleTickerProviderStat
                 ),
                 tabs: <Widget>[
                   Tab(text: AppLocalizations.of(context).searchResult_DetailsTabTitle()),
+                  Tab(text: AppLocalizations.of(context).searchResult_MapTabTitle()),
                   Tab(text: AppLocalizations.of(context).searchResult_CommentsTabTitle())
                 ],
               ),
@@ -111,6 +106,16 @@ class _PoiShowcaseState extends State<PoiShowcase> with SingleTickerProviderStat
                   ],
                 ),
               )
+            ),
+            SafeArea(
+              child: CustomScrollView(
+                physics: NeverScrollableScrollPhysics(),
+                slivers: <Widget>[
+                  SliverToBoxAdapter(
+                    child: PoiMapPosition(poi: widget.poi),
+                  )
+                ],
+              ),
             ),
             SafeArea(
               top: false, bottom: false,

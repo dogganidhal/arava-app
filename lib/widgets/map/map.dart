@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:arava/blocs/global_context/global_context_bloc.dart';
 import 'package:arava/blocs/global_context/state/global_context_state.dart';
 import 'package:arava/blocs/navigation/navigation_bloc.dart';
@@ -12,7 +10,6 @@ import 'package:arava/theme/arava_theme.dart';
 import 'package:arava/widgets/app/app_configuration_provider.dart';
 import 'package:arava/widgets/poi/poi_showcase.dart';
 import 'package:arava/widgets/poi/poi_preview.dart';
-import 'package:cache_image/cache_image.dart';
 import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
