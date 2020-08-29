@@ -24,8 +24,7 @@ abstract class AravaTheme {
     ),
     colorScheme: ColorScheme.light(
       primary: kLightPrimaryColor,
-      background: kLightColor,
-      brightness: Brightness.dark
+      background: kLightColor
     ),
     fontFamily: 'CircularStd',
     scaffoldBackgroundColor: kLightColor,
@@ -49,7 +48,7 @@ abstract class AravaTheme {
   );
 
   static final kDarkTheme = ThemeData(
-    brightness: Brightness.dark,
+    // brightness: Brightness.dark,
     primaryColor: kDarkAccentColor,
     accentColor: kDarkAccentColor,
     errorColor: kErrorColor,

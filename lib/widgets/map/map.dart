@@ -32,6 +32,7 @@ class _Map extends State<Map> {
   final Key _selectedPoiDismissibleKey = GlobalKey();
   final List<Color> _colorList = [...AravaTheme.kPremiumPoiColorList]
     ..shuffle();
+  MapType _mapType = MapType.normal;
 
   @override
   void initState() {
@@ -69,7 +70,7 @@ class _Map extends State<Map> {
                 builder: (context, state) => Stack(
                   children: <Widget>[
                     GoogleMap(
-                      mapType: MapType.normal,
+                      mapType: _mapType,
                       mapToolbarEnabled: false,
                       myLocationButtonEnabled: false,
                       initialCameraPosition: CameraPosition(
@@ -110,8 +111,11 @@ class _Map extends State<Map> {
                       bottom: 16, right: 16,
                       child: FloatingActionButton.extended(
                         onPressed: () => Modular.get<NavigationBloc>().push("/search/filters"),
-                        label: Text(AppLocalizations.of(context).search_Filter()),
-                        icon: Icon(Icons.filter_list),
+                        label: Text(
+                          AppLocalizations.of(context).search_Filter(),
+                          style: TextStyle(color: Theme.of(context).backgroundColor),
+                        ),
+                        icon: Icon(Icons.filter_list, color: Theme.of(context).backgroundColor),
                       ),
                     ),
                     if (state.regionDidChange)
@@ -171,7 +175,44 @@ class _Map extends State<Map> {
                         ),
                       ),
                     if ((state.response?.premiumCount ?? 0) > 0)
-                      _premiumTabs(state)
+                      _premiumTabs(state),
+                    Positioned(
+                      top: 16, left: 16,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).backgroundColor,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(offset: Offset(0, 2), blurRadius: 2, color: Colors.grey.withAlpha(100)),
+                          ],
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12),
+                          child: DropdownButton<MapType>(
+                            items: [
+                              DropdownMenuItem(
+                                value: MapType.satellite,
+                                child: Icon(
+                                  Icons.terrain,
+                                  color: Theme.of(context).primaryColor
+                                ),
+                              ),
+                              DropdownMenuItem(
+                                value: MapType.normal,
+                                child: Icon(
+                                  Icons.map,
+                                  color: Theme.of(context).primaryColor
+                                )
+                              )
+                            ],
+                            onChanged: (type) => setState(() => _mapType = type),
+                            value: _mapType,
+                            icon: Container(),
+                            underline: Container(),
+                          ),
+                        ),
+                      )
+                    )
                   ],
                 ),
               ),
