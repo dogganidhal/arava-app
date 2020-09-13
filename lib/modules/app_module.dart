@@ -55,7 +55,7 @@ class AppModule extends MainModule {
       ));
       dio.interceptors.add(serviceConfiguration.authInterceptor);
       dio.interceptors.add(serviceConfiguration.userPreferencesInterceptor);
-      dio.interceptors.add(serviceConfiguration.logInterceptor);
+      // dio.interceptors.add(serviceConfiguration.logInterceptor);
       return dio;
     }),
     Bind((inject) => AppService(
@@ -101,11 +101,12 @@ class AppModule extends MainModule {
       navigationBloc: inject.get(),
       session: inject.get()
     ), singleton: false),
+    Bind((inject) => GlobalContextBloc()),
     Bind((inject) => FeaturedBloc(
+      globalContextBloc: inject.get(),
       session: inject.get(),
       poiService: inject.get(),
-    ), singleton: false),
-    Bind((inject) => GlobalContextBloc())
+    ))
   ];
 
   @override

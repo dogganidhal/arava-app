@@ -27,6 +27,37 @@ abstract class AppState extends Equatable {
 
 //ignore: missing_return
   R when<R>(
+      {@required R Function(AppLoadingState) appLoadingState,
+      @required R Function(AppUnintializedState) appUnintializedState,
+      @required R Function(AppFirstLaunchState) appFirstLaunchState,
+      @required R Function(AppLoadedState) appLoadedState,
+      @required R Function(AppErrorState) appErrorState}) {
+    assert(() {
+      if (appLoadingState == null ||
+          appUnintializedState == null ||
+          appFirstLaunchState == null ||
+          appLoadedState == null ||
+          appErrorState == null) {
+        throw 'check for all possible cases';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _AppState.AppLoadingState:
+        return appLoadingState(this as AppLoadingState);
+      case _AppState.AppUnintializedState:
+        return appUnintializedState(this as AppUnintializedState);
+      case _AppState.AppFirstLaunchState:
+        return appFirstLaunchState(this as AppFirstLaunchState);
+      case _AppState.AppLoadedState:
+        return appLoadedState(this as AppLoadedState);
+      case _AppState.AppErrorState:
+        return appErrorState(this as AppErrorState);
+    }
+  }
+
+//ignore: missing_return
+  Future<R> asyncWhen<R>(
       {@required FutureOr<R> Function(AppLoadingState) appLoadingState,
       @required FutureOr<R> Function(AppUnintializedState) appUnintializedState,
       @required FutureOr<R> Function(AppFirstLaunchState) appFirstLaunchState,
@@ -57,6 +88,39 @@ abstract class AppState extends Equatable {
   }
 
   R whenOrElse<R>(
+      {R Function(AppLoadingState) appLoadingState,
+      R Function(AppUnintializedState) appUnintializedState,
+      R Function(AppFirstLaunchState) appFirstLaunchState,
+      R Function(AppLoadedState) appLoadedState,
+      R Function(AppErrorState) appErrorState,
+      @required R Function(AppState) orElse}) {
+    assert(() {
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _AppState.AppLoadingState:
+        if (appLoadingState == null) break;
+        return appLoadingState(this as AppLoadingState);
+      case _AppState.AppUnintializedState:
+        if (appUnintializedState == null) break;
+        return appUnintializedState(this as AppUnintializedState);
+      case _AppState.AppFirstLaunchState:
+        if (appFirstLaunchState == null) break;
+        return appFirstLaunchState(this as AppFirstLaunchState);
+      case _AppState.AppLoadedState:
+        if (appLoadedState == null) break;
+        return appLoadedState(this as AppLoadedState);
+      case _AppState.AppErrorState:
+        if (appErrorState == null) break;
+        return appErrorState(this as AppErrorState);
+    }
+    return orElse(this);
+  }
+
+  Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(AppLoadingState) appLoadingState,
       FutureOr<R> Function(AppUnintializedState) appUnintializedState,
       FutureOr<R> Function(AppFirstLaunchState) appFirstLaunchState,
@@ -89,7 +153,8 @@ abstract class AppState extends Equatable {
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial(
+//ignore: missing_return
+  Future<void> whenPartial(
       {FutureOr<void> Function(AppLoadingState) appLoadingState,
       FutureOr<void> Function(AppUnintializedState) appUnintializedState,
       FutureOr<void> Function(AppFirstLaunchState) appFirstLaunchState,
@@ -133,7 +198,7 @@ class AppLoadingState extends AppState {
   const AppLoadingState._() : super(_AppState.AppLoadingState);
 
   factory AppLoadingState() {
-    _instance ??= AppLoadingState._();
+    _instance ??= const AppLoadingState._();
     return _instance;
   }
 
@@ -145,7 +210,7 @@ class AppUnintializedState extends AppState {
   const AppUnintializedState._() : super(_AppState.AppUnintializedState);
 
   factory AppUnintializedState() {
-    _instance ??= AppUnintializedState._();
+    _instance ??= const AppUnintializedState._();
     return _instance;
   }
 

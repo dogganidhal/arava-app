@@ -17,7 +17,21 @@ abstract class CommentEvent extends Equatable {
   final _CommentEvent _type;
 
 //ignore: missing_return
-  R when<R>(
+  R when<R>({@required R Function(CommentSubmitEvent) commentSubmitEvent}) {
+    assert(() {
+      if (commentSubmitEvent == null) {
+        throw 'check for all possible cases';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _CommentEvent.CommentSubmitEvent:
+        return commentSubmitEvent(this as CommentSubmitEvent);
+    }
+  }
+
+//ignore: missing_return
+  Future<R> asyncWhen<R>(
       {@required FutureOr<R> Function(CommentSubmitEvent) commentSubmitEvent}) {
     assert(() {
       if (commentSubmitEvent == null) {
@@ -32,6 +46,23 @@ abstract class CommentEvent extends Equatable {
   }
 
   R whenOrElse<R>(
+      {R Function(CommentSubmitEvent) commentSubmitEvent,
+      @required R Function(CommentEvent) orElse}) {
+    assert(() {
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _CommentEvent.CommentSubmitEvent:
+        if (commentSubmitEvent == null) break;
+        return commentSubmitEvent(this as CommentSubmitEvent);
+    }
+    return orElse(this);
+  }
+
+  Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(CommentSubmitEvent) commentSubmitEvent,
       @required FutureOr<R> Function(CommentEvent) orElse}) {
     assert(() {
@@ -48,7 +79,8 @@ abstract class CommentEvent extends Equatable {
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial(
+//ignore: missing_return
+  Future<void> whenPartial(
       {FutureOr<void> Function(CommentSubmitEvent) commentSubmitEvent}) {
     assert(() {
       if (commentSubmitEvent == null) {

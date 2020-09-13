@@ -21,6 +21,29 @@ abstract class FavoritesEvent extends Equatable {
 
 //ignore: missing_return
   R when<R>(
+      {@required R Function(FavoritesLoadEvent) favoritesLoadEvent,
+      @required R Function(FavoritesTogglePoiEvent) favoritesTogglePoiEvent,
+      @required R Function(FavoritesSyncPoisEvent) favoritesSyncPoisEvent}) {
+    assert(() {
+      if (favoritesLoadEvent == null ||
+          favoritesTogglePoiEvent == null ||
+          favoritesSyncPoisEvent == null) {
+        throw 'check for all possible cases';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _FavoritesEvent.FavoritesLoadEvent:
+        return favoritesLoadEvent(this as FavoritesLoadEvent);
+      case _FavoritesEvent.FavoritesTogglePoiEvent:
+        return favoritesTogglePoiEvent(this as FavoritesTogglePoiEvent);
+      case _FavoritesEvent.FavoritesSyncPoisEvent:
+        return favoritesSyncPoisEvent(this as FavoritesSyncPoisEvent);
+    }
+  }
+
+//ignore: missing_return
+  Future<R> asyncWhen<R>(
       {@required
           FutureOr<R> Function(FavoritesLoadEvent) favoritesLoadEvent,
       @required
@@ -47,6 +70,31 @@ abstract class FavoritesEvent extends Equatable {
   }
 
   R whenOrElse<R>(
+      {R Function(FavoritesLoadEvent) favoritesLoadEvent,
+      R Function(FavoritesTogglePoiEvent) favoritesTogglePoiEvent,
+      R Function(FavoritesSyncPoisEvent) favoritesSyncPoisEvent,
+      @required R Function(FavoritesEvent) orElse}) {
+    assert(() {
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _FavoritesEvent.FavoritesLoadEvent:
+        if (favoritesLoadEvent == null) break;
+        return favoritesLoadEvent(this as FavoritesLoadEvent);
+      case _FavoritesEvent.FavoritesTogglePoiEvent:
+        if (favoritesTogglePoiEvent == null) break;
+        return favoritesTogglePoiEvent(this as FavoritesTogglePoiEvent);
+      case _FavoritesEvent.FavoritesSyncPoisEvent:
+        if (favoritesSyncPoisEvent == null) break;
+        return favoritesSyncPoisEvent(this as FavoritesSyncPoisEvent);
+    }
+    return orElse(this);
+  }
+
+  Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(FavoritesLoadEvent) favoritesLoadEvent,
       FutureOr<R> Function(FavoritesTogglePoiEvent) favoritesTogglePoiEvent,
       FutureOr<R> Function(FavoritesSyncPoisEvent) favoritesSyncPoisEvent,
@@ -71,7 +119,8 @@ abstract class FavoritesEvent extends Equatable {
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial(
+//ignore: missing_return
+  Future<void> whenPartial(
       {FutureOr<void> Function(FavoritesLoadEvent) favoritesLoadEvent,
       FutureOr<void> Function(FavoritesTogglePoiEvent) favoritesTogglePoiEvent,
       FutureOr<void> Function(FavoritesSyncPoisEvent) favoritesSyncPoisEvent}) {
@@ -105,7 +154,7 @@ class FavoritesLoadEvent extends FavoritesEvent {
   const FavoritesLoadEvent._() : super(_FavoritesEvent.FavoritesLoadEvent);
 
   factory FavoritesLoadEvent() {
-    _instance ??= FavoritesLoadEvent._();
+    _instance ??= const FavoritesLoadEvent._();
     return _instance;
   }
 
@@ -131,7 +180,7 @@ class FavoritesSyncPoisEvent extends FavoritesEvent {
       : super(_FavoritesEvent.FavoritesSyncPoisEvent);
 
   factory FavoritesSyncPoisEvent() {
-    _instance ??= FavoritesSyncPoisEvent._();
+    _instance ??= const FavoritesSyncPoisEvent._();
     return _instance;
   }
 

@@ -22,6 +22,32 @@ abstract class AppEvent extends Equatable {
 //ignore: missing_return
   R when<R>(
       {@required
+          R Function(AppLoadEvent) appLoadEvent,
+      @required
+          R Function(AppChangeLocaleEvent) appChangeLocaleEvent,
+      @required
+          R Function(AppConfirmFirstLaunchEvent) appConfirmFirstLaunchEvent}) {
+    assert(() {
+      if (appLoadEvent == null ||
+          appChangeLocaleEvent == null ||
+          appConfirmFirstLaunchEvent == null) {
+        throw 'check for all possible cases';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _AppEvent.AppLoadEvent:
+        return appLoadEvent(this as AppLoadEvent);
+      case _AppEvent.AppChangeLocaleEvent:
+        return appChangeLocaleEvent(this as AppChangeLocaleEvent);
+      case _AppEvent.AppConfirmFirstLaunchEvent:
+        return appConfirmFirstLaunchEvent(this as AppConfirmFirstLaunchEvent);
+    }
+  }
+
+//ignore: missing_return
+  Future<R> asyncWhen<R>(
+      {@required
           FutureOr<R> Function(AppLoadEvent) appLoadEvent,
       @required
           FutureOr<R> Function(AppChangeLocaleEvent) appChangeLocaleEvent,
@@ -47,6 +73,31 @@ abstract class AppEvent extends Equatable {
   }
 
   R whenOrElse<R>(
+      {R Function(AppLoadEvent) appLoadEvent,
+      R Function(AppChangeLocaleEvent) appChangeLocaleEvent,
+      R Function(AppConfirmFirstLaunchEvent) appConfirmFirstLaunchEvent,
+      @required R Function(AppEvent) orElse}) {
+    assert(() {
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _AppEvent.AppLoadEvent:
+        if (appLoadEvent == null) break;
+        return appLoadEvent(this as AppLoadEvent);
+      case _AppEvent.AppChangeLocaleEvent:
+        if (appChangeLocaleEvent == null) break;
+        return appChangeLocaleEvent(this as AppChangeLocaleEvent);
+      case _AppEvent.AppConfirmFirstLaunchEvent:
+        if (appConfirmFirstLaunchEvent == null) break;
+        return appConfirmFirstLaunchEvent(this as AppConfirmFirstLaunchEvent);
+    }
+    return orElse(this);
+  }
+
+  Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(AppLoadEvent) appLoadEvent,
       FutureOr<R> Function(AppChangeLocaleEvent) appChangeLocaleEvent,
       FutureOr<R> Function(AppConfirmFirstLaunchEvent)
@@ -72,7 +123,8 @@ abstract class AppEvent extends Equatable {
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial(
+//ignore: missing_return
+  Future<void> whenPartial(
       {FutureOr<void> Function(AppLoadEvent) appLoadEvent,
       FutureOr<void> Function(AppChangeLocaleEvent) appChangeLocaleEvent,
       FutureOr<void> Function(AppConfirmFirstLaunchEvent)
@@ -107,7 +159,7 @@ class AppLoadEvent extends AppEvent {
   const AppLoadEvent._() : super(_AppEvent.AppLoadEvent);
 
   factory AppLoadEvent() {
-    _instance ??= AppLoadEvent._();
+    _instance ??= const AppLoadEvent._();
     return _instance;
   }
 
@@ -133,7 +185,7 @@ class AppConfirmFirstLaunchEvent extends AppEvent {
       : super(_AppEvent.AppConfirmFirstLaunchEvent);
 
   factory AppConfirmFirstLaunchEvent() {
-    _instance ??= AppConfirmFirstLaunchEvent._();
+    _instance ??= const AppConfirmFirstLaunchEvent._();
     return _instance;
   }
 

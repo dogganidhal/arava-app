@@ -20,6 +20,24 @@ abstract class FavoritesState extends Equatable {
 
 //ignore: missing_return
   R when<R>(
+      {@required R Function(FavoritesLoadingState) favoritesLoadingState,
+      @required R Function(FavoritesReadyState) favoritesReadyState}) {
+    assert(() {
+      if (favoritesLoadingState == null || favoritesReadyState == null) {
+        throw 'check for all possible cases';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _FavoritesState.FavoritesLoadingState:
+        return favoritesLoadingState(this as FavoritesLoadingState);
+      case _FavoritesState.FavoritesReadyState:
+        return favoritesReadyState(this as FavoritesReadyState);
+    }
+  }
+
+//ignore: missing_return
+  Future<R> asyncWhen<R>(
       {@required
           FutureOr<R> Function(FavoritesLoadingState) favoritesLoadingState,
       @required
@@ -39,6 +57,27 @@ abstract class FavoritesState extends Equatable {
   }
 
   R whenOrElse<R>(
+      {R Function(FavoritesLoadingState) favoritesLoadingState,
+      R Function(FavoritesReadyState) favoritesReadyState,
+      @required R Function(FavoritesState) orElse}) {
+    assert(() {
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _FavoritesState.FavoritesLoadingState:
+        if (favoritesLoadingState == null) break;
+        return favoritesLoadingState(this as FavoritesLoadingState);
+      case _FavoritesState.FavoritesReadyState:
+        if (favoritesReadyState == null) break;
+        return favoritesReadyState(this as FavoritesReadyState);
+    }
+    return orElse(this);
+  }
+
+  Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(FavoritesLoadingState) favoritesLoadingState,
       FutureOr<R> Function(FavoritesReadyState) favoritesReadyState,
       @required FutureOr<R> Function(FavoritesState) orElse}) {
@@ -59,7 +98,8 @@ abstract class FavoritesState extends Equatable {
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial(
+//ignore: missing_return
+  Future<void> whenPartial(
       {FutureOr<void> Function(FavoritesLoadingState) favoritesLoadingState,
       FutureOr<void> Function(FavoritesReadyState) favoritesReadyState}) {
     assert(() {
@@ -88,7 +128,7 @@ class FavoritesLoadingState extends FavoritesState {
       : super(_FavoritesState.FavoritesLoadingState);
 
   factory FavoritesLoadingState() {
-    _instance ??= FavoritesLoadingState._();
+    _instance ??= const FavoritesLoadingState._();
     return _instance;
   }
 

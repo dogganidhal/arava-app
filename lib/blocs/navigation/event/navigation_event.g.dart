@@ -26,6 +26,37 @@ abstract class NavigationEvent extends Equatable {
 //ignore: missing_return
   R when<R>(
       {@required
+          R Function(NavigationPopEvent) navigationPopEvent,
+      @required
+          R Function(NavigationPopWithValueEvent) navigationPopWithValueEvent,
+      @required
+          R Function(NavigateToHomeEvent) navigateToHomeEvent,
+      @required
+          R Function(NavigationPushEvent) navigationPushEvent}) {
+    assert(() {
+      if (navigationPopEvent == null ||
+          navigationPopWithValueEvent == null ||
+          navigateToHomeEvent == null ||
+          navigationPushEvent == null) {
+        throw 'check for all possible cases';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _NavigationEvent.NavigationPopEvent:
+        return navigationPopEvent(this as NavigationPopEvent);
+      case _NavigationEvent.NavigationPopWithValueEvent:
+        return navigationPopWithValueEvent(this as NavigationPopWithValueEvent);
+      case _NavigationEvent.NavigateToHomeEvent:
+        return navigateToHomeEvent(this as NavigateToHomeEvent);
+      case _NavigationEvent.NavigationPushEvent:
+        return navigationPushEvent(this as NavigationPushEvent);
+    }
+  }
+
+//ignore: missing_return
+  Future<R> asyncWhen<R>(
+      {@required
           FutureOr<R> Function(NavigationPopEvent) navigationPopEvent,
       @required
           FutureOr<R> Function(NavigationPopWithValueEvent)
@@ -56,6 +87,35 @@ abstract class NavigationEvent extends Equatable {
   }
 
   R whenOrElse<R>(
+      {R Function(NavigationPopEvent) navigationPopEvent,
+      R Function(NavigationPopWithValueEvent) navigationPopWithValueEvent,
+      R Function(NavigateToHomeEvent) navigateToHomeEvent,
+      R Function(NavigationPushEvent) navigationPushEvent,
+      @required R Function(NavigationEvent) orElse}) {
+    assert(() {
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _NavigationEvent.NavigationPopEvent:
+        if (navigationPopEvent == null) break;
+        return navigationPopEvent(this as NavigationPopEvent);
+      case _NavigationEvent.NavigationPopWithValueEvent:
+        if (navigationPopWithValueEvent == null) break;
+        return navigationPopWithValueEvent(this as NavigationPopWithValueEvent);
+      case _NavigationEvent.NavigateToHomeEvent:
+        if (navigateToHomeEvent == null) break;
+        return navigateToHomeEvent(this as NavigateToHomeEvent);
+      case _NavigationEvent.NavigationPushEvent:
+        if (navigationPushEvent == null) break;
+        return navigationPushEvent(this as NavigationPushEvent);
+    }
+    return orElse(this);
+  }
+
+  Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(NavigationPopEvent) navigationPopEvent,
       FutureOr<R> Function(NavigationPopWithValueEvent)
           navigationPopWithValueEvent,
@@ -85,7 +145,8 @@ abstract class NavigationEvent extends Equatable {
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial(
+//ignore: missing_return
+  Future<void> whenPartial(
       {FutureOr<void> Function(NavigationPopEvent) navigationPopEvent,
       FutureOr<void> Function(NavigationPopWithValueEvent)
           navigationPopWithValueEvent,
@@ -125,7 +186,7 @@ class NavigationPopEvent extends NavigationEvent {
   const NavigationPopEvent._() : super(_NavigationEvent.NavigationPopEvent);
 
   factory NavigationPopEvent() {
-    _instance ??= NavigationPopEvent._();
+    _instance ??= const NavigationPopEvent._();
     return _instance;
   }
 

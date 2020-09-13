@@ -9,7 +9,8 @@ enum _FeaturedState {
   @object
   FeaturedLoadingState,
   @Data(fields: [
-    DataField<List<Poi>>('pois')
+    DataField<List<Poi>>('featured'),
+    DataField<List<Poi>>('activities')
   ])
   FeaturedReadyState,
   @Data(fields: [

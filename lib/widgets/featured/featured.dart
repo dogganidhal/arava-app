@@ -65,12 +65,15 @@ class _FeaturedState extends State<Featured> {
                 child: Text(failingState.exception.getLocalizedMessage(context)),
               ),
               featuredReadyState: (readyState) {
-                if (readyState.pois.isEmpty) {
+                final pois = widget.type == FeaturedPoiType.ACTIVITY ?
+                    readyState.activities :
+                    readyState.featured;
+                if (pois.isEmpty) {
                   return Center(
                     child: Text(AppLocalizations.of(context).general_NoItems()),
                   );
                 }
-                final groupedPois = _groupPois(readyState.pois);
+                final groupedPois = _groupPois(pois);
                 return CustomScrollView(
                   slivers: <Widget>[
                     ...groupedPois.keys

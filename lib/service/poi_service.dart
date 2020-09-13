@@ -6,6 +6,7 @@ import 'package:arava/model/search_request/search_request.dart';
 import 'package:arava/model/search_response/search_response.dart';
 import 'package:arava/service/dio_service.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 
 
@@ -25,17 +26,21 @@ class PoiService extends DioService {
   }
 
   Future<List<Poi>> getSponsored(Island island) async {
-    final response = await get("/island/${island.id}/sponsored");
-    return (response.data as List)
-      .map((jsonMap) => Poi.fromJson(jsonMap))
+    final response = await get<List>("/island/${island.id}/sponsored");
+    final pois = response.data
+      .map((js) => Poi.fromJson(js))
+      .cast<Poi>()
       .toList();
+    return pois;
   }
 
   Future<List<Poi>> getActivities(Island island) async {
-    final response = await get("/island/${island.id}/activities");
-    return (response.data as List)
-      .map((jsonMap) => Poi.fromJson(jsonMap))
+    final response = await get<List>("/island/${island.id}/activities");
+    final pois = response.data
+      .map((js) => Poi.fromJson(js))
+      .cast<Poi>()
       .toList();
+    return pois;
   }
 
   Future<void> syncFavorites(List<Poi> favorites) async {

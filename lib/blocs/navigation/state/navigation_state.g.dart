@@ -16,7 +16,22 @@ abstract class NavigationState extends Equatable {
   final _NavigationState _type;
 
 //ignore: missing_return
-  R when<R>({@required FutureOr<R> Function(NavigatorState) navigatorState}) {
+  R when<R>({@required R Function(NavigatorState) navigatorState}) {
+    assert(() {
+      if (navigatorState == null) {
+        throw 'check for all possible cases';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _NavigationState.NavigatorState:
+        return navigatorState(this as NavigatorState);
+    }
+  }
+
+//ignore: missing_return
+  Future<R> asyncWhen<R>(
+      {@required FutureOr<R> Function(NavigatorState) navigatorState}) {
     assert(() {
       if (navigatorState == null) {
         throw 'check for all possible cases';
@@ -30,6 +45,23 @@ abstract class NavigationState extends Equatable {
   }
 
   R whenOrElse<R>(
+      {R Function(NavigatorState) navigatorState,
+      @required R Function(NavigationState) orElse}) {
+    assert(() {
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _NavigationState.NavigatorState:
+        if (navigatorState == null) break;
+        return navigatorState(this as NavigatorState);
+    }
+    return orElse(this);
+  }
+
+  Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(NavigatorState) navigatorState,
       @required FutureOr<R> Function(NavigationState) orElse}) {
     assert(() {
@@ -46,7 +78,8 @@ abstract class NavigationState extends Equatable {
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial(
+//ignore: missing_return
+  Future<void> whenPartial(
       {FutureOr<void> Function(NavigatorState) navigatorState}) {
     assert(() {
       if (navigatorState == null) {

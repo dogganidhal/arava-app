@@ -33,8 +33,9 @@ class _BootstrapState extends State<Bootstrap> {
     return BlocBuilder<AppBloc, AppState>(
       bloc: _appBloc,
       builder: (context, state) => AppConfigurationProvider(
-        configuration: state.whenPartial(
-          appLoadedState: (appLoadedState) => appLoadedState.appConfiguration
+        configuration: state.whenOrElse(
+          appLoadedState: (appLoadedState) => appLoadedState.appConfiguration,
+          orElse: (_) => null
         ),
         child: MaterialApp(
           title: 'Arava',

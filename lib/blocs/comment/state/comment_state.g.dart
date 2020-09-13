@@ -23,6 +23,33 @@ abstract class CommentState extends Equatable {
 
 //ignore: missing_return
   R when<R>(
+      {@required R Function(CommentReadyState) commentReadyState,
+      @required R Function(CommentLoadingState) commentLoadingState,
+      @required R Function(CommentSuccessfulState) commentSuccessfulState,
+      @required R Function(CommentFailingState) commentFailingState}) {
+    assert(() {
+      if (commentReadyState == null ||
+          commentLoadingState == null ||
+          commentSuccessfulState == null ||
+          commentFailingState == null) {
+        throw 'check for all possible cases';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _CommentState.CommentReadyState:
+        return commentReadyState(this as CommentReadyState);
+      case _CommentState.CommentLoadingState:
+        return commentLoadingState(this as CommentLoadingState);
+      case _CommentState.CommentSuccessfulState:
+        return commentSuccessfulState(this as CommentSuccessfulState);
+      case _CommentState.CommentFailingState:
+        return commentFailingState(this as CommentFailingState);
+    }
+  }
+
+//ignore: missing_return
+  Future<R> asyncWhen<R>(
       {@required
           FutureOr<R> Function(CommentReadyState) commentReadyState,
       @required
@@ -53,6 +80,35 @@ abstract class CommentState extends Equatable {
   }
 
   R whenOrElse<R>(
+      {R Function(CommentReadyState) commentReadyState,
+      R Function(CommentLoadingState) commentLoadingState,
+      R Function(CommentSuccessfulState) commentSuccessfulState,
+      R Function(CommentFailingState) commentFailingState,
+      @required R Function(CommentState) orElse}) {
+    assert(() {
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _CommentState.CommentReadyState:
+        if (commentReadyState == null) break;
+        return commentReadyState(this as CommentReadyState);
+      case _CommentState.CommentLoadingState:
+        if (commentLoadingState == null) break;
+        return commentLoadingState(this as CommentLoadingState);
+      case _CommentState.CommentSuccessfulState:
+        if (commentSuccessfulState == null) break;
+        return commentSuccessfulState(this as CommentSuccessfulState);
+      case _CommentState.CommentFailingState:
+        if (commentFailingState == null) break;
+        return commentFailingState(this as CommentFailingState);
+    }
+    return orElse(this);
+  }
+
+  Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(CommentReadyState) commentReadyState,
       FutureOr<R> Function(CommentLoadingState) commentLoadingState,
       FutureOr<R> Function(CommentSuccessfulState) commentSuccessfulState,
@@ -81,7 +137,8 @@ abstract class CommentState extends Equatable {
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial(
+//ignore: missing_return
+  Future<void> whenPartial(
       {FutureOr<void> Function(CommentReadyState) commentReadyState,
       FutureOr<void> Function(CommentLoadingState) commentLoadingState,
       FutureOr<void> Function(CommentSuccessfulState) commentSuccessfulState,
@@ -120,7 +177,7 @@ class CommentReadyState extends CommentState {
   const CommentReadyState._() : super(_CommentState.CommentReadyState);
 
   factory CommentReadyState() {
-    _instance ??= CommentReadyState._();
+    _instance ??= const CommentReadyState._();
     return _instance;
   }
 
@@ -132,7 +189,7 @@ class CommentLoadingState extends CommentState {
   const CommentLoadingState._() : super(_CommentState.CommentLoadingState);
 
   factory CommentLoadingState() {
-    _instance ??= CommentLoadingState._();
+    _instance ??= const CommentLoadingState._();
     return _instance;
   }
 
@@ -145,7 +202,7 @@ class CommentSuccessfulState extends CommentState {
       : super(_CommentState.CommentSuccessfulState);
 
   factory CommentSuccessfulState() {
-    _instance ??= CommentSuccessfulState._();
+    _instance ??= const CommentSuccessfulState._();
     return _instance;
   }
 

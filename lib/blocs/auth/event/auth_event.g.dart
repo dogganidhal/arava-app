@@ -27,6 +27,33 @@ abstract class AuthEvent extends Equatable {
 
 //ignore: missing_return
   R when<R>(
+      {@required R Function(LoadAuthEvent) loadAuthEvent,
+      @required R Function(LogOutEvent) logOutEvent,
+      @required R Function(TryLoginEvent) tryLoginEvent,
+      @required R Function(TrySignUpEvent) trySignUpEvent}) {
+    assert(() {
+      if (loadAuthEvent == null ||
+          logOutEvent == null ||
+          tryLoginEvent == null ||
+          trySignUpEvent == null) {
+        throw 'check for all possible cases';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _AuthEvent.LoadAuthEvent:
+        return loadAuthEvent(this as LoadAuthEvent);
+      case _AuthEvent.LogOutEvent:
+        return logOutEvent(this as LogOutEvent);
+      case _AuthEvent.TryLoginEvent:
+        return tryLoginEvent(this as TryLoginEvent);
+      case _AuthEvent.TrySignUpEvent:
+        return trySignUpEvent(this as TrySignUpEvent);
+    }
+  }
+
+//ignore: missing_return
+  Future<R> asyncWhen<R>(
       {@required FutureOr<R> Function(LoadAuthEvent) loadAuthEvent,
       @required FutureOr<R> Function(LogOutEvent) logOutEvent,
       @required FutureOr<R> Function(TryLoginEvent) tryLoginEvent,
@@ -53,6 +80,35 @@ abstract class AuthEvent extends Equatable {
   }
 
   R whenOrElse<R>(
+      {R Function(LoadAuthEvent) loadAuthEvent,
+      R Function(LogOutEvent) logOutEvent,
+      R Function(TryLoginEvent) tryLoginEvent,
+      R Function(TrySignUpEvent) trySignUpEvent,
+      @required R Function(AuthEvent) orElse}) {
+    assert(() {
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _AuthEvent.LoadAuthEvent:
+        if (loadAuthEvent == null) break;
+        return loadAuthEvent(this as LoadAuthEvent);
+      case _AuthEvent.LogOutEvent:
+        if (logOutEvent == null) break;
+        return logOutEvent(this as LogOutEvent);
+      case _AuthEvent.TryLoginEvent:
+        if (tryLoginEvent == null) break;
+        return tryLoginEvent(this as TryLoginEvent);
+      case _AuthEvent.TrySignUpEvent:
+        if (trySignUpEvent == null) break;
+        return trySignUpEvent(this as TrySignUpEvent);
+    }
+    return orElse(this);
+  }
+
+  Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(LoadAuthEvent) loadAuthEvent,
       FutureOr<R> Function(LogOutEvent) logOutEvent,
       FutureOr<R> Function(TryLoginEvent) tryLoginEvent,
@@ -81,7 +137,8 @@ abstract class AuthEvent extends Equatable {
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial(
+//ignore: missing_return
+  Future<void> whenPartial(
       {FutureOr<void> Function(LoadAuthEvent) loadAuthEvent,
       FutureOr<void> Function(LogOutEvent) logOutEvent,
       FutureOr<void> Function(TryLoginEvent) tryLoginEvent,
@@ -120,7 +177,7 @@ class LoadAuthEvent extends AuthEvent {
   const LoadAuthEvent._() : super(_AuthEvent.LoadAuthEvent);
 
   factory LoadAuthEvent() {
-    _instance ??= LoadAuthEvent._();
+    _instance ??= const LoadAuthEvent._();
     return _instance;
   }
 
@@ -132,7 +189,7 @@ class LogOutEvent extends AuthEvent {
   const LogOutEvent._() : super(_AuthEvent.LogOutEvent);
 
   factory LogOutEvent() {
-    _instance ??= LogOutEvent._();
+    _instance ??= const LogOutEvent._();
     return _instance;
   }
 

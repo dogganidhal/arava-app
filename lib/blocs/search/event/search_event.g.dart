@@ -33,6 +33,49 @@ abstract class SearchEvent extends Equatable {
 //ignore: missing_return
   R when<R>(
       {@required
+          R Function(SearchSubmitEvent) searchSubmitEvent,
+      @required
+          R Function(SearchSelectIslandEvent) searchSelectIslandEvent,
+      @required
+          R Function(SearchMapLoadedEvent) searchMapLoadedEvent,
+      @required
+          R Function(SearchCameraPositionUpdatedEvent)
+              searchCameraPositionUpdatedEvent,
+      @required
+          R Function(SearchSelectPoiEvent) searchSelectPoiEvent,
+      @required
+          R Function(SearchSetFiltersEvent) searchSetFiltersEvent}) {
+    assert(() {
+      if (searchSubmitEvent == null ||
+          searchSelectIslandEvent == null ||
+          searchMapLoadedEvent == null ||
+          searchCameraPositionUpdatedEvent == null ||
+          searchSelectPoiEvent == null ||
+          searchSetFiltersEvent == null) {
+        throw 'check for all possible cases';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _SearchEvent.SearchSubmitEvent:
+        return searchSubmitEvent(this as SearchSubmitEvent);
+      case _SearchEvent.SearchSelectIslandEvent:
+        return searchSelectIslandEvent(this as SearchSelectIslandEvent);
+      case _SearchEvent.SearchMapLoadedEvent:
+        return searchMapLoadedEvent(this as SearchMapLoadedEvent);
+      case _SearchEvent.SearchCameraPositionUpdatedEvent:
+        return searchCameraPositionUpdatedEvent(
+            this as SearchCameraPositionUpdatedEvent);
+      case _SearchEvent.SearchSelectPoiEvent:
+        return searchSelectPoiEvent(this as SearchSelectPoiEvent);
+      case _SearchEvent.SearchSetFiltersEvent:
+        return searchSetFiltersEvent(this as SearchSetFiltersEvent);
+    }
+  }
+
+//ignore: missing_return
+  Future<R> asyncWhen<R>(
+      {@required
           FutureOr<R> Function(SearchSubmitEvent) searchSubmitEvent,
       @required
           FutureOr<R> Function(SearchSelectIslandEvent) searchSelectIslandEvent,
@@ -74,6 +117,45 @@ abstract class SearchEvent extends Equatable {
   }
 
   R whenOrElse<R>(
+      {R Function(SearchSubmitEvent) searchSubmitEvent,
+      R Function(SearchSelectIslandEvent) searchSelectIslandEvent,
+      R Function(SearchMapLoadedEvent) searchMapLoadedEvent,
+      R Function(SearchCameraPositionUpdatedEvent)
+          searchCameraPositionUpdatedEvent,
+      R Function(SearchSelectPoiEvent) searchSelectPoiEvent,
+      R Function(SearchSetFiltersEvent) searchSetFiltersEvent,
+      @required R Function(SearchEvent) orElse}) {
+    assert(() {
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _SearchEvent.SearchSubmitEvent:
+        if (searchSubmitEvent == null) break;
+        return searchSubmitEvent(this as SearchSubmitEvent);
+      case _SearchEvent.SearchSelectIslandEvent:
+        if (searchSelectIslandEvent == null) break;
+        return searchSelectIslandEvent(this as SearchSelectIslandEvent);
+      case _SearchEvent.SearchMapLoadedEvent:
+        if (searchMapLoadedEvent == null) break;
+        return searchMapLoadedEvent(this as SearchMapLoadedEvent);
+      case _SearchEvent.SearchCameraPositionUpdatedEvent:
+        if (searchCameraPositionUpdatedEvent == null) break;
+        return searchCameraPositionUpdatedEvent(
+            this as SearchCameraPositionUpdatedEvent);
+      case _SearchEvent.SearchSelectPoiEvent:
+        if (searchSelectPoiEvent == null) break;
+        return searchSelectPoiEvent(this as SearchSelectPoiEvent);
+      case _SearchEvent.SearchSetFiltersEvent:
+        if (searchSetFiltersEvent == null) break;
+        return searchSetFiltersEvent(this as SearchSetFiltersEvent);
+    }
+    return orElse(this);
+  }
+
+  Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(SearchSubmitEvent) searchSubmitEvent,
       FutureOr<R> Function(SearchSelectIslandEvent) searchSelectIslandEvent,
       FutureOr<R> Function(SearchMapLoadedEvent) searchMapLoadedEvent,
@@ -112,7 +194,8 @@ abstract class SearchEvent extends Equatable {
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial(
+//ignore: missing_return
+  Future<void> whenPartial(
       {FutureOr<void> Function(SearchSubmitEvent) searchSubmitEvent,
       FutureOr<void> Function(SearchSelectIslandEvent) searchSelectIslandEvent,
       FutureOr<void> Function(SearchMapLoadedEvent) searchMapLoadedEvent,
@@ -163,7 +246,7 @@ class SearchSubmitEvent extends SearchEvent {
   const SearchSubmitEvent._() : super(_SearchEvent.SearchSubmitEvent);
 
   factory SearchSubmitEvent() {
-    _instance ??= SearchSubmitEvent._();
+    _instance ??= const SearchSubmitEvent._();
     return _instance;
   }
 

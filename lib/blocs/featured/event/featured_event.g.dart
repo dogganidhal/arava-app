@@ -21,6 +21,28 @@ abstract class FeaturedEvent extends Equatable {
 //ignore: missing_return
   R when<R>(
       {@required
+          R Function(FeaturedLoadSponsoredEvent) featuredLoadSponsoredEvent,
+      @required
+          R Function(FeaturedLoadActivitiesEvent)
+              featuredLoadActivitiesEvent}) {
+    assert(() {
+      if (featuredLoadSponsoredEvent == null ||
+          featuredLoadActivitiesEvent == null) {
+        throw 'check for all possible cases';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _FeaturedEvent.FeaturedLoadSponsoredEvent:
+        return featuredLoadSponsoredEvent(this as FeaturedLoadSponsoredEvent);
+      case _FeaturedEvent.FeaturedLoadActivitiesEvent:
+        return featuredLoadActivitiesEvent(this as FeaturedLoadActivitiesEvent);
+    }
+  }
+
+//ignore: missing_return
+  Future<R> asyncWhen<R>(
+      {@required
           FutureOr<R> Function(FeaturedLoadSponsoredEvent)
               featuredLoadSponsoredEvent,
       @required
@@ -42,6 +64,27 @@ abstract class FeaturedEvent extends Equatable {
   }
 
   R whenOrElse<R>(
+      {R Function(FeaturedLoadSponsoredEvent) featuredLoadSponsoredEvent,
+      R Function(FeaturedLoadActivitiesEvent) featuredLoadActivitiesEvent,
+      @required R Function(FeaturedEvent) orElse}) {
+    assert(() {
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _FeaturedEvent.FeaturedLoadSponsoredEvent:
+        if (featuredLoadSponsoredEvent == null) break;
+        return featuredLoadSponsoredEvent(this as FeaturedLoadSponsoredEvent);
+      case _FeaturedEvent.FeaturedLoadActivitiesEvent:
+        if (featuredLoadActivitiesEvent == null) break;
+        return featuredLoadActivitiesEvent(this as FeaturedLoadActivitiesEvent);
+    }
+    return orElse(this);
+  }
+
+  Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(FeaturedLoadSponsoredEvent)
           featuredLoadSponsoredEvent,
       FutureOr<R> Function(FeaturedLoadActivitiesEvent)
@@ -64,7 +107,8 @@ abstract class FeaturedEvent extends Equatable {
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial(
+//ignore: missing_return
+  Future<void> whenPartial(
       {FutureOr<void> Function(FeaturedLoadSponsoredEvent)
           featuredLoadSponsoredEvent,
       FutureOr<void> Function(FeaturedLoadActivitiesEvent)

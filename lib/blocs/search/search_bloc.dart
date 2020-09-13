@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:arava/blocs/app/app_bloc.dart';
+import 'package:arava/blocs/global_context/event/global_context_event.dart';
 import 'package:arava/blocs/global_context/global_context_bloc.dart';
+import 'package:arava/blocs/global_context/state/global_context_state.dart';
 import 'package:arava/blocs/search/event/search_event.dart';
 import 'package:arava/blocs/search/state/search_state.dart';
 import 'package:arava/exception/app_exception.dart';
@@ -25,7 +29,29 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   LatLngBounds _lastVisibleRegion;
   bool _ignoreNextCameraUpdate = true;
 
-  SearchBloc({@required this.appBloc, @required this.poiService, @required this.globalContextBloc});
+  StreamSubscription<GlobalContextState> _globalContextSubscription;
+  String _islandId;
+
+  SearchBloc({
+    @required this.appBloc,
+    @required this.poiService,
+    @required this.globalContextBloc
+  }) {
+    _globalContextSubscription = globalContextBloc
+      .distinct()
+      .listen((state) {
+        if (state.selectedIsland.id != _islandId) {
+          selectIsland(state.selectedIsland);
+          _islandId = state.selectedIsland.id;
+        }
+      });
+  }
+
+  @override
+  Future<void> close() async {
+    await _globalContextSubscription.cancel();
+    return super.close();
+  }
 
   @override
   SearchState get initialState => SearchState(
@@ -115,12 +141,12 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   Stream<SearchState> _selectIsland(SearchSelectIslandEvent event) async* {
-    globalContextBloc.updateSelectedIsland(event.island);
     yield state
       .withIsland(event.island)
       .withEmptyResult(false)
       .withRequest(state.request
         .withIsland(event.island.id)
+        .withRegion(null)
       );
     _mapController.animateCamera(CameraUpdate.newLatLngZoom(
       LatLng(event.island.center.latitude, event.island.center.longitude),

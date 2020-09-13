@@ -22,6 +22,31 @@ abstract class GlobalContextEvent extends Equatable {
 //ignore: missing_return
   R when<R>(
       {@required
+          R Function(GlobalContextSelectIslandEvent)
+              globalContextSelectIslandEvent,
+      @required
+          R Function(GlobalContextSetConfigurationEvent)
+              globalContextSetConfigurationEvent}) {
+    assert(() {
+      if (globalContextSelectIslandEvent == null ||
+          globalContextSetConfigurationEvent == null) {
+        throw 'check for all possible cases';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _GlobalContextEvent.GlobalContextSelectIslandEvent:
+        return globalContextSelectIslandEvent(
+            this as GlobalContextSelectIslandEvent);
+      case _GlobalContextEvent.GlobalContextSetConfigurationEvent:
+        return globalContextSetConfigurationEvent(
+            this as GlobalContextSetConfigurationEvent);
+    }
+  }
+
+//ignore: missing_return
+  Future<R> asyncWhen<R>(
+      {@required
           FutureOr<R> Function(GlobalContextSelectIslandEvent)
               globalContextSelectIslandEvent,
       @required
@@ -45,6 +70,31 @@ abstract class GlobalContextEvent extends Equatable {
   }
 
   R whenOrElse<R>(
+      {R Function(GlobalContextSelectIslandEvent)
+          globalContextSelectIslandEvent,
+      R Function(GlobalContextSetConfigurationEvent)
+          globalContextSetConfigurationEvent,
+      @required R Function(GlobalContextEvent) orElse}) {
+    assert(() {
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _GlobalContextEvent.GlobalContextSelectIslandEvent:
+        if (globalContextSelectIslandEvent == null) break;
+        return globalContextSelectIslandEvent(
+            this as GlobalContextSelectIslandEvent);
+      case _GlobalContextEvent.GlobalContextSetConfigurationEvent:
+        if (globalContextSetConfigurationEvent == null) break;
+        return globalContextSetConfigurationEvent(
+            this as GlobalContextSetConfigurationEvent);
+    }
+    return orElse(this);
+  }
+
+  Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(GlobalContextSelectIslandEvent)
           globalContextSelectIslandEvent,
       FutureOr<R> Function(GlobalContextSetConfigurationEvent)
@@ -69,7 +119,8 @@ abstract class GlobalContextEvent extends Equatable {
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial(
+//ignore: missing_return
+  Future<void> whenPartial(
       {FutureOr<void> Function(GlobalContextSelectIslandEvent)
           globalContextSelectIslandEvent,
       FutureOr<void> Function(GlobalContextSetConfigurationEvent)

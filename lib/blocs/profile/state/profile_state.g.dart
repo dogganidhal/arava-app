@@ -24,6 +24,37 @@ abstract class ProfileState extends Equatable {
 //ignore: missing_return
   R when<R>(
       {@required
+          R Function(ProfileUpdateIdleState) profileUpdateIdleState,
+      @required
+          R Function(ProfileUpdateLoadingState) profileUpdateLoadingState,
+      @required
+          R Function(ProfileUpdateSuccessState) profileUpdateSuccessState,
+      @required
+          R Function(ProfileUpdateFailedState) profileUpdateFailedState}) {
+    assert(() {
+      if (profileUpdateIdleState == null ||
+          profileUpdateLoadingState == null ||
+          profileUpdateSuccessState == null ||
+          profileUpdateFailedState == null) {
+        throw 'check for all possible cases';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _ProfileState.ProfileUpdateIdleState:
+        return profileUpdateIdleState(this as ProfileUpdateIdleState);
+      case _ProfileState.ProfileUpdateLoadingState:
+        return profileUpdateLoadingState(this as ProfileUpdateLoadingState);
+      case _ProfileState.ProfileUpdateSuccessState:
+        return profileUpdateSuccessState(this as ProfileUpdateSuccessState);
+      case _ProfileState.ProfileUpdateFailedState:
+        return profileUpdateFailedState(this as ProfileUpdateFailedState);
+    }
+  }
+
+//ignore: missing_return
+  Future<R> asyncWhen<R>(
+      {@required
           FutureOr<R> Function(ProfileUpdateIdleState) profileUpdateIdleState,
       @required
           FutureOr<R> Function(ProfileUpdateLoadingState)
@@ -56,6 +87,35 @@ abstract class ProfileState extends Equatable {
   }
 
   R whenOrElse<R>(
+      {R Function(ProfileUpdateIdleState) profileUpdateIdleState,
+      R Function(ProfileUpdateLoadingState) profileUpdateLoadingState,
+      R Function(ProfileUpdateSuccessState) profileUpdateSuccessState,
+      R Function(ProfileUpdateFailedState) profileUpdateFailedState,
+      @required R Function(ProfileState) orElse}) {
+    assert(() {
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _ProfileState.ProfileUpdateIdleState:
+        if (profileUpdateIdleState == null) break;
+        return profileUpdateIdleState(this as ProfileUpdateIdleState);
+      case _ProfileState.ProfileUpdateLoadingState:
+        if (profileUpdateLoadingState == null) break;
+        return profileUpdateLoadingState(this as ProfileUpdateLoadingState);
+      case _ProfileState.ProfileUpdateSuccessState:
+        if (profileUpdateSuccessState == null) break;
+        return profileUpdateSuccessState(this as ProfileUpdateSuccessState);
+      case _ProfileState.ProfileUpdateFailedState:
+        if (profileUpdateFailedState == null) break;
+        return profileUpdateFailedState(this as ProfileUpdateFailedState);
+    }
+    return orElse(this);
+  }
+
+  Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(ProfileUpdateIdleState) profileUpdateIdleState,
       FutureOr<R> Function(ProfileUpdateLoadingState) profileUpdateLoadingState,
       FutureOr<R> Function(ProfileUpdateSuccessState) profileUpdateSuccessState,
@@ -84,7 +144,8 @@ abstract class ProfileState extends Equatable {
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial(
+//ignore: missing_return
+  Future<void> whenPartial(
       {FutureOr<void> Function(ProfileUpdateIdleState) profileUpdateIdleState,
       FutureOr<void> Function(ProfileUpdateLoadingState)
           profileUpdateLoadingState,
@@ -127,7 +188,7 @@ class ProfileUpdateIdleState extends ProfileState {
       : super(_ProfileState.ProfileUpdateIdleState);
 
   factory ProfileUpdateIdleState() {
-    _instance ??= ProfileUpdateIdleState._();
+    _instance ??= const ProfileUpdateIdleState._();
     return _instance;
   }
 
@@ -140,7 +201,7 @@ class ProfileUpdateLoadingState extends ProfileState {
       : super(_ProfileState.ProfileUpdateLoadingState);
 
   factory ProfileUpdateLoadingState() {
-    _instance ??= ProfileUpdateLoadingState._();
+    _instance ??= const ProfileUpdateLoadingState._();
     return _instance;
   }
 
@@ -153,7 +214,7 @@ class ProfileUpdateSuccessState extends ProfileState {
       : super(_ProfileState.ProfileUpdateSuccessState);
 
   factory ProfileUpdateSuccessState() {
-    _instance ??= ProfileUpdateSuccessState._();
+    _instance ??= const ProfileUpdateSuccessState._();
     return _instance;
   }
 

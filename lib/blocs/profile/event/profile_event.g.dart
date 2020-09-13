@@ -16,7 +16,21 @@ abstract class ProfileEvent extends Equatable {
   final _ProfileEvent _type;
 
 //ignore: missing_return
-  R when<R>(
+  R when<R>({@required R Function(UpdateProfileEvent) updateProfileEvent}) {
+    assert(() {
+      if (updateProfileEvent == null) {
+        throw 'check for all possible cases';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _ProfileEvent.UpdateProfileEvent:
+        return updateProfileEvent(this as UpdateProfileEvent);
+    }
+  }
+
+//ignore: missing_return
+  Future<R> asyncWhen<R>(
       {@required FutureOr<R> Function(UpdateProfileEvent) updateProfileEvent}) {
     assert(() {
       if (updateProfileEvent == null) {
@@ -31,6 +45,23 @@ abstract class ProfileEvent extends Equatable {
   }
 
   R whenOrElse<R>(
+      {R Function(UpdateProfileEvent) updateProfileEvent,
+      @required R Function(ProfileEvent) orElse}) {
+    assert(() {
+      if (orElse == null) {
+        throw 'Missing orElse case';
+      }
+      return true;
+    }());
+    switch (this._type) {
+      case _ProfileEvent.UpdateProfileEvent:
+        if (updateProfileEvent == null) break;
+        return updateProfileEvent(this as UpdateProfileEvent);
+    }
+    return orElse(this);
+  }
+
+  Future<R> asyncWhenOrElse<R>(
       {FutureOr<R> Function(UpdateProfileEvent) updateProfileEvent,
       @required FutureOr<R> Function(ProfileEvent) orElse}) {
     assert(() {
@@ -47,7 +78,8 @@ abstract class ProfileEvent extends Equatable {
     return orElse(this);
   }
 
-  FutureOr<void> whenPartial(
+//ignore: missing_return
+  Future<void> whenPartial(
       {FutureOr<void> Function(UpdateProfileEvent) updateProfileEvent}) {
     assert(() {
       if (updateProfileEvent == null) {
