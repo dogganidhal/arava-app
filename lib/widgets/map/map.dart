@@ -30,8 +30,6 @@ class _Map extends State<Map> {
   final SearchBloc _searchBloc = Modular.get();
   final GlobalContextBloc _globalContextBloc = Modular.get();
   final Key _selectedPoiDismissibleKey = GlobalKey();
-  final List<Color> _colorList = [...AravaTheme.kPremiumPoiColorList]
-    ..shuffle();
   MapType _mapType = MapType.normal;
 
   @override
@@ -82,11 +80,6 @@ class _Map extends State<Map> {
                       ),
                       onMapCreated: (GoogleMapController controller) {
                         _searchBloc.mapLoaded(controller);
-                        String brightness = MediaQuery.of(context).platformBrightness == Brightness.dark ?
-                          "dark" :
-                          "light";
-                        rootBundle.loadString("assets/map_styles/$brightness.json")
-                          .then((string) => controller.setMapStyle(string));
                       },
                       onCameraIdle: () => _searchBloc.cameraIdle(),
                       myLocationEnabled: true,

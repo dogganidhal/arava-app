@@ -9,8 +9,6 @@ import 'package:arava/widgets/map/map.dart';
 import 'package:arava/widgets/map/map_app_bar.dart';
 import 'package:arava/widgets/more/more.dart';
 import 'package:arava/widgets/more/more_app_bar.dart';
-import 'package:arava/widgets/photos/photos.dart';
-import 'package:arava/widgets/photos/photos_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';

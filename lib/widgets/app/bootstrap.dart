@@ -39,7 +39,7 @@ class _BootstrapState extends State<Bootstrap> {
         child: MaterialApp(
           title: 'Arava',
           theme: AravaTheme.kLightTheme,
-          darkTheme: AravaTheme.kDarkTheme,
+          // darkTheme: AravaTheme.kDarkTheme,
           onGenerateRoute: Modular.generateRoute,
           navigatorKey: Modular.get(),
           localizationsDelegates: [

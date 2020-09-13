@@ -33,9 +33,12 @@ class _IslandCardState extends State<IslandCard> with AutomaticKeepAliveClientMi
         ),
         child: Column(
           children: <Widget>[
-            Image(
-              fit: BoxFit.fitHeight,
-              image: CacheImage(widget.island.image.url),
+            AspectRatio(
+              aspectRatio: 4/3,
+              child: Image(
+                fit: BoxFit.cover,
+                image: CacheImage(widget.island.image.url),
+              ),
             ),
             Padding(
               padding: EdgeInsets.all(8),

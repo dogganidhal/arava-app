@@ -40,7 +40,9 @@ class _PoiMapPositionState extends State<PoiMapPosition> with AutomaticKeepAlive
               borderRadius: BorderRadius.circular(4),
             ),
             child: GoogleMap(
+              liteModeEnabled: true,
               initialCameraPosition: _initialCameraPosition,
+              mapToolbarEnabled: false,
               markers: [
                 Marker(
                   markerId: MarkerId(widget.poi.id),
@@ -49,11 +51,6 @@ class _PoiMapPositionState extends State<PoiMapPosition> with AutomaticKeepAlive
                 ),
               ].toSet(),
               onMapCreated: (controller) {
-                String brightness = MediaQuery.of(context).platformBrightness == Brightness.dark ?
-                  "dark" :
-                  "light";
-                rootBundle.loadString("assets/map_styles/$brightness.json")
-                  .then((string) => controller.setMapStyle(string));
               },
             ),
           ),

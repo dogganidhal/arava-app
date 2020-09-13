@@ -119,11 +119,14 @@ class _FeaturedState extends State<Featured> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.stretch,
                                     children: <Widget>[
-                                      Image(
-                                        fit: BoxFit.cover,
-                                        image: poi.mainImage != null ?
-                                        CacheImage(poi.mainImage.url) :
-                                        AssetImage(AravaAssets.PoiPlaceholder)
+                                      AspectRatio(
+                                        aspectRatio: 4/3,
+                                        child: Image(
+                                          fit: BoxFit.cover,
+                                          image: poi.mainImage != null ?
+                                          CacheImage(poi.mainImage.url) :
+                                          AssetImage(AravaAssets.PoiPlaceholder)
+                                        ),
                                       ),
                                       Padding(
                                         padding: EdgeInsets.all(8),

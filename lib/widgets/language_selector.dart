@@ -38,7 +38,12 @@ class _LanguageSelectorState extends State<LanguageSelector> {
         items: _languages
           .map(((language) => DropdownMenuItem<int>(
           value: _languages.indexOf(language),
-          child: Text(language.name),
+          child: Text(
+            language.name,
+            style: TextStyle(
+                color: Theme.of(context).textTheme.bodyText2.color
+            ),
+          ),
         )))
           .toList(),
         onChanged: (index) {

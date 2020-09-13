@@ -47,7 +47,9 @@ class OnBoarding extends StatelessWidget {
                     child: MaterialButton(
                       color: Theme.of(context).primaryColor,
                       onPressed: () => Modular.get<AppBloc>().confirmFirstLaunch(),
-                      child: Text(AppLocalizations.of(context).onboarding_Continue()),
+                      child: Text(
+                        AppLocalizations.of(context).onboarding_Continue(),
+                      ),
                     ),
                   ),
                 )

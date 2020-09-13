@@ -48,7 +48,7 @@ abstract class AravaTheme {
   );
 
   static final kDarkTheme = ThemeData(
-    // brightness: Brightness.dark,
+    brightness: Brightness.dark,
     primaryColor: kDarkAccentColor,
     accentColor: kDarkAccentColor,
     errorColor: kErrorColor,
@@ -83,7 +83,7 @@ abstract class AravaTheme {
           fontFamily: 'CircularStd'
         )
       ),
-      brightness: Brightness.dark,
+      brightness: Brightness.light,
     ),
   );
 
