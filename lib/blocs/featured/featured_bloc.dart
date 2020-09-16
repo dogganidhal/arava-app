@@ -79,7 +79,7 @@ class FeaturedBloc extends Bloc<FeaturedEvent, FeaturedState> {
 
   Stream<FeaturedState> _loadActivities(FeaturedLoadActivitiesEvent event) async* {
     final featured = state.whenOrElse(
-        featuredReadyState: (readyState) => readyState.activities,
+        featuredReadyState: (readyState) => readyState.featured,
         orElse: (_) => <Poi>[]
     );
     yield FeaturedState.featuredLoadingState();
