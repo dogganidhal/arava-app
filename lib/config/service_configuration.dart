@@ -50,13 +50,13 @@ class ServiceConfiguration {
   );
 
   factory ServiceConfiguration.staging({@required Session session, AuthService authService}) => ServiceConfiguration(
-    apiBaseUrl: "https://api.arava.ga",
+    apiBaseUrl: "https://api.arava-tahiti.com",
     session: session,
     authService: authService
   );
 
   factory ServiceConfiguration.production({@required Session session, AuthService authService}) => ServiceConfiguration(
-    apiBaseUrl: "https://api.arava.ga",
+    apiBaseUrl: "https://api.arava-tahiti.com",
     session: session,
     authService: authService
   );

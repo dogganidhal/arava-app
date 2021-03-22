@@ -14,7 +14,7 @@ class AppConfigurationProvider extends InheritedWidget {
   static AppConfiguration of(BuildContext context) {
     try {
       AppConfigurationProvider provider = context
-        .inheritFromWidgetOfExactType(AppConfigurationProvider);
+        .findAncestorWidgetOfExactType<AppConfigurationProvider>();
       return provider.configuration;
     } on dynamic catch (_) {
       throw FlutterError(

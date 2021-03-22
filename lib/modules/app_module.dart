@@ -21,7 +21,7 @@ import 'package:arava/widgets/map/search_filters.dart';
 import 'package:arava/widgets/profile/profile.dart';
 import 'package:arava/widgets/settings.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Router;
 import 'package:flutter_modular/flutter_modular.dart';
 
 
